@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	
+	//####noor brach
 	private Connection connect() {
 	    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 	    Connection conn = null;
