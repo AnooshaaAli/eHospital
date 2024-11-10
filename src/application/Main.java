@@ -34,7 +34,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		Connection conn = this.connect();
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("eHospital");
+		
 		showHomePage();
 	}
     
@@ -43,6 +43,7 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("HomePage.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
+		this.primaryStage.setTitle("Home");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
