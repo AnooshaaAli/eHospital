@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #FFFCE8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <ToolBar prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: #DD403A;" BorderPane.alignment="CENTER">
+         <items>
+            <Button fx:id="HomeButton" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="Home">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font></Button>
+            <Button fx:id="AboutButton" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="About">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font></Button>
+            <Button fx:id="SettingsButton" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="Settings">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font></Button>
+         </items>
+      </ToolBar>
+   </top>
+</BorderPane>
