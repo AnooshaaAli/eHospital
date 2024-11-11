@@ -16,7 +16,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@resources/reception.png" />
+                  <Image url="@resources/admin-panel.png" />
                </image>
                <VBox.margin>
                   <Insets left="20.0" top="10.0" />
@@ -27,17 +27,17 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
+            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Employees">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
+            <Button layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Follow Up">
+            <Button layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -51,7 +51,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="53.0" prefWidth="330.0" text="[ Receptionist Name ]">
+            <Label prefHeight="53.0" prefWidth="330.0" text="[ Admin Name ]">
                <font>
                   <Font name="Calibri Bold" size="36.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Label>
-            <Label text="Id: [ Receptionist Id ]" textFill="#747572">
+            <Label text="Id: [ Patient Id ]" textFill="#747572">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
@@ -75,13 +75,24 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Label>
-            <Label layoutX="30.0" layoutY="105.0" text="Employee Id: [ Emp Id ]" textFill="#747572">
+            <Label textFill="#747572">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="50.0" left="20.0" />
+                  <Insets left="20.0" />
                </VBox.margin>
+            </Label>
+            <Label textFill="#747572">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="50.0" />
+               </padding>
             </Label>
             <VBox prefHeight="277.0" prefWidth="544.0">
                <children>
@@ -90,10 +101,10 @@
                         <Font name="Calibri Bold" size="24.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
+                        <Insets bottom="20.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="- Register a New Patient " textFill="#747572">
+                  <Label text="- Manage Employees" textFill="#747572">
                      <font>
                         <Font name="Cambria" size="18.0" />
                      </font>
@@ -101,15 +112,15 @@
                         <Insets left="20.0" />
                      </VBox.margin>
                   </Label>
-                  <Label layoutX="30.0" layoutY="63.0" text="- Schedule an Appointment for the Patient" textFill="#747572">
+                  <Label layoutX="30.0" layoutY="63.0" text="- Handle Payrolls of all the Employees" textFill="#747572">
                      <font>
                         <Font name="Cambria" size="18.0" />
                      </font>
-                     <VBox.margin>
+                     <padding>
                         <Insets left="20.0" />
-                     </VBox.margin>
+                     </padding>
                   </Label>
-                  <Label layoutX="30.0" layoutY="85.0" text="- Schedule a Follow Up for the Patient" textFill="#747572">
+                  <Label layoutX="10.0" layoutY="85.0" text="- Manage Medical Equipment" textFill="#747572">
                      <font>
                         <Font name="Cambria" size="18.0" />
                      </font>
