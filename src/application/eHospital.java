@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class eHospital {
-//asd
+
     @FXML
     private Button PatientButton;
     
@@ -37,7 +37,7 @@ public class eHospital {
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Patient");
+            newFormStage.setTitle("Receptionist");
 
             // Show the new form
             newFormStage.show();
@@ -55,7 +55,33 @@ public class eHospital {
     {
     	try {
     		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Receptionist.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("Doctor");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
+    
+    public void handlePatientButtonClick()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
@@ -76,19 +102,56 @@ public class eHospital {
     		e.printStackTrace();
     	}
     }
-    
-    public void handlePatientButtonClick()
-    {
-    	
-    }
     public void handleAdminButtonClick()
     {
-    	
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("Admin");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
     
     public void handleNurseButtonClick()
     {
-    	
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("Nurse");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
 }
 
