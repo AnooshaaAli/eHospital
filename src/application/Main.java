@@ -1,16 +1,20 @@
 package application;
 	
+import java.io.IOException;
 import java.sql.*;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	
+	private Stage primaryStage;
+	private BorderPane mainLayout;
 	//####noor brach
 	private Connection connect() {
-	    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+	    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 	    Connection conn = null;
 	    try {
 	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Load SQL Server JDBC driver
@@ -28,20 +32,21 @@ public class Main extends Application {
 
     
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+	public void start(Stage primaryStage) throws IOException {
 		Connection conn = this.connect();
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("eHospital");
+		showPrescribeMedicationsPage();
 	}
     
+	public void showPrescribeMedicationsPage() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("prescribeMedications.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}

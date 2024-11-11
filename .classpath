@@ -12,8 +12,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
-	<classpathentry kind="lib" path="D:/Program Files/SQLDriver/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre8.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/SQLDriver/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre11.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/mysql-connector-j-9.0.0/mysql-connector-j-9.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/sqljdbc_12.8.1.0_enu/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre8.jar"/>
+	<classpathentry kind="lib" path="D:/sqljdbc_12.8.1.0_enu/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
