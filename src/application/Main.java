@@ -9,10 +9,10 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
 	
 	private Connection connect() {
-	    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+	    String url = "";
 	    Connection conn = null;
 	    try {
-	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Load SQL Server JDBC driver
+	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); 
 	        conn = DriverManager.getConnection(url);
 	        System.out.println("Connected to the database successfully!");
 	    } catch (ClassNotFoundException e) {
