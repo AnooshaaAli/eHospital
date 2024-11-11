@@ -15,5 +15,13 @@
 	<classpathentry kind="lib" path="D:/Program Files/SQLDriver/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre8.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/SQLDriver/sqljdbc_12.8/enu/jars/mssql-jdbc-12.8.1.jre11.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/mysql-connector-j-9.0.0/mysql-connector-j-9.0.0.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx.web.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/javafx-sdk-23.0.1/lib/javafx-swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

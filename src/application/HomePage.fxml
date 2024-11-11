@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #FFFCE8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <ToolBar prefHeight="74.0" prefWidth="750.0" style="-fx-background-color: #DD403A;" BorderPane.alignment="CENTER">
+         <items>
+            <Button fx:id="HomeButton" alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="Home">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="AboutButton" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="About">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="SettingsButton" alignment="CENTER_RIGHT" mnemonicParsing="false" style="-fx-background-color: #EE9E91;" text="Settings">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="165.0" prefWidth="750.0">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@resources/HospitalLogo.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="77.0" prefWidth="554.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="53.0" prefWidth="554.0" text="Welcome to e-Hospital" textAlignment="JUSTIFY">
+                           <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                           </font>
+                           <padding>
+                              <Insets top="50.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Your Virtual Clinic, 24/7" textAlignment="JUSTIFY" textFill="#747572">
+                           <font>
+                              <Font name="Californian FB" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label prefHeight="48.0" prefWidth="750.0" style="-fx-background-color: #F3F0DD;" text="     Select User Type">
+               <font>
+                  <Font name="Calibri" size="26.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="152.0" prefWidth="750.0">
+               <children>
+                  <Pane prefHeight="152.0" prefWidth="306.0">
+                     <children>
+                        <VBox layoutY="-1.0" prefHeight="196.0" prefWidth="277.0">
+                           <children>
+                              <ImageView fitHeight="98.0" fitWidth="247.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/patient.png" />
+                                 </image>
+                              </ImageView>
+                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Patient">
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Calibri" size="22.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="100.0" right="30.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="100.0" />
+                     </padding>
+                  </Pane>
+                  <Pane prefHeight="152.0" prefWidth="185.0">
+                     <children>
+                        <VBox prefHeight="193.0" prefWidth="185.0">
+                           <children>
+                              <ImageView fitHeight="98.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/nurse.png" />
+                                 </image>
+                              </ImageView>
+                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Nurse">
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Calibri" size="22.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="164.0" prefWidth="167.0">
+                     <children>
+                        <VBox prefHeight="185.0" prefWidth="169.0">
+                           <children>
+                              <ImageView fitHeight="98.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@resources/doctor.png" />
+                                 </image>
+                              </ImageView>
+                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Doctor">
+                                 <padding>
+                                    <Insets bottom="20.0" top="20.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Calibri" size="22.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="30.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="230.0" prefWidth="750.0">
+               <children>
+                  <VBox prefHeight="150.0" prefWidth="403.0">
+                     <children>
+                        <ImageView fitHeight="98.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/reception.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Receptionist">
+                           <padding>
+                              <Insets bottom="20.0" top="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="Calibri" size="22.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="200.0" right="30.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="164.0" prefWidth="266.0">
+                     <children>
+                        <ImageView fitHeight="98.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@resources/admin-panel.png" />
+                           </image>
+                        </ImageView>
+                        <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Admin">
+                           <padding>
+                              <Insets bottom="20.0" top="20.0" />
+                           </padding>
+                           <font>
+                              <Font name="Calibri" size="22.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="70.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets top="80.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
