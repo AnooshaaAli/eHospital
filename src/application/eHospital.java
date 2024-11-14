@@ -68,7 +68,7 @@ public class eHospital {
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            Stage currentStage = (Stage) DoctorButton.getScene().getWindow();
             currentStage.close();
     	}
     	catch (IOException e)
@@ -119,7 +119,7 @@ public class eHospital {
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            Stage currentStage = (Stage) AdminButton.getScene().getWindow();
             currentStage.close();
     	}
     	catch (IOException e)
@@ -145,7 +145,7 @@ public class eHospital {
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            Stage currentStage = (Stage) NurseButton.getScene().getWindow();
             currentStage.close();
     	}
     	catch (IOException e)
