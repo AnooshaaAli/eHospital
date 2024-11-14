@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/doctor.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="MyProfile" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="PrescribeMedications" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Prescribe Medications">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="DischargePatient" layoutX="10.0" layoutY="245.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Discharge Patient">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="ViewRecord" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" opacity="0.5" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutY="43.0" prefHeight="32.0" prefWidth="528.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+               <font>
+                  <Font name="Cambria" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutY="221.0" prefHeight="32.0" prefWidth="536.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
+               <font>
+                  <Font name="Cambria" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutY="377.0" prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
+               <font>
+                  <Font name="Cambria" size="20.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="118.0" layoutY="168.0" prefHeight="252.0" prefWidth="293.0" style="-fx-background-color: #dd403a;" visible="false">
+               <children>
+                  <AnchorPane layoutX="41.0" layoutY="34.0" prefHeight="183.0" prefWidth="205.0" style="-fx-background-color: #e67066;">
+                     <children>
+                        <Label layoutX="33.0" layoutY="56.0" text="Enter Patient Id: ">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="30.0" layoutY="93.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
