@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <left>
       <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
          <children>

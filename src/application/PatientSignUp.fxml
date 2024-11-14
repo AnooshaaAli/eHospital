@@ -17,7 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #dd403a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #dd403a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -64,7 +64,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="RegisterPatient" layoutX="172.0" layoutY="344.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
+                        <Button fx:id="RegisterPatient" layoutX="172.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#handleRegisterButtonClick" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
@@ -109,7 +109,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="RegisterPatient1" layoutX="301.0" layoutY="426.0" lineSpacing="5.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="81.0" style="-fx-background-color: transparent;" text=" Sign In " textFill="#18459e" underline="true">
+                        <Button fx:id="LoginPagePatient" layoutX="301.0" layoutY="426.0" lineSpacing="5.0" mnemonicParsing="false" onMouseClicked="#handleSignInClick" prefHeight="34.0" prefWidth="81.0" style="-fx-background-color: transparent;" text=" Sign In " textFill="#18459e" underline="true">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
