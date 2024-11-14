@@ -453,6 +453,128 @@ public class eHospital {
     	}
     }
     
+    @FXML
+    private Button ManageInventory;
+    public void handleManageInventoryAdmin()
+    {
+    	
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ManageInventory.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("ManageInventory");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ManageInventory.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    }
+
+    
+    //DOCTOR
+    @FXML
+    private Button PrescribeMedications;
+    @FXML
+    private Button DischargePatient;
+    @FXML
+    private Button PatientRecord;
+    
+    public void handlePrescribeMedicationsDoctor()
+    {
+
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("PrescribeMedications.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("PrescribeMedications");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) PrescribeMedications.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    }
+    public void handleDischargePatientDoctor()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("DischargePatient.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("DischargePatient");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) DischargePatient.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    	
+    }
+    public void handlePatientRecordDoctor()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewPatientRecordDoctor.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("PatientRecord");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) PatientRecord.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    }
+    
+    
+    
     
     
     
