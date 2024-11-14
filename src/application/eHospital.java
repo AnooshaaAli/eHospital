@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 public class eHospital {
@@ -386,8 +387,76 @@ public class eHospital {
     }
 
     
+    //admin 
+    @FXML
+    private Button ManageEmployees;
+    public void handleManageEmployeesAdmin()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ManageEmployees.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("ManageEmployees");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ManageEmployees.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    }
     
-    //saras
+    @FXML
+    private ComboBox<String> ActionComboBox; 
+    private Button CRUDdoctor;
+    private Button CRUDnurse;
+    private Button CRUDreceptionist;
+    public void handleCRUDopAdminToDoc()
+    {
+    	String selectedOption = ActionComboBox.getValue();
+    	System.out.println(selectedOption);
+    	if(selectedOption=="Add")
+    	{
+    		try {
+        		// Load the new FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("AddDoctor.fxml"));
+                Parent newFormRoot = loader.load();
+
+                // Create a new scene and stage for the new form
+                Scene newFormScene = new Scene(newFormRoot);
+                Stage newFormStage = new Stage();
+                newFormStage.setScene(newFormScene);
+                newFormStage.setTitle("AddDoctor");
+
+                // Show the new form
+                newFormStage.show();
+
+                // Close the current form
+                Stage currentStage = (Stage) CRUDdoctor.getScene().getWindow();
+                currentStage.close();
+        	}
+        	catch (IOException e)
+        	{
+        		e.printStackTrace();
+        	}
+    	}
+    }
+    
+    
+    
+    
+    //add Patient (save to SQL)
     @FXML
     private TextField Name;
     @FXML

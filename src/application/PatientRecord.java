@@ -4,6 +4,9 @@ import java.util.List;
 
 public class PatientRecord {
 	private List<Medication> medicine;
+	private float temperature;
+	private float bloodPressure;
+	private float heartRate;
 //	private List<Appointment> appointments;
 //	private Bill bills;
 	public List<Medication> getMedicine() {
