@@ -17,6 +17,7 @@ public class Medication {
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
+	
 	public void enterMedicationDetails(String name)
 	{}
 	public void updateMedicationDetails()
