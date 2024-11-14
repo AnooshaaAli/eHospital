@@ -16,12 +16,23 @@ public class UIController implements Initializable{
     private ComboBox<String> startTimeComboBox;
     @FXML
     private ComboBox<String> endTimeComboBox;
+    @FXML
+    private ComboBox<String> ActionComboBox;
     
     public void initialize(URL location, ResourceBundle resources) {
         // Populate the ComboBox with time options
-        ObservableList<String> timeOptions = generateTimeOptions();
-        startTimeComboBox.setItems(timeOptions);
-        endTimeComboBox.setItems(timeOptions);
+    	
+    	if(startTimeComboBox != null) {
+            ObservableList<String> timeOptions = generateTimeOptions();
+            startTimeComboBox.setItems(timeOptions);
+            endTimeComboBox.setItems(timeOptions);
+    	}
+    	
+    	if(ActionComboBox != null) {
+            ObservableList<String> crud_ops = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+            ActionComboBox.setItems(crud_ops);
+    	}
+
     }
 
     // Method to generate time options from 8:00 AM to 10:00 PM in 30-minute intervals
