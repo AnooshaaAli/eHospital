@@ -54,8 +54,8 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="153.0" layoutY="135.0" prefHeight="25.0" prefWidth="274.0" style="-fx-background-color: #f3f0dd;" />
-                        <TextField layoutX="153.0" layoutY="168.0" prefHeight="25.0" prefWidth="274.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="Name" layoutX="150.0" layoutY="134.0" prefHeight="25.0" prefWidth="274.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="username" layoutX="153.0" layoutY="168.0" prefHeight="25.0" prefWidth="274.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="50.0" layoutY="94.0" prefHeight="33.0" prefWidth="291.0" text="Enter the Details: " textFill="#747572">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -64,7 +64,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="RegisterPatient" layoutX="172.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#handleRegisterButtonClick" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
+                        <Button fx:id="RegisterPatient" layoutX="172.0" layoutY="344.0" mnemonicParsing="false" onAction="#registerPatient" onMouseClicked="#handleRegisterButtonClick" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
@@ -74,7 +74,7 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="153.0" layoutY="203.0" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="password" layoutX="153.0" layoutY="203.0" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="230.0" prefHeight="40.0" prefWidth="85.0" text="Gender">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -85,13 +85,13 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="153.0" layoutY="270.0" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="DOB" layoutX="153.0" layoutY="270.0" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="295.0" prefHeight="40.0" prefWidth="99.0" text="Contact">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="152.0" layoutY="303.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="contact" layoutX="152.0" layoutY="303.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="109.0" layoutY="426.0" prefHeight="33.0" prefWidth="203.0" text="Already have an account? " textFill="#747572">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -114,17 +114,17 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Button>
-                        <CheckBox layoutX="153.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Male">
+                        <CheckBox fx:id="genderM" layoutX="153.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Male">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="236.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Female">
+                        <CheckBox fx:id="genderF" layoutX="236.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Female">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="334.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Other">
+                        <CheckBox fx:id="genderO" layoutX="334.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Other">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>

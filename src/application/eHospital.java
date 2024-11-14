@@ -1,12 +1,15 @@
 package application;
 
+//import java.awt.TextField;
 import java.io.IOException;
+import javafx.scene.control.TextField;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 public class eHospital {
@@ -382,6 +385,63 @@ public class eHospital {
     	}
     }
 
+    
+    
+    //saras
+    @FXML
+    private TextField Name;
+    @FXML
+    private TextField username;
+    @FXML
+    private TextField password;
+    @FXML
+    private CheckBox genderM;
+    @FXML
+    private CheckBox genderF;
+    @FXML
+    private CheckBox genderO;
+    
+    @FXML
+    private TextField DOB;
+    @FXML
+    private TextField contact;
+    
+    public void registerPatient()
+    {
+    	String name = Name.getText();
+        String user = username.getText();
+        String pass = password.getText();
+        String gender;
+        if (genderM.isSelected()) {
+            gender = "Male";
+        } else if (genderF.isSelected()) {
+            gender = "Female";
+        } else {
+            gender = "Other"; // or handle this case if neither is selected
+        }
+        String dob = DOB.getText();
+        String cont = contact.getText();
+
+        // Process or display the input values as needed
+        System.out.println("Name: " + name);
+        System.out.println("Username: " + user);
+        System.out.println("Password: " + pass);
+        System.out.println("Gender: " + gender);
+        System.out.println("DOB: " + dob);
+        System.out.println("Contact: " + cont);
+        
+        if( name.isEmpty() || user.isEmpty() ||  pass.isEmpty() || gender.isEmpty() || dob.isEmpty() || cont.isEmpty())
+        {
+        	//yahan par input Validation bhi hogi
+        	//input validation par passe howe hai
+        	//form add hoga if any field left empty
+        }
+        
+        
+        Patient p=new Patient();
+        p.signUpPatient(name,user,pass,gender,dob,cont);
+   
+    }
     
 }
 
