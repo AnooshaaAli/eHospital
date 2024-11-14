@@ -27,7 +27,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
+            <Button fx:id="scheduleAppointment" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handlePatientScheduleAppointment" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

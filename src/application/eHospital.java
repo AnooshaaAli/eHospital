@@ -353,5 +353,35 @@ public class eHospital {
     		e.printStackTrace();
     	}
     }
+
+    @FXML
+    private Button scheduleAppointment;
+    public void handlePatientScheduleAppointment()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ScheduleAppointment.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("ScheduleAppointment");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) scheduleAppointment.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
+
+
 }
 
