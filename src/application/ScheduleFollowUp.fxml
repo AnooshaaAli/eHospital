@@ -25,17 +25,17 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="ReceptionistSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonReceptionist" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="RegisterPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
+            <Button fx:id="RegisterNewPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#handlePatientButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ScheduleAppointment" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
+            <Button fx:id="ScheduleAppointment" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handleScheduleAppointmentReceptionist" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
