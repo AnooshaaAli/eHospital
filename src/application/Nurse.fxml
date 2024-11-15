@@ -27,22 +27,22 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="UpdatePatientRecord" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Update Patient Record">
+            <Button fx:id="UpdatePatientRecord" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handleUpdatePatientRecordNurse" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Update Patient Record">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="TrackMedication" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Track Medication">
+            <Button fx:id="TrackMedication" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleTrackMedication" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Track Medication">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewPatientRecord" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
+            <Button fx:id="ViewPatientRecord" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleViewPatientRecord" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewPrescription" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
+            <Button fx:id="ViewPrescriptionNurse" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleViewPrescriptionNurse" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

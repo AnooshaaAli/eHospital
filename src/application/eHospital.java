@@ -358,8 +358,63 @@ public class eHospital {
     	}
     }
 
+    //PATIENT
     @FXML
     private Button scheduleAppointment;
+    @FXML
+    private Button ViewRecord;
+    @FXML
+    private Button ViewPrescription;
+    public void handlePatientViewPrescription()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewPrescription.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("ViewPrescription");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ViewPrescription.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
+    public void handlePatientViewRecord()
+    {
+    	try {
+    		// Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ViewPatientRecordPatient.fxml"));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle("ViewRecord");
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ViewRecord.getScene().getWindow();
+            currentStage.close();
+    	}
+    	catch (IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    }
     public void handlePatientScheduleAppointment()
     {
     	try {
@@ -387,7 +442,7 @@ public class eHospital {
     }
 
     
-    //admin 
+    //ADMIN 
     @FXML
     private Button ManageEmployees;
     public void handleManageEmployeesAdmin()
@@ -574,9 +629,33 @@ public class eHospital {
     }
     
     
+   
+    //NURSE
+    @FXML
+    private Button UpdatePatientRecord;
+    @FXML
+    private Button TrackMedication;
+    @FXML
+    private Button ViewPatientRecord;
+    @FXML
+    private Button ViewPrescriptionNurse;
     
-    
-    
+    public void handleUpdatePatientRecordNurse()
+    {
+    	//idk
+    }
+    public void handleTrackMedication()
+    {
+    	
+    }
+    public void handleViewPatientRecord()
+    {
+    	
+    }
+    public void handleViewPrescriptionNurse()
+    {
+    	
+    }
     
     //add Patient (save to SQL)
     @FXML
