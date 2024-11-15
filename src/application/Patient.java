@@ -28,11 +28,36 @@ public class Patient {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public int getId() {
-		return id;
+
+	public int getPatientId() {
+		return patientId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public Date getDob() {
+		return dob;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 	public boolean isDischargeStatus() {
 		return dischargeStatus;
@@ -47,6 +72,7 @@ public class Patient {
 		this.record = record;
 	}
 	
+	/*
 	public void signUpPatient(String name, String user, String pass, String gen, String dob, String cont) 
 	{
 	    System.out.println("Checking username availability.");
@@ -97,5 +123,7 @@ public class Patient {
 	        e.printStackTrace();
 	    }
 	}
+	
+	*/
 
 }

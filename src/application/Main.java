@@ -25,7 +25,7 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("HomePage.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
-		this.primaryStage.setTitle("AddNurse");
+		this.primaryStage.setTitle("eHospital | Home");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

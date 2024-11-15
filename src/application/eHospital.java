@@ -1,6 +1,7 @@
 package application;
 
-//import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import javafx.scene.control.TextField;
 
@@ -10,437 +11,1048 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
 public class eHospital {
 
-	//functionalities for the homepage 
-    @FXML
-    private Button PatientButton;
-    
-    @FXML
-    private Button NurseButton;
-    
-    @FXML
-    private Button DoctorButton;
-    
-    @FXML
-    private Button ReceptionistButton;
-    
-    @FXML
-    private Button AdminButton;
-    @FXML
-    public void handleReceptionistButtonClick() {
-        try {
+	//RECEPTIONIST
+	@FXML 
+    private Button ReceptionistSignIn;
+	@FXML 
+	private Button ReceptionistButton;
+	@FXML
+	private Button RegisterNewPatient; //calling function of patient
+	@FXML
+	private Button ScheduleAppointment;
+	@FXML
+	private Button ScheduleFollowUp;
+
+	public void handleReceptionistButtonClick(MouseEvent  event) {
+	        try {
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==ReceptionistButton)
+	            {
+	            	fxmlFile = "ReceptionistLogin.fxml";
+	                stageTitle = "Receptionist";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	public void handleLoginButtonReceptionist(MouseEvent event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ReceptionistSignIn)
+            {
+            	fxmlFile = "Receptionist.fxml";
+                stageTitle = "Receptionist";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
             // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ReceptionistLogin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Receptionist");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) ReceptionistButton.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleScheduleFollowUpReceptionist(MouseEvent event)
+	{
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ScheduleFollowUp)
+            {
+            	fxmlFile = "ScheduleFollowUp.fxml";
+                stageTitle = "ScheduleFollowUp";
+            }
+            
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	
+	
+	
+	//PATIENT
+	@FXML
+	private Button PatientButton;
+	@FXML 
+	private Button PatientSignIn;
+	@FXML 
+	private Button LoginPagePatient;
+	@FXML 
+    private Button RegisterPatient;
+	@FXML
+    private Button scheduleAppointment;
+	@FXML
+    private Button ViewRecord;
+	@FXML
+	private Button ViewPrescription;
+	public void handlePatientButtonClick(MouseEvent  event) {
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==PatientButton)
+            {
+            	fxmlFile = "PatientSignUp.fxml";
+                stageTitle = "Patient";
+            }
+            else if(event.getSource()==RegisterNewPatient)
+            {
+            	fxmlFile = "PatientSignUp.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void handleDoctorButtonClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("DoctorLogin.fxml"));
+	public void handleRegisterButtonClick(MouseEvent  event)
+	{
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==RegisterPatient)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Doctor");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) DoctorButton.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void handlePatientButtonClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientSignUp.fxml"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleSignInClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LoginPagePatient)
+            {
+            	fxmlFile = "PatientLogin.fxml";
+                stageTitle = "PatientLogin";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Patient");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) PatientButton.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    public void handleAdminButtonClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminLogin.fxml"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleLoginButtonPatinet(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==PatientSignIn)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Admin");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) AdminButton.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    
-    public void handleNurseButtonClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("NurseLogin.fxml"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handlePatientViewPrescription(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ViewPrescription)
+            {
+            	fxmlFile = "ViewPrescription.fxml";
+                stageTitle = "ViewPrescription";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Nurse");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) NurseButton.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    
-    //functionalities for register page of patient 
-    @FXML 
-    private Button RegisterPatient;
-    
-    @FXML 
-    private Button LoginPagePatient;
-    
-    @FXML
-    private Button AdminSignIn;
-    
-    @FXML
-    private Button DoctorSignIn;
-    
-    @FXML 
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handlePatientViewRecord(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ViewRecord)
+            {
+            	fxmlFile = "ViewPatientRecordPatient.fxml";
+                stageTitle = "ViewPatientRecord";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handlePatientScheduleAppointment(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==scheduleAppointment)
+            {
+            	fxmlFile = "ScheduleAppointment.fxml";
+                stageTitle = "ScheduleAppointment";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	//to input in sql for patient
+	public void registerPatient() {}
+	
+	
+	
+	//NURSE
+	@FXML 
     private Button NurseSignIn;
-    
-    @FXML 
-    private Button ReceptionistSignIn;
-
-    @FXML 
-    private Button PatientSignIn;
-
-    public void handleRegisterButtonClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
+	@FXML
+	private Button NurseButton;
+	@FXML
+	private Button UpdatePatientRecord;
+	@FXML
+	private Button TrackMedication;
+	@FXML
+	private Button ViewPatientRecord;
+	@FXML
+	private Button ViewPrescriptionNurse;
+	    
+	public void handleNurseButtonClick(MouseEvent  event) {
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==NurseButton)
+            {
+            	fxmlFile = "NurseLogin.fxml";
+                stageTitle = "Nurse";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Patinet");
+            newFormStage.setTitle(stageTitle);
 
             // Show the new form
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) RegisterPatient.getScene().getWindow();
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-
-    public void handleSignInClick()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("PatientLogin.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("PatinetLogin");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) LoginPagePatient.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    //functionalities of login page 
-    public void handleLoginButtonDoctor()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Doctor.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Doctor");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) DoctorSignIn.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    public void handleLoginButtonNurse()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Nurse.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Nurse");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) NurseSignIn.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    public void handleLoginButtonAdmin()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Admin");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) AdminSignIn.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    public void handleLoginButtonReceptionist()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Receptionist.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Receptionist");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) ReceptionistSignIn.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-    public void handleLoginButtonPatinet()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Patient.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("Patient");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) PatientSignIn.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-
-    @FXML
-    private Button scheduleAppointment;
-    public void handlePatientScheduleAppointment()
-    {
-    	try {
-    		// Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("ScheduleAppointment.fxml"));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle("ScheduleAppointment");
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) scheduleAppointment.getScene().getWindow();
-            currentStage.close();
-    	}
-    	catch (IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    }
-
-    
-    
-    //saras
-    @FXML
-    private TextField Name;
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField password;
-    @FXML
-    private CheckBox genderM;
-    @FXML
-    private CheckBox genderF;
-    @FXML
-    private CheckBox genderO;
-    
-    @FXML
-    private TextField DOB;
-    @FXML
-    private TextField contact;
-    
-    public void registerPatient()
-    {
-    	String name = Name.getText();
-        String user = username.getText();
-        String pass = password.getText();
-        String gender;
-        if (genderM.isSelected()) {
-            gender = "Male";
-        } else if (genderF.isSelected()) {
-            gender = "Female";
-        } else {
-            gender = "Other"; // or handle this case if neither is selected
+            
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        String dob = DOB.getText();
-        String cont = contact.getText();
-
-        // Process or display the input values as needed
-        System.out.println("Name: " + name);
-        System.out.println("Username: " + user);
-        System.out.println("Password: " + pass);
-        System.out.println("Gender: " + gender);
-        System.out.println("DOB: " + dob);
-        System.out.println("Contact: " + cont);
-        
-        if( name.isEmpty() || user.isEmpty() ||  pass.isEmpty() || gender.isEmpty() || dob.isEmpty() || cont.isEmpty())
-        {
-        	//yahan par input Validation bhi hogi
-        	//input validation par passe howe hai
-        	//form add hoga if any field left empty
-        }
-        
-        /*
-        Patient p=new Patient();
-        p.signUpPatient(name,user,pass,gender,dob,cont);
-        */
     }
-    
+	public void handleLoginButtonNurse(MouseEvent  event) {
+		 try {
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==NurseSignIn)
+	            {
+	            	fxmlFile = "Nurse.fxml";
+	                stageTitle = "Nurse";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	}
+	public void handleUpdatePatientRecordNurse(MouseEvent  event)
+    {
+		 try {
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==UpdatePatientRecord)
+	            {
+	            	fxmlFile = "UpdatePatientRecord.fxml";
+	                stageTitle = "UpdatePatientRecord";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+    }
+    public void handleTrackMedication(MouseEvent  event)
+    {
+    	 try {
+         	String fxmlFile;
+             String stageTitle;
+             
+             if(event.getSource()==TrackMedication)
+             {
+             	fxmlFile = "TrackMedication.fxml";
+                 stageTitle = "TrackMedication";
+             }
+             else
+             {
+             	throw new IllegalArgumentException("Unexpected button source");
+             }
+             
+             // Load the new FXML file
+             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+             Parent newFormRoot = loader.load();
+
+             // Create a new scene and stage for the new form
+             Scene newFormScene = new Scene(newFormRoot);
+             Stage newFormStage = new Stage();
+             newFormStage.setScene(newFormScene);
+             newFormStage.setTitle(stageTitle);
+
+             // Show the new form
+             newFormStage.show();
+
+             // Close the current form
+             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+             currentStage.close();
+             
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+    }
+    public void handleViewPatientRecord(MouseEvent  event)
+    {
+    	 try {
+         	String fxmlFile;
+             String stageTitle;
+             
+             if(event.getSource()==ViewPatientRecord)
+             {
+             	fxmlFile = "ViewPatientRecordNurse.fxml";
+                 stageTitle = "ViewPatientRecordNurse";
+             }
+             else
+             {
+             	throw new IllegalArgumentException("Unexpected button source");
+             }
+             
+             // Load the new FXML file
+             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+             Parent newFormRoot = loader.load();
+
+             // Create a new scene and stage for the new form
+             Scene newFormScene = new Scene(newFormRoot);
+             Stage newFormStage = new Stage();
+             newFormStage.setScene(newFormScene);
+             newFormStage.setTitle(stageTitle);
+
+             // Show the new form
+             newFormStage.show();
+
+             // Close the current form
+             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+             currentStage.close();
+             
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+    }
+    public void handleViewPrescriptionNurse(MouseEvent  event)
+    {
+    	 try {
+         	String fxmlFile;
+             String stageTitle;
+             
+             if(event.getSource()==ViewPrescriptionNurse)
+             {
+             	fxmlFile = "Medications.fxml";
+                 stageTitle = "Medications";
+             }
+             else
+             {
+             	throw new IllegalArgumentException("Unexpected button source");
+             }
+             
+             // Load the new FXML file
+             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+             Parent newFormRoot = loader.load();
+
+             // Create a new scene and stage for the new form
+             Scene newFormScene = new Scene(newFormRoot);
+             Stage newFormStage = new Stage();
+             newFormStage.setScene(newFormScene);
+             newFormStage.setTitle(stageTitle);
+
+             // Show the new form
+             newFormStage.show();
+
+             // Close the current form
+             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+             currentStage.close();
+             
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+    }
+	
+	
+	
+	
+	
+	
+	//DOCTOR
+	@FXML
+    private Button DoctorSignIn;
+	@FXML
+	private Button DoctorButton;
+	@FXML
+    private Button PrescribeMedications;
+	@FXML
+    private Button DischargePatient;
+	@FXML
+    private Button PatientRecord;
+	public void handleDoctorButtonClick(MouseEvent  event) {
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==DoctorButton)
+            {
+            	fxmlFile = "DoctorLogin.fxml";
+                stageTitle = "Doctor";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	public void handleLoginButtonDoctor(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==DoctorSignIn)
+            {
+            	fxmlFile = "Doctor.fxml";
+                stageTitle = "Doctor";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handlePrescribeMedicationsDoctor(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==PrescribeMedications)
+            {
+            	fxmlFile = "PrescribeMedications.fxml";
+                stageTitle = "PrescribeMedications";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleDischargePatientDoctor(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==DischargePatient)
+            {
+            	fxmlFile = "DischargePatient.fxml";
+                stageTitle = "DischargePatient";
+            }
+            
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handlePatientRecordDoctor(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==PatientRecord)
+            {
+            	fxmlFile = "ViewPatientRecordDoctor.fxml";
+                stageTitle = "PatientRecord";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	
+	
+	
+	
+	//ADMIN
+	@FXML
+    private Button AdminSignIn;
+	@FXML
+	private Button AdminButton;
+	@FXML
+    private Button ManageEmployees;
+	
+	@FXML
+	private ComboBox<String> ActionComboBox; 
+	private Button CRUDdoctor;
+	private Button CRUDnurse;
+	private Button CRUDreceptionist;
+	
+	@FXML
+	private Button ManageInventory;
+	public void handleAdminButtonClick(MouseEvent  event) {
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==AdminButton)
+            {
+            	fxmlFile = "AdminLogin.fxml";
+                stageTitle = "Admin";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	public void handleLoginButtonAdmin(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==AdminSignIn)
+            {
+            	fxmlFile = "Admin.fxml";
+                stageTitle = "Admin";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleManageEmployeesAdmin(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ManageEmployees)
+            {
+            	fxmlFile = "ManageEmployees.fxml";
+                stageTitle = "ManageEmployees";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleCRUDopAdminToDoc(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==AdminButton)
+            {
+            	fxmlFile = "AdminLogin.fxml";
+                stageTitle = "Admin";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleManageInventoryAdmin(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ManageInventory)
+            {
+            	fxmlFile = "ManageInventory.fxml";
+                stageTitle = "ManageInventory";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	
 }
