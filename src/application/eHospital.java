@@ -163,7 +163,10 @@ public class eHospital implements Initializable {
 	@FXML
     private Button ViewRecord;
 	@FXML
+	private Button PayBills;
 	private Button ViewPrescription;
+	@FXML
+	
 	public void handlePatientButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -422,6 +425,44 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
+	public void handlePatientPayBills(MouseEvent event)
+	{
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==PayBills)
+            {
+            	fxmlFile = "PayBill.fxml";
+                stageTitle = "PayBill";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 	//to input in sql for patient
 	public void registerPatient() {}
 	

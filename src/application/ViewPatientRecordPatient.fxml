@@ -43,7 +43,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewPrescription1" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Pay Bill">
+            <Button fx:id="PayBills" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientPayBills" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Pay Bill">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
