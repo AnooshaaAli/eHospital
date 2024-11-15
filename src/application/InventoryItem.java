@@ -2,9 +2,9 @@ package application;
 
 public class InventoryItem {
 	
+	private int invID;
 	private int quantity; 
 	private String name;
-	private int invID;
 	private String category;
 	
 	public int getQuantity() {

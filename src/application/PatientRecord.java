@@ -3,12 +3,12 @@ package application;
 import java.util.List;
 
 public class PatientRecord {
+	private String temperature;
+	private String bloodPressure;
+	private String heartRate;
 	private List<Medication> medicine;
-	private float temperature;
-	private float bloodPressure;
-	private float heartRate;
-//	private List<Appointment> appointments;
-//	private Bill bills;
+    private List<Appointment> appointments;
+    private Bill bills;
 	public List<Medication> getMedicine() {
 		return medicine;
 	}

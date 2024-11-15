@@ -10,15 +10,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 public class Patient {
 	
-	
-	public String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-
-	private String username; //patient name
-	private int id;	//patient id
+	private int patientId;
+	private String patientName;
+	private String username;
+	private String gender;
+	private Date dob;
+	private String contact;
 	private boolean dischargeStatus;
-//	bool isActive;	//patient is part of the system 
 	private PatientRecord record;
 	
 	public String getUsername() {

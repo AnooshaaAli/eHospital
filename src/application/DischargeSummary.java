@@ -3,10 +3,8 @@ package application;
 import java.sql.Date;
 
 public class DischargeSummary {
-	
-	private int patientID;
+	private Patient patient;
+	private int dischargeId;
 	private String instructions;
-	private Date date;
-	
-	
+	private Date date;	
 }

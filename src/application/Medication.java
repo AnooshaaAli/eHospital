@@ -1,9 +1,9 @@
 package application;
 
 public class Medication {
-	private int dosage; //this is number of days
-	private String medicineName; //name of the medicine
-	
+	private int medicationId;
+	private int dosage; 
+	private String medicineName; 
 	
 	public int getDosage() {
 		return dosage;
