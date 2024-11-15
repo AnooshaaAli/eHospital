@@ -12,28 +12,9 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
 	private Stage primaryStage;
 	private BorderPane mainLayout;
-	
-	private Connection connect() {
-	   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		// String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-	    Connection conn = null;
-	    try {
-	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Load SQL Server JDBC driver
-	        conn = DriverManager.getConnection(url);
-	        System.out.println("Connected to the database successfully!");
-	    } catch (ClassNotFoundException e) {
-	        System.out.println("SQL Server JDBC Driver not found.");
-	        e.printStackTrace();
-	    } catch (SQLException e) {
-	        System.out.println("Database connection failed.");
-	        e.printStackTrace();
-	    }
-	    return conn;
-	}
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Connection conn = this.connect();
 		this.primaryStage = primaryStage;
 		
 		showHomePage();
@@ -44,7 +25,7 @@ public class Main extends Application {
 		loader.setLocation(Main.class.getResource("HomePage.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
-		this.primaryStage.setTitle("Home");
+		this.primaryStage.setTitle("AddNurse");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
