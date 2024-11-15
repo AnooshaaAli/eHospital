@@ -41,7 +41,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewPrescription" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
+            <Button fx:id="ViewPrescription" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewPrescription" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -60,7 +60,7 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="183.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Your Bills" textFill="#fffce8" />
+            <Button fx:id="showBills" layoutX="183.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#handleshowBills" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Your Bills" textFill="#fffce8" />
             <Line endX="450.0" layoutX="101.0" layoutY="164.0" startX="-100.0" stroke="#747572" />
             <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="552.0" style="-fx-background-color: #f3f0dd;" text="Choose Payment Method">
                <font>
