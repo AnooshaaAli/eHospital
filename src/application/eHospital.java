@@ -3,10 +3,17 @@ package application;
 import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
-import javafx.scene.control.TextField;
+import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
+import javafx.scene.control.TextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,7 +21,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-public class eHospital {
+public class eHospital implements Initializable {
 
 	//RECEPTIONIST
 	@FXML 
@@ -865,11 +872,6 @@ public class eHospital {
 	@FXML
     private Button ManageEmployees;
 	
-	@FXML
-	private ComboBox<String> ActionComboBox; 
-	private Button CRUDdoctor;
-	private Button CRUDnurse;
-	private Button CRUDreceptionist;
 	
 	@FXML
 	private Button ManageInventory;
@@ -1054,5 +1056,48 @@ public class eHospital {
         }
 	}
 	
+	
+	 @FXML
+	 private ComboBox<String> startTimeComboBox;
+	 @FXML
+	 private ComboBox<String> endTimeComboBox;
+	 @FXML
+	 private ComboBox<String> ActionComboBox;
+
+	 @Override
+	 public void initialize(URL location, ResourceBundle resources) {
+		 // Populate the ComboBoxes with time options and action options
+
+	        // Populate time options for startTimeComboBox and endTimeComboBox
+		 if (startTimeComboBox != null) {
+			 ObservableList<String> timeOptions = generateTimeOptions();
+	         startTimeComboBox.setItems(timeOptions);
+	         endTimeComboBox.setItems(timeOptions);
+		 }
+
+        // Populate action options for ActionComboBox
+        if (ActionComboBox != null) {
+            ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+            ActionComboBox.setItems(crudOps);
+        }
+    }
+
+	 // Method to generate time options from 8:00 AM to 10:00 PM in 60-minute intervals
+	 private ObservableList<String> generateTimeOptions() {
+        ObservableList<String> timeOptions = FXCollections.observableArrayList();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+        // Start from 8:00 AM
+        LocalTime startTime = LocalTime.of(8, 0);
+        // End at 10:00 PM
+        LocalTime endTime = LocalTime.of(22, 0);
+
+        while (!startTime.isAfter(endTime)) {
+            timeOptions.add(startTime.format(timeFormatter));
+            startTime = startTime.plusMinutes(60); // Increment by 60 minutes
+        }
+
+        return timeOptions;
+    }
 	
 }
