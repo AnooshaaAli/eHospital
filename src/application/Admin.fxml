@@ -32,7 +32,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
+            <Button fx:id="HandlePayrolls" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleHandlePayrollsAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

@@ -879,6 +879,9 @@ public class eHospital implements Initializable {
 	private Button CRUDReceptionist;
 	@FXML
 	private Button ManageInventory;
+	@FXML
+	private Button HandlePayrolls;
+
 	public void handleAdminButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -1227,7 +1230,44 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
-	
+	public void handleHandlePayrollsAdmin(MouseEvent event)
+	{
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==HandlePayrolls)
+            {
+            	fxmlFile = "HandlePayrollProcessing.fxml";
+                stageTitle = "HandlePayrollProcessing";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	//LOAD COMBOBOX
 	 @FXML
 	 private ComboBox<String> startTimeComboBox;
 	 @FXML
