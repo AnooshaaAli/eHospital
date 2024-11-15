@@ -62,7 +62,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="183.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Patient Record" textFill="#fffce8" />
+                  <Button layoutX="183.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Prescription" textFill="#fffce8" />
                   <Label layoutX="146.0" layoutY="55.0" text="Patient Id: " textFill="#747572">
                      <font>
                         <Font name="Calibri" size="17.0" />
@@ -70,33 +70,27 @@
                   </Label>
                   <ComboBox layoutX="231.0" layoutY="53.0" prefHeight="25.0" prefWidth="156.0" style="-fx-background-color: #f3f0dd;" />
                   <Line endX="443.0" layoutX="101.0" layoutY="164.0" startX="-100.0" stroke="#747572" />
-                  <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Update Patient Record">
+                  <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Update Medications">
                      <font>
                         <Font name="Cambria" size="20.0" />
                      </font>
                      <padding>
-                        <Insets left="180.0" />
+                        <Insets left="200.0" />
                      </padding>
                   </Label>
-                  <Label layoutX="117.0" layoutY="241.0" text="Temperature:" textFill="#747572">
+                  <Label layoutX="117.0" layoutY="241.0" text="Medication Name:" textFill="#747572">
                      <font>
                         <Font name="Calibri" size="17.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="224.0" layoutY="239.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #f3f0dd;" />
-                  <Label layoutX="116.0" layoutY="289.0" text="Blood Pressure:" textFill="#747572">
+                  <Label layoutX="116.0" layoutY="289.0" text="New Dosage:" textFill="#747572">
                      <font>
                         <Font name="Calibri" size="17.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="234.0" layoutY="287.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
-                  <Button layoutX="183.0" layoutY="396.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Update Patient Record" textFill="#fffce8" />
-                  <Label layoutX="118.0" layoutY="341.0" prefHeight="21.0" prefWidth="87.0" text="Heart Rate:" textFill="#747572">
-                     <font>
-                        <Font name="Calibri" size="17.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="205.0" layoutY="339.0" prefHeight="25.0" prefWidth="205.0" style="-fx-background-color: #f3f0dd;" />
+                  <TextField layoutX="224.0" layoutY="287.0" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: #f3f0dd;" />
+                  <Button layoutX="172.0" layoutY="334.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Update" textFill="#fffce8" />
+                  <ComboBox layoutX="261.0" layoutY="239.0" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: #f3f0dd;" />
                </children>
             </AnchorPane>
          </children>
