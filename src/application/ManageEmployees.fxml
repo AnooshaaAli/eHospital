@@ -76,17 +76,17 @@
                   <Image url="@resources/doctor.png" />
                </image>
             </ImageView>
-            <Button fx:id="CRUDdoctor" layoutX="119.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDopAdminToDoc" style="-fx-background-color: #f3f0dd;" text="Doctor">
+            <Button fx:id="CRUDdoctor" layoutX="119.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDdoctor" style="-fx-background-color: #f3f0dd;" text="Doctor">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="329.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-color: #f3f0dd;" text="Nurse">
+            <Button fx:id="CRUDNurse" layoutX="329.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDnurse" style="-fx-background-color: #f3f0dd;" text="Nurse">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="206.0" layoutY="373.0" mnemonicParsing="false" style="-fx-background-color: #f3f0dd;" text="Receptionist">
+            <Button fx:id="CRUDReceptionist" layoutX="206.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#handleCRUDreceptionist" style="-fx-background-color: #f3f0dd;" text="Receptionist">
                <font>
                   <Font size="18.0" />
                </font>

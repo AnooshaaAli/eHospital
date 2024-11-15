@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #dd403a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #dd403a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -49,7 +49,7 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button layoutX="160.0" layoutY="316.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="174.0" style="-fx-background-color: #13b2b2;" text="Cancel" textFill="#fffce8">
+                        <Button fx:id="ManageEmployees" layoutX="160.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#handleManageEmployeesAdmin" prefHeight="35.0" prefWidth="174.0" style="-fx-background-color: #13b2b2;" text="Cancel" textFill="#fffce8">
                            <font>
                               <Font size="16.0" />
                            </font>

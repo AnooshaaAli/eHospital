@@ -871,8 +871,12 @@ public class eHospital implements Initializable {
 	private Button AdminButton;
 	@FXML
     private Button ManageEmployees;
-	
-	
+	@FXML
+	private Button CRUDdoctor;
+	@FXML
+	private Button CRUDNurse;
+	@FXML
+	private Button CRUDReceptionist;
 	@FXML
 	private Button ManageInventory;
 	public void handleAdminButtonClick(MouseEvent  event) {
@@ -1055,7 +1059,174 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
-	
+	public void handleCRUDdoctor(MouseEvent event)
+	{
+		try {
+        	String fxmlFile="";
+            String stageTitle="";
+            String selectedAction = ActionComboBox.getValue();
+            if(event.getSource()==CRUDdoctor)
+            {
+            	if(selectedAction=="Add")
+            	{
+            		fxmlFile = "AddDoctor.fxml";
+                    stageTitle = "AddDoctor";
+            	}
+            	else if(selectedAction=="Retrieve")
+            	{
+            		fxmlFile = "ReadDoctor.fxml";
+                    stageTitle = "ReadDoctor";
+            	}
+            	else if(selectedAction=="Update")
+            	{
+            		fxmlFile = "UpdateDoctor.fxml";
+                    stageTitle = "UpdateDoctor";
+            	}
+            	else if(selectedAction=="Delete")
+            	{
+            		fxmlFile = "DeleteDoctor.fxml";
+                    stageTitle = "DeleteDoctor";
+            	}
+            	
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleCRUDreceptionist(MouseEvent event)
+	{
+		try {
+        	String fxmlFile="";
+            String stageTitle="";
+            String selectedAction = ActionComboBox.getValue();
+            if(event.getSource()==CRUDReceptionist)
+            {
+            	if(selectedAction=="Add")
+            	{
+            		fxmlFile = "AddReceptionist.fxml";
+                    stageTitle = "AddReceptionist";
+            	}
+            	else if(selectedAction=="Retrieve")
+            	{
+            		fxmlFile = "ReadReceptionist.fxml";
+                    stageTitle = "ReadReceptionist";
+            	}
+            	else if(selectedAction=="Update")
+            	{
+            		fxmlFile = "UpdateReceptionist.fxml";
+                    stageTitle = "UpdateReceptionist";
+            	}
+            	else if(selectedAction=="Delete")
+            	{
+            		fxmlFile = "DeleteReceptionist.fxml";
+                    stageTitle = "DeleteReceptionist";
+            	}
+            	
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	public void handleCRUDnurse(MouseEvent event)
+	{
+		try {
+        	String fxmlFile="";
+            String stageTitle="";
+            String selectedAction = ActionComboBox.getValue();
+            if(event.getSource()==CRUDNurse)
+            {
+            	if(selectedAction=="Add")
+            	{
+            		fxmlFile = "AddNurse.fxml";
+                    stageTitle = "AddNurse";
+            	}
+            	else if(selectedAction=="Retrieve")
+            	{
+            		fxmlFile = "ReadNurse.fxml";
+                    stageTitle = "ReadNurse";
+            	}
+            	else if(selectedAction=="Update")
+            	{
+            		fxmlFile = "UpdateNurse.fxml";
+                    stageTitle = "UpdateNurse";
+            	}
+            	else if(selectedAction=="Delete")
+            	{
+            		fxmlFile = "DeleteNurse.fxml";
+                    stageTitle = "DeleteNurse";
+            	}
+            	
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 	
 	 @FXML
 	 private ComboBox<String> startTimeComboBox;
@@ -1068,15 +1239,17 @@ public class eHospital implements Initializable {
 	 public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
 
-	        // Populate time options for startTimeComboBox and endTimeComboBox
-		 if (startTimeComboBox != null) {
+	     // Populate time options for startTimeComboBox and endTimeComboBox
+		 if (startTimeComboBox != null) 
+		 {
 			 ObservableList<String> timeOptions = generateTimeOptions();
 	         startTimeComboBox.setItems(timeOptions);
 	         endTimeComboBox.setItems(timeOptions);
 		 }
 
         // Populate action options for ActionComboBox
-        if (ActionComboBox != null) {
+        if (ActionComboBox != null) 
+        {
             ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
             ActionComboBox.setItems(crudOps);
         }
@@ -1092,7 +1265,8 @@ public class eHospital implements Initializable {
         // End at 10:00 PM
         LocalTime endTime = LocalTime.of(22, 0);
 
-        while (!startTime.isAfter(endTime)) {
+        while (!startTime.isAfter(endTime))
+        {
             timeOptions.add(startTime.format(timeFormatter));
             startTime = startTime.plusMinutes(60); // Increment by 60 minutes
         }
