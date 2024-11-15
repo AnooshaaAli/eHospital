@@ -23,12 +23,12 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="AdminSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonAdmin" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Employees">
+            <Button fx:id="ManageEmployees" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handleManageEmployeesAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Employees">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

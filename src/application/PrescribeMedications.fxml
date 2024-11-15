@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <left>
       <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
          <children>
@@ -26,7 +26,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="MyProfile" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="DoctorSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonDoctor" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -36,12 +36,12 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="DischargePatient" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Discharge Patient">
+            <Button fx:id="DischargePatient" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleDischargePatientDoctor" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Discharge Patient">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="PatientRecord" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
+            <Button fx:id="PatientRecord" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientRecordDoctor" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

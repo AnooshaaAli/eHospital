@@ -25,7 +25,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="MyProfile" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="RegisterPatient" mnemonicParsing="false" onMouseClicked="#handleRegisterButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -35,12 +35,12 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewRecord" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Record">
+            <Button fx:id="ViewRecord" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewRecord" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Record">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewPrescription" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
+            <Button fx:id="ViewPrescription" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewPrescription" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Prescription">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

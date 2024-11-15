@@ -27,7 +27,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="RegisterPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
+            <Button fx:id="RegisterNewPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#handlePatientButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ScheduleFollowUp" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Follow Up">
+            <Button fx:id="ScheduleFollowUp" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleScheduleFollowUpReceptionist" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Follow Up">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

@@ -24,7 +24,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="AdminSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonAdmin" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -39,7 +39,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
+            <Button fx:id="ManageInventory" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
