@@ -64,7 +64,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="AddNurse" layoutX="174.0" layoutY="397.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="153.0" style="-fx-background-color: #dd403a;" text="Add Nurse" textFill="#fffce8">
+                        <Button fx:id="AddNurse" layoutX="174.0" layoutY="424.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="153.0" style="-fx-background-color: #dd403a;" text="Add Nurse" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
@@ -107,23 +107,43 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <Label layoutX="59.0" layoutY="335.0" prefHeight="40.0" prefWidth="108.0" text="Working Time">
+                        <Label layoutX="55.0" layoutY="327.0" prefHeight="40.0" prefWidth="108.0" text="Working Time">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="startTimeComboBox" layoutX="174.0" layoutY="343.0" prefHeight="25.0" prefWidth="71.0" />
-                        <Label layoutX="247.0" layoutY="347.0" text="Start Time">
+                        <ComboBox fx:id="startTimeComboBox" layoutX="171.0" layoutY="335.0" prefHeight="25.0" prefWidth="74.0" />
+                        <Label layoutX="247.0" layoutY="339.0" text="Start Time">
                            <font>
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="endTimeComboBox" layoutX="310.0" layoutY="343.0" prefHeight="25.0" prefWidth="63.0" />
-                        <Label layoutX="381.0" layoutY="347.0" text="End Time">
+                        <ComboBox fx:id="endTimeComboBox" layoutX="310.0" layoutY="335.0" prefHeight="25.0" prefWidth="63.0" />
+                        <Label layoutX="381.0" layoutY="339.0" text="End Time">
                            <font>
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Label>
+                        <Label layoutX="57.0" layoutY="360.0" prefHeight="40.0" prefWidth="85.0" text="Shift">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                        </Label>
+                        <CheckBox layoutX="171.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Morning">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox layoutX="276.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Evening">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox layoutX="373.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Night">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                        </CheckBox>
                      </children>
                   </AnchorPane>
                </children>
