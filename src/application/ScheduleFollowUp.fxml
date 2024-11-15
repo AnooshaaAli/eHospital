@@ -65,12 +65,12 @@
                   <Font name="Calibri" size="16.0" />
                </font>
             </Button>
-            <Label layoutX="363.0" layoutY="82.0" text="Avaiable" textFill="#52ae2a" visible="false">
+            <Label layoutX="450.0" layoutY="133.0" text="Avaiable" textFill="#52ae2a" visible="false">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="363.0" layoutY="82.0" text="Not Available" textFill="#da1515" visible="false">
+            <Label layoutX="450.0" layoutY="133.0" text="Not Available" textFill="#da1515" visible="false">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -88,10 +88,13 @@
             </Button>
             <Line endX="450.0" layoutX="106.0" layoutY="343.0" startX="-105.0" stroke="#747572" />
             <Line endX="441.0" layoutX="115.0" layoutY="354.0" startX="-115.0" stroke="#747572" />
-            <Label layoutX="117.0" layoutY="62.0" style="-fx-background-color: #f3f0dd;" text=" Schedule Follow Up! ">
+            <Label layoutY="62.0" prefHeight="30.0" prefWidth="557.0" style="-fx-background-color: #f3f0dd;" text=" Schedule Follow Up! ">
                <font>
-                  <Font name="Calibri Bold" size="36.0" />
+                  <Font name="Cambria Bold" size="24.0" />
                </font>
+               <padding>
+                  <Insets left="150.0" />
+               </padding>
             </Label>
             <AnchorPane layoutX="145.0" layoutY="392.0" prefHeight="252.0" prefWidth="293.0" style="-fx-background-color: #dd403a;">
                <children>
