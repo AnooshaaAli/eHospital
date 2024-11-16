@@ -4,11 +4,18 @@ import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,10 +26,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 public class eHospital implements Initializable {
-
+	
+	Patient patient= new Patient();
+	
+	
+	
 	//RECEPTIONIST
 	@FXML 
     private Button ReceptionistSignIn;
@@ -206,9 +219,6 @@ public class eHospital implements Initializable {
 	private Button ViewPrescription;
 	@FXML
 	private Button showBills;
-	
-	
-	
 
 	public void handlePatientButtonClick(MouseEvent  event) {
         try {
@@ -753,8 +763,8 @@ public class eHospital implements Initializable {
              
              if(event.getSource()==ViewPrescriptionNurse)
              {
-             	fxmlFile = "Medications.fxml";
-                 stageTitle = "Medications";
+             	fxmlFile = "ViewPrescription.fxml";
+                stageTitle = "ViewPrescription";
              }
              else
              {
@@ -1453,6 +1463,120 @@ public class eHospital implements Initializable {
 	
 	
 	
+	
+	
+	//prescribe Medications
+	@FXML
+	private Button AddMed;
+	@FXML
+	private TextField medName;
+	@FXML
+	private TextField Dosage;
+	@FXML 
+	private Button existingMed;
+	
+	public void handlePrescribeMedicationUC(MouseEvent event)
+	{
+		int pid = Integer.parseInt(pidComboBox.getValue());
+		if (pidComboBox != null && pidComboBox.getValue() != null) {
+			//initTable();
+		}
+		
+		
+		//initTable(pid);
+		if(event.getSource()==existingMed)
+		{
+			try {
+	        	String fxmlFile= "ViewExistingMedications.fxml";
+	            String stageTitle="ViewExistingMedications";
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+	            
+	            
+	            eHospital controller = loader.getController(); // Get the same controller
+	            controller.pidComboBox= this.pidComboBox;
+	            controller.initTable(); // Initialize table after form is loaded
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+	            
+	            // Show the new form
+	            newFormStage.show();
+	            
+	             // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	         //   handleTable();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
+		else if(event.getSource()==AddMed)
+		{
+			String medicationName = medName.getText();
+	        int dosageValue = Integer.parseInt(Dosage.getText());
+	        
+	        patient.addMedications(medicationName, dosageValue,pid);
+	        medName.clear();
+	        Dosage.clear();
+		}
+		
+	}
+
+	
+	
+	
+	@FXML
+	private TableView<Medication> medicationTable;
+	@FXML
+	private TableColumn<Medication, Integer> medicationId ;
+	@FXML
+	private TableColumn<Medication,String> medicineName;
+	@FXML
+	private TableColumn<Medication,Integer> dosage;
+
+	private ObservableList<Medication> observableMedication;	
+	@FXML
+	public void initTable() {
+
+		
+		//medicationTable= new TableView<>();
+		int pid;
+		if (pidComboBox != null && pidComboBox.getValue() != null) {
+			pid =Integer.parseInt(pidComboBox.getValue());
+			observableMedication = FXCollections.observableArrayList();
+			
+			//DBHandler db= new DBHandler();
+			System.out.println("medicationTable: " + medicationTable);
+	
+		//	medicineName= new TableColumn <>("medicineName");
+			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
+		//	medicationId = new TableColumn <>("medicationId");
+			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
+		//	dosage= new TableColumn <>("dosage");
+			dosage.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+			observableMedication=patient.showExistingMedication(pid);
+			medicationTable.setItems(observableMedication);
+//			medicationTable.getColumns().add(medicationId);
+//			medicationTable.getColumns().add(medicineName);
+//			medicationTable.getColumns().add(dosage);
+			
+			System.out.println(observableMedication.size());
+			//medicationTable= new TableView<>(observableMedication);
+		   
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 	//LOAD COMBOBOX
 	 @FXML
  	 private ComboBox<String> startTimeComboBox;
@@ -1464,7 +1588,9 @@ public class eHospital implements Initializable {
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
-
+		 
+		 populatePidComboBox();
+		
 	     // Populate time options for startTimeComboBox and endTimeComboBox
 		 if (startTimeComboBox != null) 
 		 {
@@ -1479,6 +1605,7 @@ public class eHospital implements Initializable {
             ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
             ActionComboBox.setItems(crudOps);
         }
+     
     }
 
 	 // Method to generate time options from 8:00 AM to 10:00 PM in 60-minute intervals
@@ -1499,5 +1626,34 @@ public class eHospital implements Initializable {
 
         return timeOptions;
     }
-	
+	 @FXML
+	 private ComboBox<String> pidComboBox;
+	 private void populatePidComboBox() {
+		    // Create an ObservableList to hold patient IDs
+		    ObservableList<String> pidList = FXCollections.observableArrayList();
+		    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+
+		    // Connect to the database and fetch the PIDs
+		    try (Connection conn = DriverManager.getConnection(url)) {
+		        String query = "SELECT pid FROM patient"; // Query to get patient ids
+		        Statement stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(query);
+
+		        // Iterate through the result set and add PIDs to the ObservableList
+		        while (rs.next()) {
+		            String pid = rs.getString("pid");
+		            pidList.add(pid);  // Add each pid to the ObservableList
+		        }
+
+		        // Set the ObservableList to the ComboBox if it's not null
+		        if (pidComboBox != null) {
+		            pidComboBox.setItems(pidList);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+	 
+	 
 }

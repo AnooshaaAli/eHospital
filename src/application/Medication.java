@@ -2,8 +2,18 @@ package application;
 
 public class Medication {
 	private int medicationId;
-	private int dosage; 
 	private String medicineName; 
+	private int dosage; 
+	
+	
+	
+	Medication(int medicationId, String medicineName, int dosage)
+	{
+		this.medicationId=medicationId;
+		this.dosage=dosage;
+		this.medicineName=medicineName;
+	}
+	
 	
 	public int getDosage() {
 		return dosage;
@@ -18,15 +28,25 @@ public class Medication {
 		this.medicineName = medicineName;
 	}
 	
-	public void enterMedicationDetails(String name)
-	{}
-	public void updateMedicationDetails()
-	{
-		
+//	public void enterMedicationDetails(String name)
+//	{}
+//	public void updateMedicationDetails()
+//	{
+//		
+//	}
+//	public Medication showExistingMedicationDetails()
+//	{
+//		return null;
+//	}
+
+
+	public int getMedicationId() {
+		return medicationId;
 	}
-	public Medication showExistingMedicationDetails()
-	{
-		return null;
+
+
+	public void setMedicationId(int medicationId) {
+		this.medicationId = medicationId;
 	}
 	
 	

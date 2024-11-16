@@ -3,6 +3,8 @@ package application;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -13,6 +15,8 @@ import java.sql.Statement;
 
 public class Patient {
 	
+	
+	private DBHandler dbhandler;
 	private int patientId;
 	private String patientName;
 	private String username;
@@ -22,6 +26,11 @@ public class Patient {
 	private boolean dischargeStatus;
 	private PatientRecord record;
 	
+	Patient()
+	{
+		dbhandler=new DBHandler();
+		record= new PatientRecord();
+	}
 	public String getUsername() {
 		return username;
 	}
@@ -46,6 +55,26 @@ public class Patient {
 	public void setRecord(PatientRecord record) {
 		this.record = record;
 	}
+	
+	public void addMedications(String medName,int dosage,int pid)
+	{
+		
+		record.addPrescribeMedication(medName,dosage,pid);
+	}
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+		ObservableList<Medication> list= record.showExistingMedication(pid);
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	public void signUpPatient(String name, String user, String pass, String gen, String dob, String cont) 
 //	{
