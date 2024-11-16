@@ -27,7 +27,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="RegisterNewPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#handleRegisterPatientButtonClick"  prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
+            <Button fx:id="RegisterNewPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#handlePatientButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
