@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #FFFCE8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #FFFCE8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <top>
       <ToolBar prefHeight="74.0" prefWidth="750.0" style="-fx-background-color: #DD403A;" BorderPane.alignment="CENTER">
          <items>
@@ -79,7 +79,8 @@
                                     <Image url="@resources/patient.png" />
                                  </image>
                               </ImageView>
-                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Patient">
+                              <Button fx:id="PatientButton" mnemonicParsing="false" onMouseClicked="#handlePatientButtonClick" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Patient">
+
                                  <padding>
                                     <Insets bottom="20.0" top="20.0" />
                                  </padding>
@@ -106,7 +107,7 @@
                                     <Image url="@resources/nurse.png" />
                                  </image>
                               </ImageView>
-                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Nurse">
+                              <Button fx:id="NurseButton" mnemonicParsing="false" onMouseClicked="#handleNurseButtonClick" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Nurse">
                                  <padding>
                                     <Insets bottom="20.0" top="20.0" />
                                  </padding>
@@ -130,7 +131,7 @@
                                     <Image url="@resources/doctor.png" />
                                  </image>
                               </ImageView>
-                              <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Doctor">
+                              <Button fx:id="DoctorButton" mnemonicParsing="false" onMouseClicked="#handleDoctorButtonClick" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Doctor">
                                  <padding>
                                     <Insets bottom="20.0" top="20.0" />
                                  </padding>
@@ -156,7 +157,7 @@
                               <Image url="@resources/reception.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Receptionist">
+                        <Button fx:id="ReceptionistButton" mnemonicParsing="false" onMouseClicked="#handleReceptionistButtonClick" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Receptionist">
                            <padding>
                               <Insets bottom="20.0" top="20.0" />
                            </padding>
@@ -176,7 +177,7 @@
                               <Image url="@resources/admin-panel.png" />
                            </image>
                         </ImageView>
-                        <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Admin">
+                        <Button fx:id="AdminButton" mnemonicParsing="false" onMouseClicked="#handleAdminButtonClick" prefHeight="68.0" prefWidth="176.0" style="-fx-background-color: #f3f0dd;" text="Admin">
                            <padding>
                               <Insets bottom="20.0" top="20.0" />
                            </padding>
