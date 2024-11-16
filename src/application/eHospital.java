@@ -1461,7 +1461,6 @@ public class eHospital implements Initializable {
 	 @FXML
 	 private ComboBox<String> ActionComboBox;
 
-	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
 
