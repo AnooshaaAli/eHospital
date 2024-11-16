@@ -37,7 +37,7 @@
                               <Insets left="140.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="DoctorSignIn" layoutX="210.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#handleLoginButtonDoctor" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Back" textFill="#fffce8">
+                        <Button fx:id="PrescribeMedications" layoutX="210.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#handlePrescribeMedicationsDoctor" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Back" textFill="#fffce8">
                            <font>
                               <Font size="16.0" />
                            </font>
