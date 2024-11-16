@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.UIController">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <left>
       <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
          <children>
@@ -24,7 +24,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="AdminSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonAdmin" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -34,12 +34,12 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
+            <Button fx:id="HandlePayrolls" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleHandlePayrollsAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="375.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
+            <Button fx:id="ManageInventory" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -76,17 +76,17 @@
                   <Image url="@resources/doctor.png" />
                </image>
             </ImageView>
-            <Button layoutX="122.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-color: #f3f0dd;" text="Doctor">
+            <Button fx:id="CRUDdoctor" layoutX="122.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDdoctor" style="-fx-background-color: #f3f0dd;" text="Doctor">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="329.0" layoutY="244.0" mnemonicParsing="false" style="-fx-background-color: #f3f0dd;" text="Nurse">
+            <Button fx:id="CRUDNurse" layoutX="329.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDnurse" style="-fx-background-color: #f3f0dd;" text="Nurse">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="206.0" layoutY="373.0" mnemonicParsing="false" style="-fx-background-color: #f3f0dd;" text="Receptionist">
+            <Button fx:id="CRUDReceptionist" layoutX="206.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#handleCRUDreceptionist" style="-fx-background-color: #f3f0dd;" text="Receptionist">
                <font>
                   <Font size="18.0" />
                </font>
