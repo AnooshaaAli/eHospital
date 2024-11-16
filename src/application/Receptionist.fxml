@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <left>
       <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
          <children>
@@ -27,17 +27,17 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="RegisterPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
+            <Button fx:id="RegisterNewPatient" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#handlePatientButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-background-radius: 5;" text="Register New Patient">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ScheduleAppointment" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
+            <Button fx:id="ScheduleAppointment" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handleScheduleAppointmentReceptionist" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Appointment">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ScheduleFollowUp" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Follow Up">
+            <Button fx:id="ScheduleFollowUp" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleScheduleFollowUpReceptionist" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Schedule Follow Up">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
