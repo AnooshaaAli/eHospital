@@ -753,8 +753,8 @@ public class eHospital implements Initializable {
              
              if(event.getSource()==ViewPrescriptionNurse)
              {
-             	fxmlFile = "Medications.fxml";
-                 stageTitle = "Medications";
+            	 fxmlFile = "ViewPrescription.fxml";
+                 stageTitle = "ViewPrescription";
              }
              else
              {
