@@ -1533,3 +1533,10 @@ public class eHospital implements Initializable {
         return timeOptions;
     }
 }
+
+
+// -------------------------------------------- Anooshaa's Use Cases -----------------------------------------------------//
+
+//Register New Patient
+
+//View Patient Record

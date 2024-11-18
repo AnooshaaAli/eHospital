@@ -16,6 +16,7 @@ public class Patient {
 	private int patientId;
 	private String patientName;
 	private String username;
+	private String password;
 	private String gender;
 	private Date dob;
 	private String contact;

@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -57,21 +59,35 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutY="43.0" prefHeight="32.0" prefWidth="528.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+            <Label layoutY="43.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <Label layoutY="221.0" prefHeight="32.0" prefWidth="536.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
+            <Label layoutY="221.0" prefHeight="32.0" prefWidth="544.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <Label layoutY="377.0" prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
+            <Label layoutX="1.0" layoutY="426.0" prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
+            <TableView layoutY="74.0" prefHeight="146.0" prefWidth="545.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="MedId" />
+                <TableColumn prefWidth="75.0" text="MedName" />
+                  <TableColumn prefWidth="75.0" text="Dosage" />
+              </columns>
+            </TableView>
+            <TableView layoutY="253.0" prefHeight="172.0" prefWidth="545.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="AptId" />
+                  <TableColumn prefWidth="75.0" text="StartTime" />
+                  <TableColumn prefWidth="75.0" text="EndTime" />
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </center>
