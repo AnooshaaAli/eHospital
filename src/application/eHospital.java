@@ -1229,8 +1229,6 @@ public class eHospital implements Initializable {
 	private TextField name;
 	@FXML
 	private TextField Id;
-	
-	
 	@FXML
 	private Button addInventory;
 	@FXML
@@ -1710,17 +1708,7 @@ public class eHospital implements Initializable {
         }
 	}
 	
-	public void details(String Name, String usrname,int id) {
-	  //  System.out.println("Setting admin name: " + Name);
-	    if (name != null) {
-	        name.setText(Name);
-	        Username.setText(usrname);
-	        Id.setText(Integer.toString(id));
-	    } 
-	    else 
-	        System.out.println("TextField 'name' is null. Check FXML bindings.");
-	    
-	}
+	
 	
 	
 	//PM USE CASE
@@ -1911,7 +1899,6 @@ public class eHospital implements Initializable {
 	         currentStage.close();  
     	}
     }
-	
     //load login 
     
    
@@ -1921,19 +1908,16 @@ public class eHospital implements Initializable {
 	        alert.setHeaderText(header);
 	        alert.setContentText(content);
 	        alert.showAndWait();
-	    }
-	    
-		
+	}
 	//LOAD COMBOBOX
 	 @FXML
  	 private ComboBox<String> startTimeComboBox;
 	 @FXML
 	 private ComboBox<String> endTimeComboBox;
-	 @FXML
-	 private ComboBox<String> ActionComboBox;
-
+	@FXML
+	private ComboBox<String> ActionComboBox;
 	 @Override
-	 public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
 		 populatePid1ComboBox();
 		 populatePidComboBox();
@@ -1954,9 +1938,8 @@ public class eHospital implements Initializable {
         }
      
     }
-
 	 // Method to generate time options from 8:00 AM to 10:00 PM in 60-minute intervals
-	 private ObservableList<String> generateTimeOptions() {
+	private ObservableList<String> generateTimeOptions() {
         ObservableList<String> timeOptions = FXCollections.observableArrayList();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 
@@ -1975,7 +1958,7 @@ public class eHospital implements Initializable {
     }
 	 @FXML
 	 private ComboBox<String> pidComboBox;
-	 private void populatePidComboBox() {
+	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
 		    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
@@ -2001,6 +1984,16 @@ public class eHospital implements Initializable {
 		        e.printStackTrace();
 		    }
 		}
-	 
+	private void details(String Name, String usrname,int id) {
+		  //  System.out.println("Setting admin name: " + Name);
+		    if (name != null) {
+		        name.setText(Name);
+		        Username.setText(usrname);
+		        Id.setText(Integer.toString(id));
+		    } 
+		    else 
+		        System.out.println("TextField 'name' is null. Check FXML bindings.");
+		    
+		}
 	 
 }
