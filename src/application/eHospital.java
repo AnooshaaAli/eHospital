@@ -221,13 +221,13 @@ public class eHospital implements Initializable {
 	private Button ViewPrescription;
 	@FXML
 	private Button showBills;
-	private Button updatePatientRecordView;
+	
+	@FXML
+	private Button updatePatientRecordViewUC;
     
     @FXML
-    private Button updatePatientRecordupdate;
+    private Button updatePatientRecordupdateUC;
     
- 	
- 
  	@FXML
     private TextField temp;
  
@@ -584,8 +584,6 @@ public class eHospital implements Initializable {
 	
 	//to input in sql for patient
 	public void registerPatient() {}
-	
-	
 	
 	//NURSE
 	@FXML 
@@ -1694,7 +1692,7 @@ public class eHospital implements Initializable {
 	             // Close the current form
 	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
 	            currentStage.close();
-	         //   handleTable();
+	       
 	            
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -1743,7 +1741,43 @@ public class eHospital implements Initializable {
 	}
 
 	//update patient record
-	
+	@FXML
+    public void handleupdatePatientRecordViewNurseUC() {
+    	try {
+    		System.out.println("dance");
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+    	 
+    }
+    
+    @FXML
+    public void handleupdatePatientRecordupdateNurseUC() {
+    	String pidString = pidComboBox.getSelectionModel().getSelectedItem();
+    	int pid = 0;
+    	 String tempText = temp.getText();
+    	 String bloodPressureText = blood_p.getText();
+    	 String heartRateText = heart_b.getText();
+
+        if (pidString != null && !pidString.isEmpty()) {
+            try {
+                pid = Integer.parseInt(pidString);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Patient ID format. Please enter a valid number.");
+                return; 
+            }
+        } else {
+            System.out.println("Patient ID is not selected.");
+            return; 
+        }
+        //jab patient combobox se pid select karo ge then the patient record will be added
+        PatientRecord p=new PatientRecord();
+        p.updatePatientRecord(pid,tempText,bloodPressureText,heartRateText);
+        System.out.println("done");
+        
+    }
 	
 	
 	
