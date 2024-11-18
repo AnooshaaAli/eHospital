@@ -25,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -1220,7 +1221,15 @@ public class eHospital implements Initializable {
 	private Button ManageInventory;
 	@FXML
 	private Button HandlePayrolls;
-
+	@FXML
+	private TextField Username;
+	@FXML
+	private TextField password;
+	@FXML
+	private TextField name;
+	@FXML
+	private TextField Id;
+	
 	
 	@FXML
 	private Button addInventory;
@@ -1268,6 +1277,29 @@ public class eHospital implements Initializable {
     }
 	public void handleLoginButtonAdmin(MouseEvent  event) {
 		try {
+			
+			//=========================
+			
+			String username = Username.getText();
+            String password_ = password.getText();
+
+            if (username.isEmpty() || password_.isEmpty()) 
+            {
+                System.out.println("Username or password cannot be empty.");
+                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+                return; 
+            }
+
+            Admin a = new Admin();
+            boolean check = a.LoginAdmin(username, password_);
+
+            if (!check) {
+                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+                return; 
+            }
+            
+
+			//=========================
         	String fxmlFile;
             String stageTitle;
             
@@ -1284,12 +1316,20 @@ public class eHospital implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            
+            eHospital controller = loader.getController();
+            // Retrieve admin name from the database and set it in the TextField
+            Admin b = new Admin();
+            String adminName = b.loadAdminName(username);
+            int id= b.loadAdminId(username);
+            controller.details(adminName, username,id);
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
             newFormStage.setTitle(stageTitle);
+            
 
             // Show the new form
             newFormStage.show();
@@ -1297,6 +1337,7 @@ public class eHospital implements Initializable {
             // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
+           
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -1669,7 +1710,17 @@ public class eHospital implements Initializable {
         }
 	}
 	
-	
+	public void details(String Name, String usrname,int id) {
+	  //  System.out.println("Setting admin name: " + Name);
+	    if (name != null) {
+	        name.setText(Name);
+	        Username.setText(usrname);
+	        Id.setText(Integer.toString(id));
+	    } 
+	    else 
+	        System.out.println("TextField 'name' is null. Check FXML bindings.");
+	    
+	}
 	
 	
 	//PM USE CASE
@@ -1740,16 +1791,12 @@ public class eHospital implements Initializable {
 	private TableColumn<Medication,Integer> dosage;
 	private ObservableList<Medication> observableMedication;	
 	@FXML
-	public void initTable() {
+	private void initTable() {
 
 		int pid;
 		if (pidComboBox != null && pidComboBox.getValue() != null) {
 			pid =Integer.parseInt(pidComboBox.getValue());
 			observableMedication = FXCollections.observableArrayList();
-			
-			//DBHandler db= new DBHandler();
-			//System.out.println("medicationTable: " + medicationTable);
-	
 			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
 			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
 			dosage.setCellValueFactory(new PropertyValueFactory<>("dosage"));
@@ -1856,7 +1903,7 @@ public class eHospital implements Initializable {
 	
     @FXML
     private Button Close;
-    public void handleClose(MouseEvent event)
+    private void handleClose(MouseEvent event)
     {
     	if(event.getSource()==Close)
     	{
@@ -1865,7 +1912,18 @@ public class eHospital implements Initializable {
     	}
     }
 	
-	
+    //load login 
+    
+   
+	private void showAlert(String title, String header, String content) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setTitle(title);
+	        alert.setHeaderText(header);
+	        alert.setContentText(content);
+	        alert.showAndWait();
+	    }
+	    
+		
 	//LOAD COMBOBOX
 	 @FXML
  	 private ComboBox<String> startTimeComboBox;

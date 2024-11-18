@@ -359,4 +359,83 @@ public class DBHandler {
 		        System.out.println("Error processing discharge summary.");
 		    }
 	 }
+	 //login admin 
+	 public boolean LoginAdmin(String username, String password) 
+	 {
+		  // String url = "jdbc:sqlserver://DESKTOP-VH2BAA0\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;encrypt=false";
+		   String sql = "SELECT aid, username FROM admin WHERE username = ? AND password = ?";
+
+		    try (Connection con = connect();
+		         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+		        // Set the username and password parameters
+		        stmt.setString(1, username);
+		        stmt.setString(2, password);
+
+		        // Execute the query
+		        ResultSet rs = stmt.executeQuery();
+
+		        if (rs.next())
+		        {
+		            String adminName = rs.getString("username");
+		            int adminId = rs.getInt("aid");
+		            System.out.println("Login successful for Admin: " + adminName + " (ID: " + adminId + ")");
+
+		            return true; 
+		        } 
+		        else 
+		            return false; 
+		     
+		    }
+		    catch (SQLException e) {
+		        System.out.println("Database error during admin lookup.");
+		        e.printStackTrace();
+		        return false; // Return false when there is a database error
+		    }
+
+		}
+	 //load admin details 
+	 public String loadAdminName(String username) {
+		    String adminName = null;
+		    String sql = "SELECT name FROM ADMIN WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		            adminName = rs.getString("name");
+		        } else {
+		            System.out.println("Admin not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving admin name.");
+		        e.printStackTrace();
+		    }
+		    return adminName; // Return the retrieved name or null
+		}
+	 public int loadAdminId(String username) {
+		    int adminID =-10;
+		    String sql = "SELECT aid FROM ADMIN WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	adminID = rs.getInt("aid");
+		        } else {
+		            System.out.println("Admin not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving admin id.");
+		        e.printStackTrace();
+		    }
+		    return adminID; // Return the retrieved name or null
+		}
+
+
+
 }
