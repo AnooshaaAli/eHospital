@@ -255,13 +255,10 @@ public class eHospital implements Initializable {
 	private Button ViewPrescription;
 	@FXML
 	private Button showBills;
-	
 	@FXML
 	private Button updatePatientRecordViewUC;
-    
     @FXML
     private Button updatePatientRecordupdateUC;
-    
  	@FXML
     private TextField temp;
  
@@ -618,6 +615,8 @@ public class eHospital implements Initializable {
 	//to input in sql for patient
 	public void registerPatient() {}
 	
+	
+	//NURSE
 	//NURSE
 	@FXML 
     private Button NurseSignIn;
@@ -778,6 +777,7 @@ public class eHospital implements Initializable {
              e.printStackTrace();
          }
     }
+    //use case Update patietn record
     @FXML
     public void setMedicationDetails(List<String> medicationDetails) {
         if (medicationDetails != null && !medicationDetails.isEmpty()) {
@@ -927,6 +927,7 @@ public class eHospital implements Initializable {
         }
     }
     //end
+    //end
     public void handleViewPatientRecord(MouseEvent  event)
     {
     	 try {
@@ -1006,7 +1007,7 @@ public class eHospital implements Initializable {
 	
 	
 
-	
+	//DOCTOR
 	//DOCTOR
 	@FXML
     private Button DoctorSignIn;
@@ -1201,7 +1202,7 @@ public class eHospital implements Initializable {
 	
 	
 	
-	
+	//ADMIN
 	//ADMIN
 	@FXML
     private Button AdminSignIn;
@@ -1671,7 +1672,7 @@ public class eHospital implements Initializable {
 	
 	
 	
-	
+	//PM USE CASE
 	//prescribe Medications
 	@FXML
 	private Button AddMed;
@@ -1737,7 +1738,6 @@ public class eHospital implements Initializable {
 	private TableColumn<Medication,String> medicineName;
 	@FXML
 	private TableColumn<Medication,Integer> dosage;
-
 	private ObservableList<Medication> observableMedication;	
 	@FXML
 	public void initTable() {
@@ -1799,7 +1799,7 @@ public class eHospital implements Initializable {
       //  System.out.println("done");
         
     }
-	
+	//DH USE CASE
     //discharge patient
     @FXML
     private Button dischargeSummary;
