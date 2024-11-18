@@ -66,6 +66,25 @@ public class Patient {
 		ObservableList<Medication> list= record.showExistingMedication(pid);
 		return list;
 	}
+	@Override
+    public String toString() {
+        return patientName + " (" + patientId + ")";
+    }
+
+    public ObservableList<String> getPatientIds() {
+    	DBHandler db=new DBHandler();
+		
+        ObservableList<String> pidList = db.getPatientIds();
+
+        return pidList;
+    }
+    
+    public ObservableList<String> findPatientRecord(int pid) {
+    	PatientRecord p=new PatientRecord();
+    	ObservableList<String> pidList = p.getPatientIds(pid);
+		return pidList;
+
+    }
 	
 	
 	

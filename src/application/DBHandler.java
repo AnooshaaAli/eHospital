@@ -2,9 +2,12 @@ package application;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -100,5 +103,228 @@ public class DBHandler {
 
 		return medications;
 	}
+	
+	 public ObservableList<String> findPatientRecord(int pid) {
+	        int rpid = -1; // Default value if no record is found
+	        try (Connection conn = DriverManager.getConnection(url)) {
 
+	            String query = "SELECT recordId FROM patientRecord WHERE pid = ?"; // Query to get recordId
+	            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+	                stmt.setInt(1, pid); // Set the parameter for the query
+
+	                ResultSet rs = stmt.executeQuery();
+	                if (rs.next()) {
+	                    rpid = rs.getInt("recordId"); // Retrieve the recordId
+	                }
+	            }
+	            if (rpid == -1) {
+	                return null; // Return null if no record found
+	            } else {
+	                Medication m = new Medication();
+	                return m.getMedications(rpid); // Fetch medications for the recordId
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return null; // Return null if an error occurs
+	    }
+	 
+	public ObservableList<String> getMedications() {
+        ObservableList<String> medicationList = FXCollections.observableArrayList();
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+
+            String query = "SELECT medicationname FROM medication "; // Adjust your query if needed
+            Statement stmt = conn.createStatement(); // Using java.sql.Statement here
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String medication = rs.getString("medicationname");
+                medicationList.add(medication);
+            }
+
+            // Print fetched medications for debugging
+            System.out.println("Fetched Medications: " + medicationList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicationList;
+    }
+	
+	public ObservableList<String> getMedications(int rpid) {
+        ObservableList<String> medicationList = FXCollections.observableArrayList();
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+
+            String query = "SELECT medicationname FROM medication where recordId= "+rpid; // Adjust your query if needed
+            Statement stmt = conn.createStatement(); // Using java.sql.Statement here
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String medication = rs.getString("medicationname");
+                medicationList.add(medication);
+            }
+
+            // Print fetched medications for debugging
+            System.out.println("Fetched Medications: " + medicationList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicationList;
+    }
+	
+	public ObservableList<String> getPatientIds() {
+		
+        ObservableList<String> pidList = FXCollections.observableArrayList();
+
+        // Connect to the database and fetch the PIDs
+        try (Connection conn = DriverManager.getConnection(url)) {
+
+            String query = "SELECT pid FROM patient"; 
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String pid = rs.getString("pid");
+                pidList.add(pid); // Add each PID to the ObservableList
+            }
+
+            // Print fetched PIDs for debugging
+            System.out.println("Fetched PIDs: " + pidList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pidList;
+    }
+	
+	public void EnterMedicationDetails(int pid, String medicationName, int dosage) {
+	    
+	    String upsertQuery = """
+	        MERGE INTO medication AS target
+	        USING (VALUES (?, ?, ?)) AS source (recordID, medicationName, dosage)
+	        ON target.recordID = source.recordID
+	        WHEN MATCHED THEN
+	            UPDATE SET 
+	                medicationName = source.medicationName,
+	                dosage = source.dosage
+	        WHEN NOT MATCHED THEN
+	            INSERT (recordID, medicationName, dosage)
+	            VALUES (source.recordID, source.medicationName, source.dosage);
+	    """;
+
+	    try (Connection conn = DriverManager.getConnection(url);
+	         PreparedStatement pstmt = conn.prepareStatement(upsertQuery)) {
+
+	        // Set query parameters
+	        pstmt.setInt(1, pid);
+	        pstmt.setString(2, medicationName);
+	        pstmt.setInt(3, dosage);
+
+	        // Execute the query
+	        int rowsAffected = pstmt.executeUpdate();
+
+	        // Print feedback for debugging
+	        if (rowsAffected > 0) {
+	            System.out.println("Medication details successfully inserted/updated for PID: " + pid);
+	        } else {
+	            System.out.println("No changes made for PID: " + pid);
+	        }
+
+	    } catch (SQLException e) {
+	        // Handle SQL exceptions
+	        System.err.println("Error inserting/updating medication details in the database:");
+	        e.printStackTrace();
+	    }
+	}
+	 
+	 public List<String> FindMedicationDetails(int pid) {
+		    
+		    String selectQuery = "SELECT medicationName, dosage FROM medication WHERE recordID = ?";
+		    List<String> medicationDetails = new ArrayList<>();
+
+		    try (Connection conn = DriverManager.getConnection(url);
+		         PreparedStatement pstmt = conn.prepareStatement(selectQuery)) {
+
+		        // Set query parameter
+		        pstmt.setInt(1, pid);
+
+		        // Execute the query
+		        try (ResultSet rs = pstmt.executeQuery()) {
+		            // Process results and add to the list
+		            while (rs.next()) {
+		                String medicationName = rs.getString("medicationName");
+		                int dosage = rs.getInt("dosage");
+		                medicationDetails.add("Medication Name: " + medicationName + ", Dosage: " + dosage);
+		            }
+		        }
+
+		    } catch (SQLException e) {
+		        // Handle SQL exceptions
+		        System.err.println("Error retrieving medication details from the database:");
+		        e.printStackTrace();
+		    }
+
+		    return medicationDetails;
+	 }
+	 
+	 public void updatePatientRecord(int pid, String patientRecord, String bloodPressureText, String heartRateText) {
+		   
+		    String checkQuery = "SELECT COUNT(*) FROM patientrecord WHERE pID = ?";
+		    String updateQuery = "UPDATE patientrecord SET temperature = ?, blood_Pressure = ?, heart_Rate = ? WHERE pID = ?";
+		    String insertQuery = "INSERT INTO patientrecord (pID, temperature, blood_Pressure, heart_Rate) VALUES (?, ?, ?, ?)";
+
+		    try (Connection conn = DriverManager.getConnection(url);
+		         PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+
+		        // Check if the patient record exists
+		        checkStmt.setInt(1, pid);
+		        ResultSet rs = checkStmt.executeQuery();
+		        rs.next();
+		        int count = rs.getInt(1);
+
+		        if (count > 0) {
+		            // Record exists; update it
+		            try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+		                updateStmt.setString(1, patientRecord);
+		                updateStmt.setString(2, bloodPressureText);
+		                updateStmt.setString(3, heartRateText);
+		                updateStmt.setInt(4, pid);
+
+		                int rowsUpdated = updateStmt.executeUpdate();
+		                if (rowsUpdated > 0) {
+		                    System.out.println("Patient record updated successfully.");
+		                } else {
+		                    System.out.println("Failed to update the patient record.");
+		                }
+		            }
+		        } else {
+		            // Record does not exist; insert a new one
+		            try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+		                insertStmt.setInt(1, pid);
+		                insertStmt.setString(2, patientRecord);
+		                insertStmt.setString(3, bloodPressureText);
+		                insertStmt.setString(4, heartRateText);
+
+		                int rowsInserted = insertStmt.executeUpdate();
+		                if (rowsInserted > 0) {
+		                    System.out.println("New patient record inserted successfully.");
+		                } else {
+		                    System.out.println("Failed to insert the new patient record.");
+		                }
+		            }
+		        }
+
+		    } catch (SQLException e) {
+		        System.err.println("Error occurred while updating/inserting the patient record:");
+		        e.printStackTrace();
+		    }
+		}
 }

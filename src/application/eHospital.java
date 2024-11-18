@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.TextField;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -219,6 +221,33 @@ public class eHospital implements Initializable {
 	private Button ViewPrescription;
 	@FXML
 	private Button showBills;
+	private Button updatePatientRecordView;
+    
+    @FXML
+    private Button updatePatientRecordupdate;
+    
+ 	
+ 
+ 	@FXML
+    private TextField temp;
+ 
+ 	@FXML
+    private TextField blood_p;
+ 
+ 	@FXML
+    private TextField heart_b;
+ 
+    @FXML
+    private Button trackMedicationUpdate;
+    
+    @FXML
+    private Button trackMedicationView;
+
+    @FXML
+    private ComboBox<String> MedicationNameComboBox;
+    
+    @FXML
+    private ListView<String> medicationListView;
 
 	public void handlePatientButtonClick(MouseEvent  event) {
         try {
@@ -718,6 +747,162 @@ public class eHospital implements Initializable {
              e.printStackTrace();
          }
     }
+    @FXML
+    public void setMedicationDetails(List<String> medicationDetails) {
+        if (medicationDetails != null && !medicationDetails.isEmpty()) {
+            medicationListView.getItems().addAll(medicationDetails);
+        } else {
+            medicationListView.getItems().add("No medication details available.");
+        }
+    }
+    //Track medication use case
+    @FXML 
+    public void handleNurseTrackMedicationView(MouseEvent event) {
+    	String pidString = pidComboBox.getSelectionModel().getSelectedItem();
+    	int pid = 0;
+
+        if (pidString != null && !pidString.isEmpty())
+        {
+            try {
+                pid = Integer.parseInt(pidString);
+                if(event.getSource()==existingMed)
+                {
+                	try {
+	                	String fxmlFile= "ViewExistingMedications.fxml";
+	    	            String stageTitle="ViewExistingMedications";
+	    	            // Load the new FXML file
+	    	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	    	            Parent newFormRoot = loader.load();
+	    	            
+	    	            
+	    	            eHospital controller = loader.getController(); // Get the same controller
+	    	            controller.pidComboBox= this.pidComboBox;
+	    	            controller.initTable(); // Initialize table after form is loaded
+	    	            // Create a new scene and stage for the new form
+	    	            Scene newFormScene = new Scene(newFormRoot);
+	    	            Stage newFormStage = new Stage();
+	    	            newFormStage.setScene(newFormScene);
+	    	            newFormStage.setTitle(stageTitle);
+	    	            
+	    	            // Show the new form
+	    	            newFormStage.show();
+	    	            
+	    	             // Close the current form
+	    	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	    	            currentStage.close();
+                	}
+                	catch (IOException e) {
+        	            e.printStackTrace();
+        	        }
+    	         
+                }
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Invalid Patient ID format. Please enter a valid number.");
+                return; 
+            }
+        } 
+        else 
+        {
+            System.out.println("Patient ID is not selected.");
+            return; 
+        }
+        Medication medicationService = new Medication();
+        List<String> medicationDetails = medicationService.GetMedicationDetails(pid);
+        System.out.println("in the controller");
+        for (String detail : medicationDetails) 
+            System.out.printf(detail);
+        
+
+    }
+    @FXML
+    public void handleNurseTrackMedication(MouseEvent event) {
+        try {
+            String pidString = pidComboBox.getSelectionModel().getSelectedItem();
+            String medicationName = MedicationNameComboBox.getSelectionModel().getSelectedItem();
+
+            int dosage = 0;
+            int pid = 0;
+            String dosageString = Dosage.getText();
+
+            if (pidString != null && !pidString.isEmpty()) {
+                try {
+                    pid = Integer.parseInt(pidString);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid Patient ID format. Please enter a valid number.");
+                    return; 
+                }
+            } else {
+                System.out.println("Patient ID is not selected.");
+                return; 
+            }
+            if (dosageString != null && !dosageString.isEmpty()) {
+                try {
+                    dosage = Integer.parseInt(dosageString);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid dosage format. Please enter a valid number.");
+                    return; 
+                }
+            } else {
+                System.out.println("Dosage is not entered.");
+                return; 
+            }
+            if (medicationName == null || medicationName.isEmpty()) {
+                System.out.println("No medication name selected.");
+                return; 
+            }
+
+            System.out.println("Track Medication Update button clicked");
+            System.out.println("Selected PID: " + pid);
+            System.out.println("Selected Medication: " + medicationName);
+            System.out.println("Dosage: " + dosage);
+
+            Medication medicationService = new Medication();
+            medicationService.EnterMedicationDetails(pid, medicationName, dosage);
+
+            System.out.println("Medication details successfully entered.");
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred:");
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void populateMediComboBox() {
+        Medication medicationService = new Medication();
+        String selectedPidString = pidComboBox.getSelectionModel().getSelectedItem();
+
+        int pid = -1;
+
+        if (selectedPidString != null && !selectedPidString.isEmpty()) {
+            try {
+                pid = Integer.parseInt(selectedPidString); 
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid PID format");
+            }
+        }
+
+        Patient patientService = new Patient();
+        ObservableList<String> medList = patientService.findPatientRecord(pid); 
+        if (medList != null && MedicationNameComboBox != null) {
+            MedicationNameComboBox.setItems(medList); 
+        } else {
+            System.out.println("No medications found for this patient");
+        }
+    }
+    @FXML
+    private void populatePid1ComboBox() {
+        Patient patientService = new Patient();
+        ObservableList<String> pidList = patientService.getPatientIds();
+
+        if (pidComboBox != null) {
+            pidComboBox.setItems(pidList);
+
+            pidComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                populateMediComboBox(); 
+            });
+        }
+    }
+    //end
     public void handleViewPatientRecord(MouseEvent  event)
     {
     	 try {
@@ -1526,10 +1711,6 @@ public class eHospital implements Initializable {
 		}
 		
 	}
-
-	
-	
-	
 	@FXML
 	private TableView<Medication> medicationTable;
 	@FXML
@@ -1543,8 +1724,6 @@ public class eHospital implements Initializable {
 	@FXML
 	public void initTable() {
 
-		
-		//medicationTable= new TableView<>();
 		int pid;
 		if (pidComboBox != null && pidComboBox.getValue() != null) {
 			pid =Integer.parseInt(pidComboBox.getValue());
@@ -1553,25 +1732,17 @@ public class eHospital implements Initializable {
 			//DBHandler db= new DBHandler();
 			System.out.println("medicationTable: " + medicationTable);
 	
-		//	medicineName= new TableColumn <>("medicineName");
 			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
-		//	medicationId = new TableColumn <>("medicationId");
 			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
-		//	dosage= new TableColumn <>("dosage");
 			dosage.setCellValueFactory(new PropertyValueFactory<>("dosage"));
 			observableMedication=patient.showExistingMedication(pid);
 			medicationTable.setItems(observableMedication);
-//			medicationTable.getColumns().add(medicationId);
-//			medicationTable.getColumns().add(medicineName);
-//			medicationTable.getColumns().add(dosage);
-			
-			System.out.println(observableMedication.size());
-			//medicationTable= new TableView<>(observableMedication);
 		   
 		}
 
 	}
-	
+
+	//update patient record
 	
 	
 	
@@ -1588,7 +1759,7 @@ public class eHospital implements Initializable {
 	 @Override
 	 public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
-		 
+		 populatePid1ComboBox();
 		 populatePidComboBox();
 		
 	     // Populate time options for startTimeComboBox and endTimeComboBox

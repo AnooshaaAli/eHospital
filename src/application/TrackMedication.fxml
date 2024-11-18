@@ -62,13 +62,13 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="183.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Prescription" textFill="#fffce8" />
+                  <Button fx:id="existingMed" layoutX="183.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#handleNurseTrackMedicationView" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Prescription" textFill="#fffce8" />
                   <Label layoutX="146.0" layoutY="55.0" text="Patient Id: " textFill="#747572">
                      <font>
                         <Font name="Calibri" size="17.0" />
                      </font>
                   </Label>
-                  <ComboBox layoutX="231.0" layoutY="53.0" prefHeight="25.0" prefWidth="156.0" style="-fx-background-color: #f3f0dd;" />
+                  <ComboBox fx:id="pidComboBox" layoutX="231.0" layoutY="53.0" prefHeight="25.0" prefWidth="156.0" style="-fx-background-color: #f3f0dd;" />
                   <Line endX="443.0" layoutX="101.0" layoutY="164.0" startX="-100.0" stroke="#747572" />
                   <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Update Medications">
                      <font>
@@ -88,9 +88,9 @@
                         <Font name="Calibri" size="17.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="224.0" layoutY="287.0" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: #f3f0dd;" />
-                  <Button layoutX="172.0" layoutY="334.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Update" textFill="#fffce8" />
-                  <ComboBox layoutX="261.0" layoutY="239.0" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: #f3f0dd;" />
+                  <TextField fx:id="Dosage" layoutX="224.0" layoutY="287.0" prefHeight="25.0" prefWidth="202.0" style="-fx-background-color: #f3f0dd;" />
+                  <Button fx:id="trackMedicationUpdate" layoutX="172.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#handleNurseTrackMedication" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Update" textFill="#fffce8" />
+                  <ComboBox fx:id="MedicationNameComboBox" layoutX="261.0" layoutY="239.0" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: #f3f0dd;" />
                </children>
             </AnchorPane>
          </children>

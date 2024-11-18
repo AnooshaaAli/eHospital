@@ -76,6 +76,19 @@ public class PatientRecord {
 		this.recordID = recordID;
 	}
 	
+	public ObservableList<String> getPatientIds(int pid)
+	{
+		DBHandler db=new DBHandler();
+		ObservableList<String> pidList=db.findPatientRecord(pid);
+		return pidList;
+	
+	}
+	
+	public void updatePatientRecord(int pid,String PatientRecord,String bloodPressureText,String heartRateText)
+	{
+		DBHandler db=new DBHandler();
+		db.updatePatientRecord(pid,PatientRecord,bloodPressureText,heartRateText);
+	}
 	
 	
 //	public List<Appointment> getAppointments() {
