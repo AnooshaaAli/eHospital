@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,7 +105,7 @@ public class DBHandler {
 		return medications;
 	}
 	
-	 public ObservableList<String> findPatientRecord(int pid) {
+	public ObservableList<String> findPatientRecord(int pid) {
 	        int rpid = -1; // Default value if no record is found
 	        try (Connection conn = DriverManager.getConnection(url)) {
 
@@ -146,7 +147,7 @@ public class DBHandler {
             }
 
             // Print fetched medications for debugging
-            System.out.println("Fetched Medications: " + medicationList);
+      //      System.out.println("Fetched Medications: " + medicationList);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -170,7 +171,7 @@ public class DBHandler {
             }
 
             // Print fetched medications for debugging
-            System.out.println("Fetched Medications: " + medicationList);
+           // System.out.println("Fetched Medications: " + medicationList);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,7 +197,7 @@ public class DBHandler {
             }
 
             // Print fetched PIDs for debugging
-            System.out.println("Fetched PIDs: " + pidList);
+        //    System.out.println("Fetched PIDs: " + pidList);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -327,4 +328,35 @@ public class DBHandler {
 		        e.printStackTrace();
 		    }
 		}
+	 //discharge patient
+	 public void createDischargePatient(String inst,LocalDate date, int pid)
+	 {
+		 Connection connection = null;
+
+		    try (Connection conn = connect(); 
+		         Statement statement = conn.createStatement()) {
+
+		        // Step 1: Retrieve the recordId corresponding to the given pid
+		        String fetchRecordIdSql = "SELECT recordId FROM PatientRecord WHERE pid = " + pid;
+		        ResultSet resultSet = statement.executeQuery(fetchRecordIdSql);
+
+		        // Check if a record was found
+		        if (resultSet.next()) {
+		            int recordId = resultSet.getInt("recordId");
+
+		            // Step 2: Insert into DischargeSummary using the fetched recordId
+		            String insertSql = "INSERT INTO DischargeSummary (recordId, instructions, date) " +
+		                               "VALUES (" + recordId + ", '" + inst + "', '" + date.toString() + "')";
+		            statement.executeUpdate(insertSql);
+
+		        }
+		        else 
+		            System.out.println("No record found for patient ID: " + pid);
+		        
+		    } 
+		    catch (SQLException e) {
+		        e.printStackTrace();
+		        System.out.println("Error processing discharge summary.");
+		    }
+	 }
 }

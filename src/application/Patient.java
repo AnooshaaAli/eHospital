@@ -86,7 +86,10 @@ public class Patient {
 
     }
 	
-	
+	public void dischargePatient(String inst,LocalDate date,int pid)
+	{
+		record.dischargePatient(inst,date,pid);
+	}
 	
 	
 	

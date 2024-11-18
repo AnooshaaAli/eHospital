@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,9 +35,7 @@ import javafx.stage.Stage;
 
 public class eHospital implements Initializable {
 	
-	Patient patient= new Patient();
-	
-	
+	private Patient patient= new Patient();
 	
 	//RECEPTIONIST
 	@FXML 
@@ -198,7 +197,42 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
-	
+	public void handleRegisterPatientButtonClick(MouseEvent  event) {
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==RegisterNewPatient)
+            {
+            	fxmlFile = "RegisterNewPatient.fxml";
+                stageTitle = "Register Patient";
+            }
+            
+            else
+            	throw new IllegalArgumentException("Unexpected button source");
+            
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	
 	
@@ -302,9 +336,8 @@ public class eHospital implements Initializable {
                 stageTitle = "Patient";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -785,9 +818,9 @@ public class eHospital implements Initializable {
 	    	            // Show the new form
 	    	            newFormStage.show();
 	    	            
-	    	             // Close the current form
-	    	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-	    	            currentStage.close();
+//	    	             // Close the current form
+//	    	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+//	    	            currentStage.close();
                 	}
                 	catch (IOException e) {
         	            e.printStackTrace();
@@ -799,6 +832,7 @@ public class eHospital implements Initializable {
                 System.out.println("Invalid Patient ID format. Please enter a valid number.");
                 return; 
             }
+          
         } 
         else 
         {
@@ -849,16 +883,8 @@ public class eHospital implements Initializable {
                 System.out.println("No medication name selected.");
                 return; 
             }
-
-            System.out.println("Track Medication Update button clicked");
-            System.out.println("Selected PID: " + pid);
-            System.out.println("Selected Medication: " + medicationName);
-            System.out.println("Dosage: " + dosage);
-
             Medication medicationService = new Medication();
             medicationService.EnterMedicationDetails(pid, medicationName, dosage);
-
-            System.out.println("Medication details successfully entered.");
         } catch (Exception e) {
             System.err.println("An unexpected error occurred:");
             e.printStackTrace();
@@ -884,7 +910,7 @@ public class eHospital implements Initializable {
         if (medList != null && MedicationNameComboBox != null) {
             MedicationNameComboBox.setItems(medList); 
         } else {
-            System.out.println("No medications found for this patient");
+           // System.out.println("No medications found for this patient");
         }
     }
     @FXML
@@ -979,7 +1005,7 @@ public class eHospital implements Initializable {
 	
 	
 	
-	
+
 	
 	//DOCTOR
 	@FXML
@@ -1068,7 +1094,6 @@ public class eHospital implements Initializable {
 		try {
         	String fxmlFile;
             String stageTitle;
-            
             if(event.getSource()==PrescribeMedications)
             {
             	fxmlFile = "PrescribeMedications.fxml";
@@ -1078,7 +1103,6 @@ public class eHospital implements Initializable {
             {
             	throw new IllegalArgumentException("Unexpected button source");
             }
-            
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
@@ -1657,16 +1681,12 @@ public class eHospital implements Initializable {
 	private TextField Dosage;
 	@FXML 
 	private Button existingMed;
-	
 	public void handlePrescribeMedicationUC(MouseEvent event)
 	{
 		int pid = Integer.parseInt(pidComboBox.getValue());
 		if (pidComboBox != null && pidComboBox.getValue() != null) {
 			//initTable();
 		}
-		
-		
-		//initTable(pid);
 		if(event.getSource()==existingMed)
 		{
 			try {
@@ -1690,8 +1710,8 @@ public class eHospital implements Initializable {
 	            newFormStage.show();
 	            
 	             // Close the current form
-	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-	            currentStage.close();
+//	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+//	            currentStage.close();
 	       
 	            
 	        } catch (IOException e) {
@@ -1728,7 +1748,7 @@ public class eHospital implements Initializable {
 			observableMedication = FXCollections.observableArrayList();
 			
 			//DBHandler db= new DBHandler();
-			System.out.println("medicationTable: " + medicationTable);
+			//System.out.println("medicationTable: " + medicationTable);
 	
 			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
 			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
@@ -1752,7 +1772,6 @@ public class eHospital implements Initializable {
     	}
     	 
     }
-    
     @FXML
     public void handleupdatePatientRecordupdateNurseUC() {
     	String pidString = pidComboBox.getSelectionModel().getSelectedItem();
@@ -1764,22 +1783,87 @@ public class eHospital implements Initializable {
         if (pidString != null && !pidString.isEmpty()) {
             try {
                 pid = Integer.parseInt(pidString);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 System.out.println("Invalid Patient ID format. Please enter a valid number.");
                 return; 
             }
-        } else {
+        }
+        else {
             System.out.println("Patient ID is not selected.");
             return; 
         }
         //jab patient combobox se pid select karo ge then the patient record will be added
         PatientRecord p=new PatientRecord();
         p.updatePatientRecord(pid,tempText,bloodPressureText,heartRateText);
-        System.out.println("done");
+      //  System.out.println("done");
         
     }
 	
+    //discharge patient
+    @FXML
+    private Button dischargeSummary;
+    @FXML
+    private TextField instructions;
+    @FXML
+    private TextField date;
+    public void handleDischargePatientUC(MouseEvent event)
+    {
+    	int pid = Integer.parseInt(pidComboBox.getValue());
+		if (pidComboBox != null && pidComboBox.getValue() != null) 
+		{
+			if(event.getSource()==existingMed)
+			{
+				try {
+		        	String fxmlFile= "ViewExistingMedications.fxml";
+		            String stageTitle="ViewExistingMedications";
+		            // Load the new FXML file
+		            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+		            Parent newFormRoot = loader.load();
+		            
+		            
+		            eHospital controller = loader.getController(); // Get the same controller
+		            controller.pidComboBox= this.pidComboBox;
+		            controller.initTable(); // Initialize table after form is loaded
+		            // Create a new scene and stage for the new form
+		            Scene newFormScene = new Scene(newFormRoot);
+		            Stage newFormStage = new Stage();
+		            newFormStage.setScene(newFormScene);
+		            newFormStage.setTitle(stageTitle);
+		            
+		            // Show the new form
+		            newFormStage.show();
+		            
+//		             // Close the current form
+//		            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+//		            currentStage.close();    
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+				
+			}
+			else if(event.getSource()==dischargeSummary)
+			{
+				String FollowUPinstructions = instructions.getText();
+				String inputDate = date.getText();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate date = LocalDate.parse(inputDate, formatter);
+				patient.dischargePatient(FollowUPinstructions, date,pid);
+			}
+		}
+		
+    }
 	
+    @FXML
+    private Button Close;
+    public void handleClose(MouseEvent event)
+    {
+    	if(event.getSource()==Close)
+    	{
+    		 Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	         currentStage.close();  
+    	}
+    }
 	
 	
 	//LOAD COMBOBOX

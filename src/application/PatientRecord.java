@@ -1,5 +1,6 @@
 package application;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -14,10 +15,11 @@ public class PatientRecord {
     private List<Appointment> appointments;
     private Bill bills;
     private int recordID;
-    
+    private DischargeSummary summary;
     PatientRecord()
     {
     	dbhandler=new DBHandler();
+    	summary= new DischargeSummary();
     }
     
 	public List<Medication> getMedicine() {
@@ -89,7 +91,11 @@ public class PatientRecord {
 		DBHandler db=new DBHandler();
 		db.updatePatientRecord(pid,PatientRecord,bloodPressureText,heartRateText);
 	}
-	
+	public void dischargePatient(String inst,LocalDate date,int pid)
+	{
+		//System.out.println("this is the record id " +this.getRecordID() );
+		summary.createDischargePatient(inst, date,pid);
+	}
 	
 //	public List<Appointment> getAppointments() {
 //		return appointments;
