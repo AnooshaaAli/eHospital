@@ -83,5 +83,9 @@ public class Patient {
 	public void registerPatient(String name, String username, String password, String gender, String dob, String contact) {
 		int id = dbhandler.registerPatient(name, username, password, gender, dob, contact);
 		record.insertDefaultRecord(id);
-;	}
+	}
+	
+	public void viewRecord(){
+		record = record.getRecord(patId);
+	}
 }

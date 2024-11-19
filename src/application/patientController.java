@@ -20,7 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class patientController implements Initializable{
-
+	
 	@FXML
 	private Button PatientButton;
 	@FXML 
@@ -68,6 +68,8 @@ public class patientController implements Initializable{
     private TableColumn<Medication, String> nameColumn;
     @FXML
     private TableColumn<Medication, Integer> dosageColumn;
+    
+    private ObservableList<Medication> medicationList = FXCollections.observableArrayList();
     
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
@@ -122,10 +124,13 @@ public class patientController implements Initializable{
 	}
 	
 	public void displayMedications() {
-        idColumn.setCellFactory(new PropertyValueFactory<>("mid"));
-        nameColumn.setCellFactory(new PropertyValueFactory<>("medicationName"));
-        dosageColumn.setCellFactory(new PropertyValueFactory<>("dosage"));
-
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("mid"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("medicationName"));
+        dosageColumn.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+        
+        Patient patient = new Patient():
+        patient.viewRecord();
+        
         medicationTable.setItems(medicationList); // Set the data
 	}
 }

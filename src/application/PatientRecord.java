@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientRecord {
@@ -13,6 +14,9 @@ public class PatientRecord {
     
     PatientRecord() {
     	dbhandler = new DBHandler();
+    	medicine = new ArrayList<Medication>();
+    	appointments = new ArrayList<Appointment>();
+    	bills = new ArrayList<Bill>();
     }
 	public List<Medication> getMedicine() {
 		return medicine;
@@ -37,5 +41,11 @@ public class PatientRecord {
 		bloodPressure = "120/80 mmHg";
 		heartRate = "72 bpm";
 		dbhandler.insertPatientRecord(patientId, temperature, bloodPressure, heartRate);
+	}
+	
+	public PatientRecord getRecord(int patId) {
+		Medication m = new Medication();
+		medicine = m.viewMedicines();
+		return this;
 	}
 }
