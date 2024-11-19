@@ -85,7 +85,7 @@ public class Patient {
 		record.insertDefaultRecord(id);
 	}
 	
-	public void viewRecord(){
+	public void viewRecord(int patId){
 		record = record.getRecord(patId);
 	}
 }

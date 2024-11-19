@@ -45,7 +45,7 @@ public class PatientRecord {
 	
 	public PatientRecord getRecord(int patId) {
 		Medication m = new Medication();
-		medicine = m.viewMedicines();
+		medicine = m.showExistingMedication(patId);
 		return this;
 	}
 }

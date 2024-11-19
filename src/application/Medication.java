@@ -8,8 +8,15 @@ public class Medication {
 	private String medicineName; 
 	DBHandler dbhandler;
 	
+	Medication(int id, String name, int dosage) {
+		dbhandler = new DBHandler();
+		this.medicationId = id;
+		this.medicineName = name;
+		this.dosage = dosage;
+	}
+	
 	Medication() {
-		dbhandler = new DBHandler()
+		dbhandler = new DBHandler();
 	}
 	
 	public int getDosage() {

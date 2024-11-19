@@ -89,28 +89,39 @@ public class DBHandler {
 	
 	// ---------------------------------------- View Existing Medications ------------------------------------------------ //
 	
-	public ObservableList<String> getMedications(int rpid) {
-        ObservableList<String> medicationList = FXCollections.observableArrayList();
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+		ObservableList<Medication> medications = FXCollections.observableArrayList();
+		String recordIdQuery = "SELECT recordID FROM PATIENTRECORD WHERE pid = " + pid;
+	    
+	    try (Connection conn = connect(); 
+	         Statement stmt = conn.createStatement()) {
+	        
+	        // First, get the recordID
+	        ResultSet rsRecordId = stmt.executeQuery(recordIdQuery);
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+	        if (rsRecordId.next()) {
+	            int recordID = rsRecordId.getInt("recordID");
 
-            String query = "SELECT medicationname FROM medication where recordId= "+rpid; // Adjust your query if needed
-            Statement stmt = conn.createStatement(); // Using java.sql.Statement here
-            ResultSet rs = stmt.executeQuery(query);
+	            // Now, query the MEDICATION table using the recordID to get medications
+	            String medicationQuery = "SELECT * FROM MEDICATION WHERE recordID = " + recordID;
+	            ResultSet rsMedication = stmt.executeQuery(medicationQuery);
 
-            while (rs.next()) {
-                String medication = rs.getString("medicationname");
-                medicationList.add(medication);
-            }
+	            // Fetch medication details and add to ObservableList
+	            while (rsMedication.next()) {
+	                int medicationId = rsMedication.getInt("mid");
+	                String medicationName = rsMedication.getString("MedicationName");
+	                int dosage = rsMedication.getInt("Dosage");
 
-            // Print fetched medications for debugging
-           // System.out.println("Fetched Medications: " + medicationList);
+	                Medication medication = new Medication(medicationId, medicationName, dosage);
+	                medications.add(medication);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return medicationList;
-    }
+		return medications;
+	}
 	
 }
