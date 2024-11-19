@@ -685,6 +685,32 @@ public class eHospital implements Initializable {
 	    
 	public void handleNurseButtonClick(MouseEvent  event) {
         try {
+        	//=======================
+        	String username="";
+			String password_ ="";
+			//=========================
+			if(Username!=null && password !=null)
+			{
+				username = Username.getText();
+	            password_ = password.getText();
+	
+	            if (username.isEmpty() || password_.isEmpty()) 
+	            {
+	                System.out.println("Username or password cannot be empty.");
+	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+	                return; 
+	            }
+	
+	            Employee a = new Employee();
+	            boolean check = a.LoginNurse(username, password_);
+	
+	            if (!check) {
+	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+	                return; 
+	            }
+			}
+        	//=========================
+        	
         	String fxmlFile;
             String stageTitle;
             

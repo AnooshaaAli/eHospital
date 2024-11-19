@@ -470,6 +470,40 @@ public class DBHandler {
 		    }
 
 	 }
+	 //login nurse 
+	 public boolean LoginNurse(String username, String password)
+	 {
+		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
+
+		    try (Connection con = connect();
+		         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+		        // Set the username and password parameters
+		        stmt.setString(1, username);
+		        stmt.setString(2, password);
+
+		        // Execute the query
+		        ResultSet rs = stmt.executeQuery();
+
+		        if (rs.next())
+		        {
+		            String NurseName = rs.getString("username");
+		            int empId = rs.getInt("empid");
+		            System.out.println("Login successful for Nurse: " + NurseName + " (ID: " + empId + ")");
+
+		            return true; 
+		        } 
+		        else 
+		            return false; 
+		     
+		    }
+		    catch (SQLException e) {
+		        System.out.println("Database error during Nurse lookup.");
+		        e.printStackTrace();
+		        return false; 
+		    }
+	 }
+	 
 	 //login patient 
 	 public boolean LoginPatient(String username, String password)
 	 {

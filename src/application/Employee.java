@@ -20,4 +20,10 @@ public class Employee {
 		boolean check = a.LoginDoctor(username, password);
 		return check;
 	}
+	public boolean LoginNurse(String username, String password)
+	{
+		Nurse a= new Nurse();
+		boolean check= a.LoginNurse(username, password);
+		return check;
+	}
 }
