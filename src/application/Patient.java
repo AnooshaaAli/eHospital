@@ -3,6 +3,9 @@ package application;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
+
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -85,7 +88,8 @@ public class Patient {
 		record.insertDefaultRecord(id);
 	}
 	
-	public void viewRecord(int patId){
+	public List<Medication> viewRecord(int patId){
 		record = record.getRecord(patId);
+		return record.getMedicine();
 	}
 }

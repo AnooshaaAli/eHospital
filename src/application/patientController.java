@@ -82,7 +82,6 @@ public class patientController implements Initializable{
            genderComboBox.setItems(genders);
        }
        
-       displayMedications();
 	 }
 	 
 	public void handleRegisterButtonClick(MouseEvent  event)
@@ -123,13 +122,50 @@ public class patientController implements Initializable{
         }
 	}
 	
-	public void displayMedications() {
+	public void handlePatientViewRecord(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==ViewRecord)
+            {
+            	fxmlFile = "ViewPatientRecordPatient.fxml";
+                stageTitle = "ViewPatientRecord";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+    
+	public void displayMedications(int patId) {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("mid"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("medicationName"));
         dosageColumn.setCellValueFactory(new PropertyValueFactory<>("dosage"));
         
-        Patient patient = new Patient():
-        patient.viewRecord();
+        Patient patient = new Patient();
+        medicationList = (ObservableList<Medication>) patient.viewRecord(patId);
         
         medicationTable.setItems(medicationList); // Set the data
 	}
