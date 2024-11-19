@@ -31,13 +31,14 @@ public class Patient {
 		dbhandler = new DBHandler();
 		record = new PatientRecord();
 	}
+	
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
 	public int getPatientId() {
 		return patientId;
 	}
@@ -81,6 +82,7 @@ public class Patient {
 		this.record = record;
 	}
 	
+	// --------------------------------------------------------- ANOOSHAAAAA -------------------------------------------------------------------------//
 	// ------------------------------------------ Get patient Id on the basis of username ---------------------------------------------------//
 	
 	public int getPatientId(String username) {
@@ -102,5 +104,46 @@ public class Patient {
 	public PatientRecord viewRecord(int patId){
 		record = record.getRecord(patId);
 		return record;
+	}
+	
+	public void addMedications(String medName,int dosage,int pid)
+	{
+		
+		record.addPrescribeMedication(medName,dosage,pid);
+	}
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+		ObservableList<Medication> list= record.showExistingMedication(pid);
+		return list;
+	}
+	@Override
+    public String toString() {
+        return patientName + " (" + patientId + ")";
+    }
+
+    public ObservableList<String> getPatientIds() {
+    	DBHandler db=new DBHandler();
+		
+        ObservableList<String> pidList = db.getPatientIds();
+
+        return pidList;
+    }
+    
+    public ObservableList<String> findPatientRecord(int pid) {
+    	PatientRecord p=new PatientRecord();
+    	ObservableList<String> pidList = p.getPatientIds(pid);
+		return pidList;
+
+    }
+	
+	public void dischargePatient(String inst,LocalDate date,int pid)
+	{
+		record.dischargePatient(inst,date,pid);
+	}
+	
+	public boolean LoginPatient(String username, String password)
+	{
+		boolean check =dbhandler.LoginPatient(username,password);
+		return check;
 	}
 }
