@@ -1047,8 +1047,8 @@ public class eHospital implements Initializable {
              // Show the new form
              newFormStage.show();
              // Close the current form
-             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-             currentStage.close();
+            // Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+           //  currentStage.close();
              //handleViewPrescriptionUC(loader);
              
          } catch (IOException e) {
@@ -1301,23 +1301,7 @@ public class eHospital implements Initializable {
 	private Button ManageInventory;
 	@FXML
 	private Button HandlePayrolls;
-	@FXML
-	private TextField Username;
-	@FXML
-	private TextField password;
-	@FXML
-	private TextField name;
-	@FXML
-	private TextField Id;
-	@FXML
-	private TextField gender;
-	@FXML
-	private TextField DOB;
-	@FXML
-	private TextField contact;
-	@FXML
-	private TextField dischargeStatus;
-
+	
 	
 	@FXML
 	private Button addInventory;
@@ -1998,7 +1982,22 @@ public class eHospital implements Initializable {
     
     
    
-    
+    @FXML
+	private TextField Username;
+	@FXML
+	private TextField password;
+	@FXML
+	private TextField name;
+	@FXML
+	private TextField Id;
+	@FXML
+	private TextField gender;
+	@FXML
+	private TextField DOB;
+	@FXML
+	private TextField contact;
+	@FXML
+	private TextField dischargeStatus;
     @FXML
     private Button Close;
     public void handleClose(MouseEvent event)
