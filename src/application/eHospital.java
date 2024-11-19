@@ -2,6 +2,8 @@ package application;
 
 import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
@@ -14,14 +16,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
+import javafx.scene.*;
+import javafx.scene.control.*;
 
-public class eHospital implements Initializable {
+public class eHospital extends patientController implements Initializable {
 
 	//RECEPTIONIST
 	@FXML 
@@ -31,9 +29,23 @@ public class eHospital implements Initializable {
 	@FXML
 	private Button RegisterNewPatient; //calling function of patient
 	@FXML
+	private Button RegisterPatientByReceptionist; //calling function of receptionist
+	@FXML
 	private Button ScheduleAppointment;
 	@FXML
 	private Button ScheduleFollowUp;
+	
+	//TEXTFIELDS
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordTextField;
+    @FXML
+    private TextField dobTextField;
+    @FXML
+    private TextField contactTextField;
 
 	public void handleReceptionistButtonClick(MouseEvent  event) {
 	        try {
@@ -73,11 +85,27 @@ public class eHospital implements Initializable {
 	    }
 	public void handleLoginButtonReceptionist(MouseEvent event) {
 		try {
+            
         	String fxmlFile;
             String stageTitle;
             
             if(event.getSource()==ReceptionistSignIn)
             {
+            	fxmlFile = "Receptionist.fxml";
+                stageTitle = "Receptionist";
+            }
+            else if(event.getSource()==RegisterPatientByReceptionist)
+            {
+                String name = nameTextField.getText();
+                String username = usernameTextField.getText();
+                String password = passwordTextField.getText();
+                String gender = genderComboBox.getValue();
+                String dob = dobTextField.getText();
+                String contact = contactTextField.getText();
+
+                Patient patient = new Patient();
+                patient.registerPatient(name, username, password, gender, dob, contact);
+                
             	fxmlFile = "Receptionist.fxml";
                 stageTitle = "Receptionist";
             }
@@ -185,6 +213,7 @@ public class eHospital implements Initializable {
 	}	 
 	public void handleRegisterPatientButtonClick(MouseEvent  event) {
         try {
+            
         	String fxmlFile;
             String stageTitle;
             
@@ -242,8 +271,7 @@ public class eHospital implements Initializable {
 	@FXML
 	private Button showBills;
 	
-	
-	public void handlePatientButtonClick(MouseEvent  event) {
+	public void handlePatientButtonClick(MouseEvent event) {
         try {
         	String fxmlFile;
             String stageTitle;
@@ -284,44 +312,6 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
     }
-	
-	public void handleRegisterButtonClick(MouseEvent  event)
-	{
-		try {
-        	String fxmlFile;
-            String stageTitle;
-            
-            if(event.getSource()==RegisterPatient)
-            {
-            	fxmlFile = "Patient.fxml";
-                stageTitle = "Patient";
-            }
-            else
-            {
-            	throw new IllegalArgumentException("Unexpected button source");
-            }
-            
-            // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle(stageTitle);
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
 	public void handleSignInClick(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -576,12 +566,7 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
-	
-	//to input in sql for patient
-	public void registerPatient() {}
-	
-	
-	
+
 	//NURSE
 	@FXML 
     private Button NurseSignIn;
@@ -1494,7 +1479,9 @@ public class eHospital implements Initializable {
 	 private ComboBox<String> endTimeComboBox;
 	 @FXML
 	 private ComboBox<String> ActionComboBox;
-
+	 @FXML
+	 private ComboBox<String> genderComboBox;
+	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
 
@@ -1512,6 +1499,14 @@ public class eHospital implements Initializable {
             ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
             ActionComboBox.setItems(crudOps);
         }
+        
+        // Populate genders for genderComboBox
+        if (genderComboBox != null) 
+        {
+            ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
+            genderComboBox.setItems(genders);
+        }
+        
     }
 
 	 // Method to generate time options from 8:00 AM to 10:00 PM in 60-minute intervals
@@ -1538,5 +1533,7 @@ public class eHospital implements Initializable {
 // -------------------------------------------- Anooshaa's Use Cases -----------------------------------------------------//
 
 //Register New Patient
+
+
 
 //View Patient Record

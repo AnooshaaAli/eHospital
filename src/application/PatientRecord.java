@@ -8,7 +8,12 @@ public class PatientRecord {
 	private String heartRate;
 	private List<Medication> medicine;
     private List<Appointment> appointments;
-    private Bill bills;
+    private List<Bill> bills;
+    private DBHandler dbhandler;
+    
+    PatientRecord() {
+    	dbhandler = new DBHandler();
+    }
 	public List<Medication> getMedicine() {
 		return medicine;
 	}
@@ -27,4 +32,10 @@ public class PatientRecord {
 //	public void setBills(Bill bills) {
 //		this.bills = bills;
 //	}
+	public void insertDefaultRecord(int patientId) {
+		temperature = "98.6 F";
+		bloodPressure = "120/80 mmHg";
+		heartRate = "72 bpm";
+		dbhandler.insertPatientRecord(patientId, temperature, bloodPressure, heartRate);
+	}
 }
