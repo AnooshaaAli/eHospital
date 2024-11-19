@@ -158,9 +158,15 @@ public class patientController implements Initializable{
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-            eHospital controller = loader.getController(); 
-            int patId
+            
+            // Get the controller of the new FXML
+            eHospital controller = loader.getController();
+            
+            // Pass the patId to the new controller
+            int patId = getPatientId();
             controller.displayMedications(patId);
+            
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -180,13 +186,16 @@ public class patientController implements Initializable{
 	}
     
 	public void displayMedications(int patId) {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("mid"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("medicationName"));
-        dosageColumn.setCellValueFactory(new PropertyValueFactory<>("dosage"));
-        
-        Patient patient = new Patient();
-        medicationList = (ObservableList<Medication>) patient.viewRecord(patId).getMedicine();
-        
-        medicationTable.setItems(medicationList); // Set the data
+	    // Set up cell factories with the correct types corresponding to the Medication class fields
+	    idColumn.setCellValueFactory(new PropertyValueFactory<Medication, Integer>("mid")); // Property mid is of type Integer
+	    nameColumn.setCellValueFactory(new PropertyValueFactory<Medication, String>("medicationName")); // Property medicationName is of type String
+	    dosageColumn.setCellValueFactory(new PropertyValueFactory<Medication, Integer>("dosage")); // Property dosage is of type Integer
+	    
+	    // Assuming the Patient class fetches the list of medications
+	    Patient patient = new Patient();
+	    medicationList = FXCollections.observableArrayList(patient.viewRecord(patId).getMedicine()); // Correct the way data is fetched if necessary
+	    
+	    // Set the list of medications into the TableView
+	    medicationTable.setItems(medicationList);
 	}
 }
