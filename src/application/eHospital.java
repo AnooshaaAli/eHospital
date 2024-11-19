@@ -237,6 +237,8 @@ public class eHospital implements Initializable {
 	
 	
 	
+	
+	
 	//PATIENT
 	@FXML
 	private Button PatientButton;
@@ -262,22 +264,16 @@ public class eHospital implements Initializable {
     private Button updatePatientRecordupdateUC;
  	@FXML
     private TextField temp;
- 
  	@FXML
     private TextField blood_p;
- 
  	@FXML
     private TextField heart_b;
- 
     @FXML
     private Button trackMedicationUpdate;
-    
     @FXML
     private Button trackMedicationView;
-
     @FXML
     private ComboBox<String> MedicationNameComboBox;
-    
     @FXML
     private ListView<String> medicationListView;
 
@@ -325,7 +321,7 @@ public class eHospital implements Initializable {
 	public void handleRegisterButtonClick(MouseEvent  event)
 	{
 		try {
-			
+			//======================================================
 			String username="";
 			String password_=""; 
 			
@@ -350,7 +346,7 @@ public class eHospital implements Initializable {
 		        }
 			
 			}
-			
+			//===============================================
         	String fxmlFile;
             String stageTitle;
             
@@ -436,9 +432,35 @@ public class eHospital implements Initializable {
 	}
 	public void handleLoginButtonPatinet(MouseEvent  event) {
 		try {
+			//===============================
+			String username="";
+			String password_=""; 
+			
+			if(Username!=null && password != null)
+			{
+				username = Username.getText();
+		        password_ = password.getText();
+	
+		        if (username.isEmpty() || password_.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+	
+		        Patient a = new Patient();
+		        boolean check = a.LoginPatient(username, password_);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+			
+			}
+			//=========================================
         	String fxmlFile;
             String stageTitle;
-            String username = Username.getText();
+            //String username = Username.getText();
 	       
             if(event.getSource()==PatientSignIn)
             {
@@ -666,6 +688,10 @@ public class eHospital implements Initializable {
 	
 	//to input in sql for patient
 	public void registerPatient() {}
+
+	
+	
+	
 	
 	
 	//NURSE
@@ -685,30 +711,6 @@ public class eHospital implements Initializable {
 	    
 	public void handleNurseButtonClick(MouseEvent  event) {
         try {
-        	//=======================
-        	String username="";
-			String password_ ="";
-			if(Username!=null && password !=null)
-			{
-				username = Username.getText();
-	            password_ = password.getText();
-	
-	            if (username.isEmpty() || password_.isEmpty()) 
-	            {
-	                System.out.println("Username or password cannot be empty.");
-	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-	                return; 
-	            }
-	
-	            Employee a = new Employee();
-	            boolean check = a.LoginNurse(username, password_);
-	
-	            if (!check) {
-	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-	                return; 
-	            }
-			}
-        	//=========================
         	
         	String fxmlFile;
             String stageTitle;
@@ -746,6 +748,31 @@ public class eHospital implements Initializable {
     }
 	public void handleLoginButtonNurse(MouseEvent  event) {
 		 try {
+			//=======================
+	        	String username="";
+				String password_ ="";
+				if(Username!=null && password !=null)
+				{
+					username = Username.getText();
+		            password_ = password.getText();
+		
+		            if (username.isEmpty() || password_.isEmpty()) 
+		            {
+		                System.out.println("Username or password cannot be empty.");
+		                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		                return; 
+		            }
+		
+		            Employee a = new Employee();
+		            boolean check = a.LoginNurse(username, password_);
+		
+		            if (!check) {
+		                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		                return; 
+		            }
+				}
+	        	//=========================
+	        	
 	        	String fxmlFile;
 	            String stageTitle;
 	            
@@ -1090,7 +1117,10 @@ public class eHospital implements Initializable {
 
 	//DOCTOR
 	//DOCTOR
-	@FXML
+
+    
+    
+    @FXML
     private Button DoctorSignIn;
 	@FXML
 	private Button DoctorButton;
@@ -1304,6 +1334,8 @@ public class eHospital implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	
 	
 	
 	
