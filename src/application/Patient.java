@@ -107,6 +107,23 @@ public class Patient {
 		int id=dbhandler.loadPatientId(username);
 		return id;
 	}
+	public String loadPatientGender(String username) {
+		String data= dbhandler.loadPatientGender(username);
+		return data;
+	}
+	public String loadPatientDOB(String username) {
+		String data= dbhandler.loadPatientDOB(username);
+		return data;
+	}
+	public String loadPatientDischargeStatus(String username) {
+		String data = dbhandler.loadPatientDischargeStatus(username) ? "Discharged" : "Not Discharged";
+		return data;
+	}
+	public String loadPatientContact(String username) {
+		String data= dbhandler.loadPatientContact(username);
+		return data;
+	}
+	
 	
 	
 	

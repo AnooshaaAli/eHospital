@@ -374,7 +374,11 @@ public class eHospital implements Initializable {
             Patient b = new Patient();
             String patientName = b.loadPatientName(username);
             int id= b.loadPatientId(username);
-            controller.details(patientName, username,id);
+            String gender = b.loadPatientGender(username);
+            String contact = b.loadPatientContact(username);
+            String discharge = b.loadPatientDischargeStatus(username);
+            String dob = b.loadPatientDOB(username);
+            controller.detailsPatient(patientName, username,id,gender,dob,contact,discharge);
             
             
             // Create a new scene and stage for the new form
@@ -454,7 +458,11 @@ public class eHospital implements Initializable {
             Patient b = new Patient();
             String patientName = b.loadPatientName(username);
             int id= b.loadPatientId(username);
-            controller.details(patientName, username,id);
+            String gender = b.loadPatientGender(username);
+            String contact = b.loadPatientContact(username);
+            String discharge = b.loadPatientDischargeStatus(username);
+            String dob = b.loadPatientDOB(username);
+            controller.detailsPatient(patientName, username,id,gender,dob,contact,discharge);
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -1302,6 +1310,16 @@ public class eHospital implements Initializable {
 	@FXML
 	private TextField Id;
 	@FXML
+	private TextField gender;
+	@FXML
+	private TextField DOB;
+	@FXML
+	private TextField contact;
+	@FXML
+	private TextField dischargeStatus;
+
+	
+	@FXML
 	private Button addInventory;
 	@FXML
 	private Button deleteInventory;
@@ -2082,8 +2100,25 @@ public class eHospital implements Initializable {
 		        Id.setText(Integer.toString(id));
 		    } 
 		    else 
-		        System.out.println("TextField 'name' is null. Check FXML bindings.");
+		        System.out.println("TextField  is null. Check FXML bindings.");
 		    
-		}
+	}
 	 
+	private void detailsPatient(String Name, String usrname,int id,String Gender, String dob,String Contact,String st) {
+		  //  System.out.println("Setting admin name: " + Name);
+		    if (name != null) {
+		        name.setText(Name);
+		        Username.setText(usrname);
+		        Id.setText(Integer.toString(id));
+		        DOB.setText(dob);
+		        contact.setText(Contact);
+		        gender.setText(Gender);
+		        dischargeStatus.setText(st);
+		    } 
+		    else 
+		        System.out.println("TextField  is null. Check FXML bindings.");
+		    
+	}
+	
+
 }

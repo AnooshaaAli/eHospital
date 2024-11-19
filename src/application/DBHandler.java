@@ -548,4 +548,93 @@ public class DBHandler {
 		    }
 		 return id;
 	 }
+	 public String loadPatientGender(String username)
+	 {
+		 String data="";
+		 String sql = "SELECT gender FROM PATIENT WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("gender");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient gender.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public String loadPatientDOB(String username)
+	 {
+		 String data="";
+		 String sql = "SELECT DOB FROM PATIENT WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("DOB");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient DOB.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public String loadPatientContact (String username)
+	 {
+		 String data="";
+		 String sql = "SELECT contact FROM PATIENT WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("contact");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient contact.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public boolean loadPatientDischargeStatus(String username)
+	 {
+		 int data=0;
+		 String sql = "SELECT isDischarge FROM PATIENT WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getInt("isDischarge");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient Discharge status.");
+		        e.printStackTrace();
+		    }
+		    if(data==0)
+		    	return false;
+		    else if(data==1)
+		    	return true;
+		    return false;
+	 }
+	 
 }
