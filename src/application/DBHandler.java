@@ -1,6 +1,8 @@
 package application;
 
 import java.sql.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class DBHandler {
 	
@@ -84,4 +86,31 @@ public class DBHandler {
             e.printStackTrace();
         }
 	}
+	
+	// ---------------------------------------- View Existing Medications ------------------------------------------------ //
+	
+	public ObservableList<String> getMedications(int rpid) {
+        ObservableList<String> medicationList = FXCollections.observableArrayList();
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+
+            String query = "SELECT medicationname FROM medication where recordId= "+rpid; // Adjust your query if needed
+            Statement stmt = conn.createStatement(); // Using java.sql.Statement here
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String medication = rs.getString("medicationname");
+                medicationList.add(medication);
+            }
+
+            // Print fetched medications for debugging
+           // System.out.println("Fetched Medications: " + medicationList);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return medicationList;
+    }
+	
 }

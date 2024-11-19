@@ -8,7 +8,7 @@ public class Medication {
 	private String medicineName; 
 	DBHandler dbhandler;
 	
-	Medicine() {
+	Medication() {
 		dbhandler = new DBHandler()
 	}
 	
