@@ -52,8 +52,8 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="166.0" layoutY="182.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
-                        <TextField layoutX="166.0" layoutY="223.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="Username" layoutX="166.0" layoutY="182.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="password" layoutX="166.0" layoutY="223.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="63.0" layoutY="139.0" prefHeight="33.0" prefWidth="291.0" text="Enter the Details: " textFill="#747572">
                            <font>
                               <Font name="Calibri" size="18.0" />

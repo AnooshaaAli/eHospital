@@ -688,7 +688,6 @@ public class eHospital implements Initializable {
         	//=======================
         	String username="";
 			String password_ ="";
-			//=========================
 			if(Username!=null && password !=null)
 			{
 				username = Username.getText();
