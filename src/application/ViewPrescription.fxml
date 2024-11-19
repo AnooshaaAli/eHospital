@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,7 +44,14 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="200.0" layoutY="23.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #f3f0dd;" />
+                        <ComboBox fx:id="pidComboBox" layoutX="200.0" layoutY="23.0" onAction="#initTable" prefHeight="25.0" prefWidth="185.0" promptText="chose patient id" style="-fx-background-color: #f3f0dd;" />
+                        <TableView fx:id="medicationTable" layoutX="79.0" layoutY="156.0" prefHeight="247.0" prefWidth="323.0">
+                          <columns>
+                            <TableColumn fx:id="medicationId" prefWidth="108.0" text="medicationId" />
+                            <TableColumn fx:id="medicineName" prefWidth="110.39994812011719" text="medicineName" />
+                              <TableColumn fx:id="dosage" prefWidth="103.99998779296874" text="dosage" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </children>

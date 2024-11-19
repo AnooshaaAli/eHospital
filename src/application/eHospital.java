@@ -976,6 +976,7 @@ public class eHospital implements Initializable {
              {
              	fxmlFile = "ViewPrescription.fxml";
                 stageTitle = "ViewPrescription";
+                
              }
              else
              {
@@ -985,7 +986,7 @@ public class eHospital implements Initializable {
              // Load the new FXML file
              FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
              Parent newFormRoot = loader.load();
-
+             
              // Create a new scene and stage for the new form
              Scene newFormScene = new Scene(newFormRoot);
              Stage newFormStage = new Stage();
@@ -994,14 +995,17 @@ public class eHospital implements Initializable {
 
              // Show the new form
              newFormStage.show();
-
              // Close the current form
              Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
              currentStage.close();
+             //handleViewPrescriptionUC(loader);
              
          } catch (IOException e) {
              e.printStackTrace();
          }
+    	 
+    	 
+    	
     }
 	
 	
@@ -1749,11 +1753,6 @@ public class eHospital implements Initializable {
 	            // Show the new form
 	            newFormStage.show();
 	            
-	             // Close the current form
-//	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-//	            currentStage.close();
-	       
-	            
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
@@ -1888,10 +1887,34 @@ public class eHospital implements Initializable {
 		}
 		
     }
-	
+	//pay bills use case
+    public void handlePayBillsUC()
+    {
+    	
+    }
+    @FXML
+    private TableView<Bill> billTable;
+    @FXML
+    private TableColumn<Bill,Integer> bid;
+    @FXML
+    private TableColumn<Bill,Double> amount;
+    private ObservableList<Bill> observableBill;
+    @FXML
+    public void initBillTable()
+    {
+    	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     @FXML
     private Button Close;
-    private void handleClose(MouseEvent event)
+    public void handleClose(MouseEvent event)
     {
     	if(event.getSource()==Close)
     	{
@@ -1900,8 +1923,6 @@ public class eHospital implements Initializable {
     	}
     }
     //load login 
-    
-   
 	private void showAlert(String title, String header, String content) {
 	        Alert alert = new Alert(Alert.AlertType.ERROR);
 	        alert.setTitle(title);
@@ -1910,10 +1931,10 @@ public class eHospital implements Initializable {
 	        alert.showAndWait();
 	}
 	//LOAD COMBOBOX
-	 @FXML
- 	 private ComboBox<String> startTimeComboBox;
-	 @FXML
-	 private ComboBox<String> endTimeComboBox;
+	@FXML
+ 	private ComboBox<String> startTimeComboBox;
+	@FXML
+	private ComboBox<String> endTimeComboBox;
 	@FXML
 	private ComboBox<String> ActionComboBox;
 	 @Override
@@ -1956,8 +1977,8 @@ public class eHospital implements Initializable {
 
         return timeOptions;
     }
-	 @FXML
-	 private ComboBox<String> pidComboBox;
+	@FXML
+	private ComboBox<String> pidComboBox;
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
