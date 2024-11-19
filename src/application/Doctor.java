@@ -18,5 +18,23 @@ public class Doctor extends Employee{
     	boolean check=db.LoginDoctor(username,pass);
 		return check;   	
     }
+    public String loadDoctorName(String username)
+	{
+		String data=db.loadDoctorName(username);
+		
+		return data;
+	}
+	public int loadDoctorId(String username)
+	{
+		int data=db.loadDoctorId(username);
+		
+		return data;
+	}
+    public String loadDoctorWorkingDays(String username)
+    {
+    	
+    	String days= db.loadWorkingDays(username);
+    	return days;
+    }
     
 }

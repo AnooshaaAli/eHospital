@@ -470,8 +470,126 @@ public class DBHandler {
 		    }
 
 	 }
+	 public int loadDoctorId(String username)
+	 {
+		 int docID =-10;
+		 String sql="SELECT d.did FROM EMPLOYEE e JOIN DOCTOR d ON d.empid = e.empid WHERE e.username = '"+username+"'";
+		    //String sql = "SELECT did FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	docID = rs.getInt("did");
+		        } else {
+		            System.out.println("Doctor not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor id.");
+		        e.printStackTrace();
+		    }
+		    return docID; 
+	 }
+	 public String loadDoctorName(String username)
+	 {
+		 String docName="";
+		 String sql = "SELECT name FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	docName = rs.getString("name");
+		        } else {
+		            System.out.println("Doctor not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor name.");
+		        e.printStackTrace();
+		    }
+		    return docName;
+	 }
+	 public int loadEmployeeId(String username)
+	 {
+		 int empID =-10;
+		    String sql = "SELECT empid FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	empID = rs.getInt("empid");
+		        } else {
+		            System.out.println("Doctor not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving employee id.");
+		        e.printStackTrace();
+		    }
+		    return empID; 
+	 }
+	 public int loadExperience(String username)
+	 {
+		 int exp=-10;
+		 String sql = "SELECT experience FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	exp = rs.getInt("experience");
+		        } else {
+		            System.out.println("Doctor not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor experience.");
+		        e.printStackTrace();
+		    }
+		 return exp;
+	 }
+	 public String loadWorkingDays(String username)
+	 {
+		 String sql = "SELECT d.monday, d.tuesday, d.wednesday, d.thursday, d.friday " +
+                 "FROM EMPLOYEE e " +
+                 "JOIN DOCTOR d ON d.empid = e.empid " +
+                 "WHERE e.username = '" + username + "'";
+		 StringBuilder workingDays = new StringBuilder();
+
+	    try (Connection con = connect(); 
+	         Statement stmt = con.createStatement();
+	         ResultSet rs = stmt.executeQuery(sql)) {
+	
+	        if (rs.next()) {
+	            // Map day columns to day names
+	            String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+	            for (int i = 1; i <= 5; i++) { // Columns start at 1 for ResultSet
+	                if (rs.getInt(i) == 1) { // 1 means working day
+	                    if (workingDays.length() > 0) {
+	                        workingDays.append(", "); // Add a separator for multiple days
+	                    }
+	                    workingDays.append(days[i - 1]); // Append day name
+	                }
+	            }
+	        } else {
+	            System.out.println("No schedule found for username: " + username);
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("Error retrieving working days.");
+	        e.printStackTrace();
+	    }
+	
+	    return workingDays.length() > 0 ? workingDays.toString() : "No working days"; 
+	 }
 	 //login nurse 
-	 public boolean LoginNurse(String username, String password)
+ 	 public boolean LoginNurse(String username, String password)
 	 {
 		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
 

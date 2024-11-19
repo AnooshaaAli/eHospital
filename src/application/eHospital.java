@@ -1117,9 +1117,6 @@ public class eHospital implements Initializable {
 
 	//DOCTOR
 	//DOCTOR
-
-    
-    
     @FXML
     private Button DoctorSignIn;
 	@FXML
@@ -1130,6 +1127,7 @@ public class eHospital implements Initializable {
     private Button DischargePatient;
 	@FXML
     private Button PatientRecord;
+	
 	public void handleDoctorButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -1168,15 +1166,16 @@ public class eHospital implements Initializable {
     }
 	public void handleLoginButtonDoctor(MouseEvent  event) {
 		try {	
-			
+			String username="";
+			String password_ ="";
 			if(Username!=null && password != null)
 			{
-				String username = Username.getText();
-		        String password_ = password.getText();
+				username = Username.getText();
+		        password_ = password.getText();
 	
 		        if (username.isEmpty() || password_.isEmpty()) 
 		        {
-		            System.out.println("Username or password cannot be empty.");
+		            //System.out.println("Username or password cannot be empty.");
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
@@ -1202,14 +1201,22 @@ public class eHospital implements Initializable {
                 stageTitle = "Doctor";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            
+            eHospital controller = loader.getController();
+            Employee b = new Employee();
+            String DoctorName = b.loadDoctorName(username);
+            int id= b.loadDoctorId(username);
+            int empid=b.loadEmployeeId(username);
+            int exp= b.loadExperience(username);
+            String days= b.loadDoctorWorkingDays(username);
+            controller.detailsDoctor(DoctorName, username,id,empid,exp,days);
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -1450,7 +1457,6 @@ public class eHospital implements Initializable {
             Parent newFormRoot = loader.load();
             
             eHospital controller = loader.getController();
-            // Retrieve admin name from the database and set it in the TextField
             Admin b = new Admin();
             String adminName = b.loadAdminName(username);
             int id= b.loadAdminId(username);
@@ -2175,6 +2181,25 @@ public class eHospital implements Initializable {
 		        System.out.println("TextField  is null. Check FXML bindings.");
 		    
 	}
-	
+	private void detailsDoctor(String Name, String username, int id,int empid,int exp, String days)
+	{
+		if (name != null) {
+	        name.setText(Name);
+	        Username.setText(username);
+	        Id.setText(Integer.toString(id));
+	        empID.setText(Integer.toString(empid));
+	        workingDays.setText(days);
+	        experience.setText(Integer.toString(exp));
+	       
+	    } 
+	    else 
+	        System.out.println("TextField  is null. Check FXML bindings.");
+	}
 
+	@FXML
+	private TextField experience;
+	@FXML
+	private TextField workingDays;
+	@FXML
+	private TextField empID;
 }
