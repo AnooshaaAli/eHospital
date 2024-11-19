@@ -97,6 +97,17 @@ public class Patient {
 		return check;
 	}
 	
+	public String loadPatientName(String username)
+	{
+		String name= dbhandler.loadPatientName(username);
+		return name;
+	}
+	public int loadPatientId(String username)
+	{
+		int id=dbhandler.loadPatientId(username);
+		return id;
+	}
+	
 	
 	
 	

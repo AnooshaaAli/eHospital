@@ -504,5 +504,48 @@ public class DBHandler {
 		    }
 
 	 }
+	 //patient details 
+	 public String loadPatientName(String username)
+	 {
+		 String name="";
+		 String sql = "SELECT name FROM PATIENT WHERE username = '" + username + "'";
 
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	name = rs.getString("name");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient name.");
+		        e.printStackTrace();
+		    }
+		    return name;
+		 
+	 }
+	 public int loadPatientId(String username)
+	 {
+		 int id=-20;
+		 String sql = "SELECT pid FROM PATIENT WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	id = rs.getInt("pid");
+		        } else {
+		            System.out.println("Patient not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient id.");
+		        e.printStackTrace();
+		    }
+		 return id;
+	 }
 }

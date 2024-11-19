@@ -326,11 +326,13 @@ public class eHospital implements Initializable {
 	{
 		try {
 			
+			String username="";
+			String password_=""; 
 			
 			if(Username!=null && password != null)
 			{
-				String username = Username.getText();
-		        String password_ = password.getText();
+				username = Username.getText();
+		        password_ = password.getText();
 	
 		        if (username.isEmpty() || password_.isEmpty()) 
 		        {
@@ -349,16 +351,6 @@ public class eHospital implements Initializable {
 			
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
         	String fxmlFile;
             String stageTitle;
             
@@ -375,6 +367,16 @@ public class eHospital implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
+            
+            
+            eHospital controller = loader.getController();
+            // Retrieve admin name from the database and set it in the TextField
+            Patient b = new Patient();
+            String patientName = b.loadPatientName(username);
+            int id= b.loadPatientId(username);
+            controller.details(patientName, username,id);
+            
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -410,7 +412,7 @@ public class eHospital implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -432,7 +434,8 @@ public class eHospital implements Initializable {
 		try {
         	String fxmlFile;
             String stageTitle;
-            
+            String username = Username.getText();
+	       
             if(event.getSource()==PatientSignIn)
             {
             	fxmlFile = "Patient.fxml";
@@ -447,6 +450,12 @@ public class eHospital implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
+            eHospital controller = loader.getController();
+            Patient b = new Patient();
+            String patientName = b.loadPatientName(username);
+            int id= b.loadPatientId(username);
+            controller.details(patientName, username,id);
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -1339,26 +1348,29 @@ public class eHospital implements Initializable {
 	public void handleLoginButtonAdmin(MouseEvent  event) {
 		try {
 			
+			String username="";
+			String password_ ="";
 			//=========================
-			
-			String username = Username.getText();
-            String password_ = password.getText();
-
-            if (username.isEmpty() || password_.isEmpty()) 
-            {
-                System.out.println("Username or password cannot be empty.");
-                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-                return; 
-            }
-
-            Admin a = new Admin();
-            boolean check = a.LoginAdmin(username, password_);
-
-            if (!check) {
-                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-                return; 
-            }
-            
+			if(Username!=null && password !=null)
+			{
+				username = Username.getText();
+	            password_ = password.getText();
+	
+	            if (username.isEmpty() || password_.isEmpty()) 
+	            {
+	                System.out.println("Username or password cannot be empty.");
+	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+	                return; 
+	            }
+	
+	            Admin a = new Admin();
+	            boolean check = a.LoginAdmin(username, password_);
+	
+	            if (!check) {
+	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+	                return; 
+	            }
+			}
 
 			//=========================
         	String fxmlFile;
