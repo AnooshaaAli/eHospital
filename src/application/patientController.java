@@ -21,6 +21,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class patientController implements Initializable{
 	
+	// ------------------------------------------------ ATTRIBUTES --------------------------------------------------------//
+	
+	private int patId;
+	
+	// ----------------------------------------------- BUTTONS ----------------------------------------------------------- //
+	
 	@FXML
 	private Button PatientButton;
 	@FXML 
@@ -71,6 +77,16 @@ public class patientController implements Initializable{
     
     private ObservableList<Medication> medicationList = FXCollections.observableArrayList();
     
+    //----------------------------------------------- GET PATIENT ID ----------------------------------------------------//
+    
+    public int getPatientId() {
+    	return patId;
+    }
+    
+    public void setPatientId(int patientId) {
+    	patId = patientId;
+    }
+    
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
@@ -98,6 +114,8 @@ public class patientController implements Initializable{
 
             Patient patient = new Patient();
             patient.registerPatient(name, username, password, gender, dob, contact);
+            int id = patient.getPatientId(username);
+            setPatientId(id);
         	fxmlFile = "Patient.fxml";
             stageTitle = "Patient";
             // Load the new FXML file
@@ -140,7 +158,9 @@ public class patientController implements Initializable{
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            eHospital controller = loader.getController(); 
+            int patId
+            controller.displayMedications(patId);
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -165,7 +185,7 @@ public class patientController implements Initializable{
         dosageColumn.setCellValueFactory(new PropertyValueFactory<>("dosage"));
         
         Patient patient = new Patient();
-        medicationList = (ObservableList<Medication>) patient.viewRecord(patId);
+        medicationList = (ObservableList<Medication>) patient.viewRecord(patId).getMedicine();
         
         medicationTable.setItems(medicationList); // Set the data
 	}

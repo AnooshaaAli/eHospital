@@ -81,15 +81,26 @@ public class Patient {
 		this.record = record;
 	}
 	
-	// Use Cases
-	// Use Case: Register Patient
+	// ------------------------------------------ Get patient Id on the basis of username ---------------------------------------------------//
+	
+	public int getPatientId(String username) {
+		int id = dbhandler.getPatientId(username);
+		return id;
+	}
+	
+	// ---------------------------------------------------------- Use Cases -------------------------------------------------------------------//
+	
+	// -------------------------------------------------- Use Case: Register Patient --------------------------------------------------------//
+	
 	public void registerPatient(String name, String username, String password, String gender, String dob, String contact) {
 		int id = dbhandler.registerPatient(name, username, password, gender, dob, contact);
 		record.insertDefaultRecord(id);
 	}
 	
-	public List<Medication> viewRecord(int patId){
+	// -------------------------------------------------- Use Case: View Patient Record --------------------------------------------------------//
+	
+	public PatientRecord viewRecord(int patId){
 		record = record.getRecord(patId);
-		return record.getMedicine();
+		return record;
 	}
 }

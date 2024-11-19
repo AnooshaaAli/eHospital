@@ -24,6 +24,34 @@ public class DBHandler {
 	    return conn;
 	}
 	
+	// ---------------------------------------------- GET PATIENT ID ------------------------------------------------------ //
+	
+    public int getPatientId(String username) {
+        // SQL query to get patientId for the provided username
+        String query = "SELECT patientId FROM patients WHERE username = ?";
+        
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            // Set the username parameter in the query
+            stmt.setString(1, username);
+
+            // Execute the query
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retrieve patientId from the result set
+                    return rs.getInt("patientId");
+                } else {
+                    // Return -1 or any value to indicate the username was not found
+                    return -1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1; // In case of error, return -1 or handle it as needed
+        }
+    }
+    
 	// ------------------------------------------- register a new patient ------------------------------------------------ //
 	
 	public int registerPatient(String name, String username, String password, String gender, String dob, String contact) {
@@ -57,6 +85,8 @@ public class DBHandler {
 	    }
 		return 0;
 	}
+	
+	// --------------------------------------------- INSERT INTO PATIENT RECORD ---------------------------------------------------- //
 	
 	public void insertPatientRecord(int pid, String temperature, String bloodPressure, String heartRate) {
         // SQL Insert Query
