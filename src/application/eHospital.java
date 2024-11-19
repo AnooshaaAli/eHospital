@@ -325,6 +325,40 @@ public class eHospital implements Initializable {
 	public void handleRegisterButtonClick(MouseEvent  event)
 	{
 		try {
+			
+			
+			if(Username!=null && password != null)
+			{
+				String username = Username.getText();
+		        String password_ = password.getText();
+	
+		        if (username.isEmpty() || password_.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+	
+		        Patient a = new Patient();
+		        boolean check = a.LoginPatient(username, password_);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+			
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
         	String fxmlFile;
             String stageTitle;
             
@@ -1061,7 +1095,32 @@ public class eHospital implements Initializable {
         }
     }
 	public void handleLoginButtonDoctor(MouseEvent  event) {
-		try {
+		try {	
+			
+			if(Username!=null && password != null)
+			{
+				String username = Username.getText();
+		        String password_ = password.getText();
+	
+		        if (username.isEmpty() || password_.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+	
+		        Employee a = new Employee();
+		        boolean check = a.LoginDoctor(username, password_);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+			
+			}
+			
+			
+			
         	String fxmlFile;
             String stageTitle;
             
@@ -1908,9 +1967,7 @@ public class eHospital implements Initializable {
     
     
     
-    
-    
-    
+   
     
     @FXML
     private Button Close;

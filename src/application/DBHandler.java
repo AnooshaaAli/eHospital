@@ -393,7 +393,7 @@ public class DBHandler {
 		        return false; // Return false when there is a database error
 		    }
 
-		}
+	 }
 	 //load admin details 
 	 public String loadAdminName(String username) {
 		    String adminName = null;
@@ -435,7 +435,74 @@ public class DBHandler {
 		    }
 		    return adminID; // Return the retrieved name or null
 		}
+	 //login doctor 
+	 public boolean LoginDoctor(String username, String password)
+	 {
+		  // String url = "jdbc:sqlserver://DESKTOP-VH2BAA0\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;encrypt=false";
+		   String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
 
+		    try (Connection con = connect();
+		         PreparedStatement stmt = con.prepareStatement(sql)) {
 
+		        // Set the username and password parameters
+		        stmt.setString(1, username);
+		        stmt.setString(2, password);
+
+		        // Execute the query
+		        ResultSet rs = stmt.executeQuery();
+
+		        if (rs.next())
+		        {
+		            String docName = rs.getString("username");
+		            int empId = rs.getInt("empid");
+		            System.out.println("Login successful for Doctor: " + docName + " (ID: " + empId + ")");
+
+		            return true; 
+		        } 
+		        else 
+		            return false; 
+		     
+		    }
+		    catch (SQLException e) {
+		        System.out.println("Database error during admin lookup.");
+		        e.printStackTrace();
+		        return false; // Return false when there is a database error
+		    }
+
+	 }
+	 //login patient 
+	 public boolean LoginPatient(String username, String password)
+	 {
+		 String sql = "SELECT pid, username FROM PATIENT WHERE username = ? AND password = ?";
+
+		    try (Connection con = connect();
+		         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+		        // Set the username and password parameters
+		        stmt.setString(1, username);
+		        stmt.setString(2, password);
+
+		        // Execute the query
+		        ResultSet rs = stmt.executeQuery();
+
+		        if (rs.next())
+		        {
+		            String patientName = rs.getString("username");
+		            int pid = rs.getInt("pid");
+		            System.out.println("Login successful for Patient: " + patientName + " (ID: " + pid + ")");
+
+		            return true; 
+		        } 
+		        else 
+		            return false; 
+		     
+		    }
+		    catch (SQLException e) {
+		        System.out.println("Database error during admin lookup.");
+		        e.printStackTrace();
+		        return false; // Return false when there is a database error
+		    }
+
+	 }
 
 }

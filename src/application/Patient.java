@@ -91,6 +91,11 @@ public class Patient {
 		record.dischargePatient(inst,date,pid);
 	}
 	
+	public boolean LoginPatient(String username, String password)
+	{
+		boolean check =dbhandler.LoginPatient(username,password);
+		return check;
+	}
 	
 	
 	

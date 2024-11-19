@@ -21,7 +21,7 @@ public class Admin {
 		String name=db.loadAdminName(username);
 		return name;
 	}
-	 public int loadAdminId(String username)
+	public int loadAdminId(String username)
 	 {
 		 int id=db.loadAdminId(username);
 		 return id;
