@@ -1,9 +1,16 @@
 package application;
 
+import javafx.collections.ObservableList;
+
 public class Medication {
 	private int medicationId;
 	private int dosage; 
 	private String medicineName; 
+	DBHandler dbhandler;
+	
+	Medicine() {
+		dbhandler = new DBHandler()
+	}
 	
 	public int getDosage() {
 		return dosage;
@@ -18,15 +25,10 @@ public class Medication {
 		this.medicineName = medicineName;
 	}
 	
-	public void enterMedicationDetails(String name)
-	{}
-	public void updateMedicationDetails()
+	public ObservableList<Medication> showExistingMedication(int pid)
 	{
-		
-	}
-	public Medication showExistingMedicationDetails()
-	{
-		return null;
+		ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
+		return list;
 	}
 	
 	
