@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class patientController implements Initializable{
 
@@ -57,6 +58,17 @@ public class patientController implements Initializable{
     
 	private ComboBox<String> genderComboBox;
 	 
+    // -------------------------------------------- TABLES ------------------------------------------------------------//
+    
+    @FXML
+    private TableView<Medication> medicationTable;
+    @FXML
+    private TableColumn<Medication, Integer> idColumn;
+    @FXML
+    private TableColumn<Medication, String> nameColumn;
+    @FXML
+    private TableColumn<Medication, Integer> dosageColumn;
+    
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
@@ -68,6 +80,7 @@ public class patientController implements Initializable{
            genderComboBox.setItems(genders);
        }
        
+       displayMedications();
 	 }
 	 
 	public void handleRegisterButtonClick(MouseEvent  event)
@@ -108,4 +121,11 @@ public class patientController implements Initializable{
         }
 	}
 	
+	public void displayMedications() {
+        idColumn.setCellFactory(new PropertyValueFactory<>("mid"));
+        nameColumn.setCellFactory(new PropertyValueFactory<>("medicationName"));
+        dosageColumn.setCellFactory(new PropertyValueFactory<>("dosage"));
+
+        medicationTable.setItems(medicationList); // Set the data
+	}
 }

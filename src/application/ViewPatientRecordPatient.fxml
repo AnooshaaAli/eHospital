@@ -59,29 +59,36 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutY="43.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+            <Label layoutX="-1.0" layoutY="-2.0" prefHeight="32.0" prefWidth="550.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <Label layoutY="221.0" prefHeight="32.0" prefWidth="544.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
+            <Label layoutY="221.0" prefHeight="32.0" prefWidth="547.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <Label layoutX="1.0" layoutY="426.0" prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
+            <Label layoutX="1.0" layoutY="426.0" prefHeight="32.0" prefWidth="548.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <TableView layoutY="74.0" prefHeight="146.0" prefWidth="545.0">
+            <TableView fx:id="medicationTable" layoutY="30.0" prefHeight="190.0" prefWidth="547.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="MedId" />
-                <TableColumn prefWidth="75.0" text="MedName" />
-                  <TableColumn prefWidth="75.0" text="Dosage" />
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="MedId" />
+                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="MedName" />
+                  <TableColumn fx:id="dosageColumn" prefWidth="75.0" text="Dosage" />
               </columns>
             </TableView>
-            <TableView layoutY="253.0" prefHeight="172.0" prefWidth="545.0">
+            <TableView layoutY="253.0" prefHeight="172.0" prefWidth="548.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="AptId" />
+                  <TableColumn prefWidth="75.0" text="StartTime" />
+                  <TableColumn prefWidth="75.0" text="EndTime" />
+               </columns>
+            </TableView>
+            <TableView layoutY="458.0" prefHeight="202.0" prefWidth="548.0">
                <columns>
                   <TableColumn prefWidth="75.0" text="AptId" />
                   <TableColumn prefWidth="75.0" text="StartTime" />
