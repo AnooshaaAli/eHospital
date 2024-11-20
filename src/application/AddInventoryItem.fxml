@@ -30,18 +30,18 @@
                <children>
                   <AnchorPane layoutX="61.0" layoutY="88.0" prefHeight="394.0" prefWidth="493.0" style="-fx-background-color: #fffce8;">
                      <children>
-                        <Label layoutX="59.0" layoutY="127.0" prefHeight="40.0" prefWidth="85.0" text="Name">
+                        <Label layoutX="60.0" layoutY="151.0" prefHeight="40.0" prefWidth="85.0" text="Name">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <Label layoutX="59.0" layoutY="160.0" prefHeight="40.0" prefWidth="80.0" text="Quantity">
+                        <Label layoutX="61.0" layoutY="191.0" prefHeight="40.0" prefWidth="80.0" text="Quantity">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="169.0" layoutY="135.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
-                        <TextField layoutX="170.0" layoutY="168.0" prefHeight="25.0" prefWidth="260.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="name" layoutX="165.0" layoutY="159.0" prefHeight="26.0" prefWidth="267.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="itemQuantity" layoutX="168.0" layoutY="199.0" prefHeight="26.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="50.0" layoutY="94.0" prefHeight="33.0" prefWidth="291.0" text="Enter the Details: " textFill="#747572">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -50,23 +50,17 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="AddItem" layoutX="169.0" layoutY="301.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="179.0" style="-fx-background-color: #dd403a;" text="Add Item" textFill="#fffce8">
+                        <Button fx:id="addInventory" layoutX="169.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAddUC" prefHeight="37.0" prefWidth="179.0" style="-fx-background-color: #dd403a;" text="Add Item" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
                         </Button>
-                        <Label layoutX="59.0" layoutY="196.0" prefHeight="40.0" prefWidth="85.0" text="Price">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="170.0" layoutY="204.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="236.0" prefHeight="40.0" prefWidth="99.0" text="Category">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="169.0" layoutY="244.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="itemCategory" layoutX="169.0" layoutY="244.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutY="31.0" prefHeight="63.0" prefWidth="493.0" style="-fx-background-color: #f3f0dd;" text="Add New Item">
                            <font>
                               <Font name="Cambria Bold" size="24.0" />

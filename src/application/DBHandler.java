@@ -927,4 +927,60 @@ public class DBHandler {
 		    return false;
 	 }
 	 
+	 
+	 //display current inventory 
+	 public  ObservableList<InventoryItem> displayCurrentInventory()
+	 {
+		 ObservableList<InventoryItem> inv = FXCollections.observableArrayList();
+		  // SQL query to fetch inventory items
+		    String query = "SELECT iid, quantity, name, Category FROM INVENTORYITEM";
+
+		    try (Connection conn = connect();
+		         Statement stmt = conn.createStatement();
+		         ResultSet rs = stmt.executeQuery(query)) {
+
+		        // Loop through the result set and add each inventory item to the ObservableList
+		        while (rs.next()) {
+		            int iid = rs.getInt("iid");
+		            int quantity = rs.getInt("quantity");
+		            String name = rs.getString("name");
+		            String category = rs.getString("Category");
+
+		            // Create a new InventoryItem object and add it to the list
+		            InventoryItem item = new InventoryItem(iid, quantity, name, category);
+		            inv.add(item);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        // Handle SQL exceptions
+		    }
+
+		 return inv;
+				
+	 }
+	 //add inventory 
+	 public boolean addInventoryItem(int amt, String category, String name) 
+	 {
+		    String query = "INSERT INTO INVENTORYITEM (quantity, name, category) VALUES (" 
+		                    + amt + ", '" + name + "', '" + category + "')";
+		    try {
+		        Connection connection = connect(); // Get the connection
+		        Statement statement = connection.createStatement();
+		        int rowsAffected = statement.executeUpdate(query); // Execute the query
+
+		        // Close resources
+		        statement.close();
+		        connection.close();
+
+		        // Check if the insert was successful
+		        return rowsAffected > 0;
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        return false; // Return false if there was an error
+		    }
+		}
+
+
+
 }

@@ -2015,6 +2015,7 @@ public class eHospital implements Initializable {
             {
             	fxmlFile = "CurrentInventory.fxml";
                 stageTitle = "CurrentInventory";
+                
             }
             else if(event.getSource()==deleteInventory)
             {
@@ -2036,6 +2037,11 @@ public class eHospital implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
+            if (event.getSource()==currentInventory)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initInventoryTable();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -2046,8 +2052,8 @@ public class eHospital implements Initializable {
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            //Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            //currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -2244,11 +2250,75 @@ public class eHospital implements Initializable {
     @FXML
     private TableColumn<Bill,Double> amount;
     private ObservableList<Bill> observableBill;
+    
+    
+    
+    //MANAGE INVENTORY 
+    
+    private ObservableList<InventoryItem> observableInventory;
     @FXML
-    public void initBillTable()
+    private TableView<InventoryItem> inventoryTable;
+    @FXML
+    private TableColumn<InventoryItem,Integer> invID;
+    @FXML
+    private TableColumn<InventoryItem,Integer> quantity;
+    @FXML
+    private TableColumn<InventoryItem,String> itemname;
+    @FXML
+    private TableColumn<InventoryItem,String> category;
+    @FXML
+    private TextField itemQuantity;
+    @FXML
+    private TextField itemCategory;
+    
+    
+    @FXML
+    public void initInventoryTable()
     {
-    	
+    	observableInventory = FXCollections.observableArrayList();
+    	itemname.setCellValueFactory(new PropertyValueFactory<>("name"));
+		invID.setCellValueFactory(new PropertyValueFactory<>("invID"));
+		quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+		category.setCellValueFactory(new PropertyValueFactory<>("category"));
+		InventoryItem invItem= new InventoryItem();
+		observableInventory=invItem.displayCurrentInventory();
+		System.out.println(observableInventory.size());
+		inventoryTable.setItems(observableInventory);
     }
+    
+    public void handleManageInventoryAddUC(MouseEvent event)
+    {
+    	if(event.getSource()==addInventory)
+    	{
+    		String itemname= name.getText();
+    		String category= itemCategory.getText();
+    		int quantity= Integer.parseInt(itemQuantity.getText());
+    		InventoryItem inv= new InventoryItem();
+    		boolean check =inv.addInventoryItem(quantity,category,itemname);
+    		//System.out.println("valie"+check);
+    		if(check)
+    			showAlert("Successful","Item added","Your inventory is updated.");
+    		else
+    			showAlert("Unsuccessful","Unable to add item","Error occured.");
+    	}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
