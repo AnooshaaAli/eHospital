@@ -25,6 +25,29 @@ public class Patient {
 	private String contact;
 	private boolean dischargeStatus;
 	private PatientRecord record;
+	private static Patient instance; 
+
+	
+	public void init(int id, String name, String uname,String gen,Date DOB,String con, boolean st) {
+		this.patientId=id;
+		this.patientName=name;
+		this.username=uname;
+		this.gender= gen;
+		this.dob = DOB;
+		
+		this.contact=con;
+		this.dischargeStatus=st;
+		
+    }
+	public static Patient getInstance() 
+	{
+		if (instance == null) {
+            instance = new Patient();
+        }
+        return instance;
+	}
+	
+	
 	
 	Patient()
 	{
@@ -122,6 +145,45 @@ public class Patient {
 	public String loadPatientContact(String username) {
 		String data= dbhandler.loadPatientContact(username);
 		return data;
+	}
+	public DBHandler getDbhandler() {
+		return dbhandler;
+	}
+	public void setDbhandler(DBHandler dbhandler) {
+		this.dbhandler = dbhandler;
+	}
+	public int getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(int patientId) {
+		this.patientId = patientId;
+	}
+	public String getPatientName() {
+		return patientName;
+	}
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public Date getDob() {
+		return dob;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public static void setInstance(Patient instance) {
+		Patient.instance = instance;
 	}
 	
 	

@@ -5,12 +5,16 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,7 +40,7 @@ import javafx.stage.Stage;
 
 public class eHospital implements Initializable {
 	
-	private Patient patient= new Patient();
+//	private Patient patient= new Patient();
 	
 	//RECEPTIONIST
 	@FXML 
@@ -324,7 +328,7 @@ public class eHospital implements Initializable {
 			//======================================================
 			String username="";
 			String password_=""; 
-			
+			Patient patient= Patient.getInstance();
 			if(Username!=null && password != null)
 			{
 				username = Username.getText();
@@ -344,9 +348,38 @@ public class eHospital implements Initializable {
 		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		            return; 
 		        }
-			
-			}
-			//===============================================
+		        
+		        
+		      //======================================
+	            String patientName = patient.loadPatientName(username);
+	            int id= patient.loadPatientId(username);
+	            String gender = patient.loadPatientGender(username);
+	            String contact = patient.loadPatientContact(username);
+                String discharge = patient.loadPatientDischargeStatus(username);
+                String dob1 = patient.loadPatientDOB(username); // e.g., "2024-11-20"
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localDate = null; // Initializes to null
+                java.sql.Date sqlDob=null;
+                try {
+                    // Parse the string into a LocalDate
+                    localDate = LocalDate.parse(dob1, formatter);
+                    LocalDateTime localDateTime = localDate.atStartOfDay();
+                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                    sqlDob = new java.sql.Date(utilDob.getTime());
+                    System.out.println("Converted Date: " + sqlDob);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Invalid date format.");
+                }
+	            patient.init(id, username, patientName, gender, sqlDob, contact, check);
+		
+		}
+		else 
+		{
+			 if (patient == null) 
+	                showAlert("Error", "Missing Data", "No user is logged in.");
+		}
+		//=========================================
         	String fxmlFile;
             String stageTitle;
             
@@ -364,18 +397,24 @@ public class eHospital implements Initializable {
             Parent newFormRoot = loader.load();
 
             
-            
+          //==========================================
             eHospital controller = loader.getController();
-            // Retrieve admin name from the database and set it in the TextField
-            Patient b = new Patient();
-            String patientName = b.loadPatientName(username);
-            int id= b.loadPatientId(username);
-            String gender = b.loadPatientGender(username);
-            String contact = b.loadPatientContact(username);
-            String discharge = b.loadPatientDischargeStatus(username);
-            String dob = b.loadPatientDOB(username);
-            controller.detailsPatient(patientName, username,id,gender,dob,contact,discharge);
-            
+            String st= patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob= patient.getDob();
+            String dobString ="";
+            if (dob != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob);
+                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
+                                           patient.getGender(), dobString, patient.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
+            		,dobString,patient.getContact(),st);
+            //==========================================
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -435,7 +474,7 @@ public class eHospital implements Initializable {
 			//===============================
 			String username="";
 			String password_=""; 
-			
+			Patient patient= Patient.getInstance();
 			if(Username!=null && password != null)
 			{
 				username = Username.getText();
@@ -455,7 +494,44 @@ public class eHospital implements Initializable {
 		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		            return; 
 		        }
+		        
+			       //======================================
+		            String patientName = patient.loadPatientName(username);
+		            int id= patient.loadPatientId(username);
+		            String gender = patient.loadPatientGender(username);
+		            String contact = patient.loadPatientContact(username);
+	                String discharge = patient.loadPatientDischargeStatus(username);
+	                String dob1 = patient.loadPatientDOB(username); // e.g., "2024-11-20"
+	                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	                LocalDate localDate = null; // Initializes to null
+	                java.sql.Date sqlDob=null;
+	                try {
+	                    // Parse the string into a LocalDate
+	                    localDate = LocalDate.parse(dob1, formatter);
+	                    
+	                    // Convert LocalDate to LocalDateTime (at the start of the day)
+	                    LocalDateTime localDateTime = localDate.atStartOfDay();
+	                    
+	                    // Convert LocalDateTime to java.util.Date
+	                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+	                    
+	                    // Convert java.util.Date to java.sql.Date
+	                    sqlDob = new java.sql.Date(utilDob.getTime());
+
+	                    System.out.println("Converted Date: " + sqlDob);
+
+	                    // Now you can pass sqlDob (java.sql.Date) to your init method
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    System.out.println("Invalid date format.");
+	                }
+		            patient.init(id, username, patientName, gender, sqlDob, contact, check);
 			
+			}
+			else 
+			{
+				 if (patient == null) 
+		                showAlert("Error", "Missing Data", "No user is logged in.");
 			}
 			//=========================================
         	String fxmlFile;
@@ -468,25 +544,32 @@ public class eHospital implements Initializable {
                 stageTitle = "Patient";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
+            //==========================================
             eHospital controller = loader.getController();
-            Patient b = new Patient();
-            String patientName = b.loadPatientName(username);
-            int id= b.loadPatientId(username);
-            String gender = b.loadPatientGender(username);
-            String contact = b.loadPatientContact(username);
-            String discharge = b.loadPatientDischargeStatus(username);
-            String dob = b.loadPatientDOB(username);
-            controller.detailsPatient(patientName, username,id,gender,dob,contact,discharge);
+            String st= patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob= patient.getDob();
+            String dobString ="";
+            if (dob != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob);
+                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
+                                           patient.getGender(), dobString, patient.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
+            		,dobString,patient.getContact(),st);
+            //==========================================
             
-            // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
@@ -751,6 +834,8 @@ public class eHospital implements Initializable {
 			//=======================
 	        	String username="";
 				String password_ ="";
+				Employee employee= Employee.getInstanceNurse();
+				Nurse nurse= Nurse.getInstance();
 				if(Username!=null && password !=null)
 				{
 					username = Username.getText();
@@ -770,6 +855,24 @@ public class eHospital implements Initializable {
 		                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		                return; 
 		            }
+		            
+		            //================
+		            String name= employee.loadName(username);
+		            int id= nurse.loadNurseId(username);
+		            int empid= employee.loadEmployeeId(username);
+		            String gender= employee.loadGender(username);
+		            int exp= employee.loadExperience(username);
+		            String con= employee.loadContact(username);
+		            //System.out.println("Sf"+con);
+		            String workingHrs=employee.loadWorkingHours(username); 
+		            employee.initNurse(id,name,username,password_,gender,exp,workingHrs,con);
+		            //================
+				}
+				else 
+				{
+					 if (employee == null) {
+			                showAlert("Error", "Missing Data", "No user is logged in.");
+			            }
 				}
 	        	//=========================
 	        	
@@ -789,7 +892,17 @@ public class eHospital implements Initializable {
 	            // Load the new FXML file
 	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 	            Parent newFormRoot = loader.load();
-
+	            eHospital controller = loader.getController();
+	            controller.detailsNurse(
+	                    employee.getName(),
+	                    employee.getUsername(),
+	                    nurse.getNurseId(),
+	                    employee.getEmployeeId(), 
+	                    employee.getGender(),
+	                    employee.getExperience(),
+	                    employee.getContact(),
+	                    employee.getWorkingHours()
+	                );
 	            // Create a new scene and stage for the new form
 	            Scene newFormScene = new Scene(newFormRoot);
 	            Stage newFormStage = new Stage();
@@ -1168,6 +1281,8 @@ public class eHospital implements Initializable {
 		try {	
 			String username="";
 			String password_ ="";
+			Employee employee = Employee.getInstance();
+			Doctor doctor = Doctor.getInstance();
 			if(Username!=null && password != null)
 			{
 				username = Username.getText();
@@ -1187,7 +1302,27 @@ public class eHospital implements Initializable {
 		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		            return; 
 		        }
+		        //=====================
+		       
+	            String DoctorName = employee.loadName(username);
+	            int id= employee.loadDoctorId(username);
+	            int empid=employee.loadEmployeeId(username);
+	            int exp= employee.loadExperience(username);
+	            String con=employee.loadContact(username);
+	            String wHrs=employee.loadWorkingHours(username);
+	            String days= employee.loadDoctorWorkingDays(username);
+	            boolean[] workdays= doctor.convertDaysToBooleanArray(days);
+	            String gen=employee.loadGender(username);
+	            employee.init(empid, DoctorName, username, password_, gen, exp, wHrs, con);
+	            doctor.init(id, workdays, employee.getExperience());
+	            //===========================
 			
+			}
+			else 
+			{
+				 if (employee == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
 			}
 			
 			
@@ -1209,13 +1344,14 @@ public class eHospital implements Initializable {
             Parent newFormRoot = loader.load();
             
             eHospital controller = loader.getController();
-            Employee b = new Employee();
-            String DoctorName = b.loadDoctorName(username);
-            int id= b.loadDoctorId(username);
-            int empid=b.loadEmployeeId(username);
-            int exp= b.loadExperience(username);
-            String days= b.loadDoctorWorkingDays(username);
-            controller.detailsDoctor(DoctorName, username,id,empid,exp,days);
+            controller.detailsDoctor(
+                    employee.getName(),
+                    employee.getUsername(),
+                    doctor.getDoctorId(),
+                    employee.getEmployeeId(),
+                    employee.getExperience(),
+                    doctor.convertBooleanArrayToDays(doctor.getAvailableDays())
+                );
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -1416,6 +1552,7 @@ public class eHospital implements Initializable {
 			
 			String username="";
 			String password_ ="";
+			Admin admin= Admin.getInstance();
 			//=========================
 			if(Username!=null && password !=null)
 			{
@@ -1436,6 +1573,20 @@ public class eHospital implements Initializable {
 	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 	                return; 
 	            }
+	            
+	            
+	            //==================
+	            
+	            String adminName = admin.loadAdminName(username);
+	            int id= admin.loadAdminId(username);
+	            admin.init(id, adminName, username, password_);
+	            //====================
+			}
+			else 
+			{
+				 if (admin == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
 			}
 
 			//=========================
@@ -1457,10 +1608,7 @@ public class eHospital implements Initializable {
             Parent newFormRoot = loader.load();
             
             eHospital controller = loader.getController();
-            Admin b = new Admin();
-            String adminName = b.loadAdminName(username);
-            int id= b.loadAdminId(username);
-            controller.details(adminName, username,id);
+            controller.details(admin.getAdminName(), admin.getUsername(),admin.getAdminId());
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -1895,6 +2043,7 @@ public class eHospital implements Initializable {
 		}
 		else if(event.getSource()==AddMed)
 		{
+			Patient patient= Patient.getInstance();
 			String medicationName = medName.getText();
 	        int dosageValue = Integer.parseInt(Dosage.getText());
 	        
@@ -1923,6 +2072,7 @@ public class eHospital implements Initializable {
 			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
 			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
 			dosage.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+			Patient patient= Patient.getInstance();
 			observableMedication=patient.showExistingMedication(pid);
 			medicationTable.setItems(observableMedication);
 		   
@@ -2014,6 +2164,7 @@ public class eHospital implements Initializable {
 			}
 			else if(event.getSource()==dischargeSummary)
 			{
+				Patient patient= Patient.getInstance();
 				String FollowUPinstructions = instructions.getText();
 				String inputDate = date.getText();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -2178,7 +2329,7 @@ public class eHospital implements Initializable {
 		        dischargeStatus.setText(st);
 		    } 
 		    else 
-		        System.out.println("TextField  is null. Check FXML bindings.");
+				showAlert("Error"," ","TextField  is null. Check FXML bindings.");
 		    
 	}
 	private void detailsDoctor(String Name, String username, int id,int empid,int exp, String days)
@@ -2193,9 +2344,27 @@ public class eHospital implements Initializable {
 	       
 	    } 
 	    else 
-	        System.out.println("TextField  is null. Check FXML bindings.");
+	    	showAlert("Error"," ","TextField  is null. Check FXML bindings.");
 	}
-
+	private void detailsNurse(String nme,String username,int id, int empid, String gen,int exp,String con, String workinghrs)
+	{
+		if(name!=null)
+		{
+			 name.setText(nme);
+		     Username.setText(username);
+		     Id.setText(Integer.toString(id));
+		     empID.setText(Integer.toString(empid));
+		     gender.setText(gen);
+		     experience.setText(Integer.toString(exp));
+		     contact.setText(con);
+		     workingHours.setText(workinghrs);
+		}
+		else 
+			showAlert("Error"," ","TextField  is null. Check FXML bindings.");
+	}
+	
+	@FXML
+	private TextField workingHours;
 	@FXML
 	private TextField experience;
 	@FXML

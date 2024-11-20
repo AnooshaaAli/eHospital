@@ -435,7 +435,7 @@ public class DBHandler {
 		    }
 		    return adminID; // Return the retrieved name or null
 		}
-	 //login doctor 
+	 //login doctor + nurse
 	 public boolean LoginDoctor(String username, String password)
 	 {
 		  // String url = "jdbc:sqlserver://DESKTOP-VH2BAA0\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;encrypt=false";
@@ -492,7 +492,7 @@ public class DBHandler {
 		    }
 		    return docID; 
 	 }
-	 public String loadDoctorName(String username)
+	 public String loadName(String username)
 	 {
 		 String docName="";
 		 String sql = "SELECT name FROM EMPLOYEE WHERE username = '" + username + "'";
@@ -588,7 +588,71 @@ public class DBHandler {
 	
 	    return workingDays.length() > 0 ? workingDays.toString() : "No working days"; 
 	 }
-	 //login nurse 
+	 public String loadGender(String username)
+	 {
+		 String gender="";
+		 String sql = "SELECT gender FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	gender = rs.getString("gender");
+		        } else {
+		            System.out.println("Doctor/Nurse not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor/nurse gender.");
+		        e.printStackTrace();
+		    }
+		 return gender;
+	 }
+	 public String loadContact(String username)
+	 {
+		 String contact="";
+		 
+		 String sql = "SELECT contact FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	contact = rs.getString("contact");
+		        } else {
+		            System.out.println("Doctor/Nurse not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor/nurse contact.");
+		        e.printStackTrace();
+		    }
+		 return contact;
+	 }
+	 public String loadWorkingHours(String username)
+	 {
+			String workingHours="";
+			String sql = "SELECT working_hours FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	workingHours = rs.getString("working_hours");
+		        } else {
+		            System.out.println("Doctor/Nurse not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving doctor/nurse workingHours.");
+		        e.printStackTrace();
+		    }
+			return workingHours;
+	 }
+	 
  	 public boolean LoginNurse(String username, String password)
 	 {
 		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
@@ -621,7 +685,28 @@ public class DBHandler {
 		        return false; 
 		    }
 	 }
-	 
+	 public int loadNurseId(String username)
+	 {
+		 int id=-10;
+		 String sql="SELECT n.nid FROM EMPLOYEE e JOIN NURSE n ON n.empid = e.empid WHERE e.username = '"+username+"'";
+		    //String sql = "SELECT did FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	id = rs.getInt("nid");
+		        } else {
+		            System.out.println("Nurse not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving nurse id.");
+		        e.printStackTrace();
+		    }
+		 return id;
+	 }
 	 //login patient 
 	 public boolean LoginPatient(String username, String password)
 	 {

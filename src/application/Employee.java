@@ -3,6 +3,8 @@ package application;
 public class Employee {
 	private int employeeId;
 	private String name;
+	private static Employee instance; 
+	private static Employee instanceNurse; 
 	private String username;
 	private String passowrd;
 	private String gender;
@@ -14,6 +16,46 @@ public class Employee {
 	{
 		db= new DBHandler();
 	}
+	public void init(int id, String name, String username, String pass, String gender,int exp,
+			String workinghours, String con)
+	{
+		this.employeeId = id;
+        this.name = name;
+        this.username = username;
+        this.passowrd = pass;
+        this.gender = gender;
+        this.experience = exp;
+        this.workingHours = workingHours;
+        this.contact = contact;
+	}
+	public void initNurse(int id, String name, String username, String pass, String gender,int exp,
+			String workinghours, String con)
+	{
+		this.employeeId = id;
+        this.name = name;
+        this.username = username;
+        this.passowrd = pass;
+        this.gender = gender;
+        this.experience = exp;
+        this.workingHours = workinghours;
+        this.contact = con;
+	}
+	public static Employee getInstance() 
+	{
+		if (instance == null) {
+            instance = new Employee();
+        }
+        return instance;
+	}
+	public static Employee getInstanceNurse() 
+	{
+		if (instanceNurse == null) {
+			instanceNurse = new Employee();
+        }
+        return instanceNurse;
+	}
+	
+	
 	public boolean LoginDoctor(String username,String password)
 	{
 		Doctor a = new Doctor();
@@ -26,10 +68,10 @@ public class Employee {
 		boolean check= a.LoginNurse(username, password);
 		return check;
 	}
-	public String loadDoctorName(String username)
+	public String loadName(String username)
 	{
-		Doctor a= new Doctor();
-		String data=a.loadDoctorName(username);
+		
+		String data=db.loadName(username);
 		
 		return data;
 	}
@@ -55,6 +97,93 @@ public class Employee {
 		Doctor a= new Doctor();
 		String data=a.loadDoctorWorkingDays(username);
 		return data;
+	}
+	public String loadGender(String username)
+	{
+		String data= db.loadGender(username);
+		return data;
+	}
+	public String loadContact(String username)
+	{
+		String data= db.loadContact(username);
+		return data;
+	}
+	public String loadWorkingHours(String username)
+	{
+		String data= db.loadWorkingHours(username);
+		return data;
+	}
+	
+ 	public int loadNurseId(String username)
+	{
+		Nurse n= new Nurse();
+		int id=n.loadNurseId(username);
+		return id;
+	}
+	public String loadNurseName(String username)
+	{
+		String data="";
+		
+		return data;
+	}
+	
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassowrd() {
+		return passowrd;
+	}
+	public void setPassowrd(String passowrd) {
+		this.passowrd = passowrd;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public int getExperience() {
+		return experience;
+	}
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+	public String getWorkingHours() {
+		return workingHours;
+	}
+	public void setWorkingHours(String workingHours) {
+		this.workingHours = workingHours;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public DBHandler getDb() {
+		return db;
+	}
+	public void setDb(DBHandler db) {
+		this.db = db;
+	}
+	public static void setInstance(Employee instance) {
+		Employee.instance = instance;
 	}
 
 }
