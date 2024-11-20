@@ -80,21 +80,6 @@
                            </font>
                         </Label>
                         <TextField layoutX="170.0" layoutY="303.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
-                        <CheckBox layoutX="169.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Male">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox layoutX="250.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Female">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox layoutX="353.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Other">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
                         <Label layoutX="59.0" layoutY="328.0" prefHeight="40.0" prefWidth="110.0" text="Available Days">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -147,14 +132,21 @@
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="-1.0" layoutY="31.0" prefHeight="63.0" prefWidth="495.0" style="-fx-background-color: #f3f0dd;" text="Update Doctor Information">
+                        <Label layoutX="1.0" layoutY="14.0" prefHeight="32.0" prefWidth="498.0" style="-fx-background-color: #f3f0dd;" text="Update Doctor Information">
                            <font>
-                              <Font name="Cambria Bold" size="24.0" />
+                              <Font name="Cambria Bold" size="18.0" />
                            </font>
                            <padding>
-                              <Insets left="110.0" />
+                              <Insets left="150.0" />
                            </padding>
                         </Label>
+                        <ComboBox fx:id="genderComboBox" layoutX="170.0" layoutY="238.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
+                        <Label layoutX="122.0" layoutY="61.0" text="Doctor Id:">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox layoutX="212.0" layoutY="59.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
                      </children>
                   </AnchorPane>
                </children>
