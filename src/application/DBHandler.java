@@ -652,8 +652,61 @@ public class DBHandler {
 		    }
 			return workingHours;
 	 }
-	 
- 	 public boolean LoginNurse(String username, String password)
+	 public int loadReceptionistId(String username)
+	 {
+		 int id=-10;
+		 String sql="SELECT r.rid FROM EMPLOYEE e JOIN RECEPTIONIST r ON r.empid = e.empid WHERE e.username = '"+username+"'";
+		    //String sql = "SELECT did FROM EMPLOYEE WHERE username = '" + username + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	id = rs.getInt("rid");
+		        } else {
+		            System.out.println("Receptionist not found for username: " + username);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving receptionist id.");
+		        e.printStackTrace();
+		    }
+		 return id;
+	 }
+	 public boolean LoginReceptionist(String username,String password)
+	 {
+		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
+
+		    try (Connection con = connect();
+		         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+		        // Set the username and password parameters
+		        stmt.setString(1, username);
+		        stmt.setString(2, password);
+
+		        // Execute the query
+		        ResultSet rs = stmt.executeQuery();
+
+		        if (rs.next())
+		        {
+		            String ReceptionistName = rs.getString("username");
+		            int empId = rs.getInt("empid");
+		            System.out.println("Login successful for receptionist: " + ReceptionistName + " (ID: " + empId + ")");
+
+		            return true; 
+		        } 
+		        else 
+		            return false; 
+		     
+		    }
+		    catch (SQLException e) {
+		        System.out.println("Database error during Nurse lookup.");
+		        e.printStackTrace();
+		        return false; 
+		    }
+	 }
+	 public boolean LoginNurse(String username, String password)
 	 {
 		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
 

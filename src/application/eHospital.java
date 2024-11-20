@@ -56,6 +56,7 @@ public class eHospital implements Initializable {
 
 	public void handleReceptionistButtonClick(MouseEvent  event) {
 	        try {
+	        	
 	        	String fxmlFile;
 	            String stageTitle;
 	            
@@ -69,11 +70,11 @@ public class eHospital implements Initializable {
 	            	throw new IllegalArgumentException("Unexpected button source");
 	            }
 	            
-	            // Load the new FXML file
 	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 	            Parent newFormRoot = loader.load();
 
-	            // Create a new scene and stage for the new form
+	           
+	            
 	            Scene newFormScene = new Scene(newFormRoot);
 	            Stage newFormStage = new Stage();
 	            newFormStage.setScene(newFormScene);
@@ -92,6 +93,53 @@ public class eHospital implements Initializable {
 	    }
 	public void handleLoginButtonReceptionist(MouseEvent event) {
 		try {
+			
+			//=======================
+        	String username="";
+			String password_ ="";
+			Employee employee= Employee.getInstanceReceptionist();
+			Receptionist receptionist= Receptionist.getInstance();
+			if(Username!=null && password !=null)
+			{
+				username = Username.getText();
+	            password_ = password.getText();
+	
+	            if (username.isEmpty() || password_.isEmpty()) 
+	            {
+	              //  System.out.println("Username or password cannot be empty.");
+	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+	                return; 
+	            }
+	
+	            Employee a = new Employee();
+	            boolean check = a.LoginReceptionist(username, password_);
+	
+	            if (!check) {
+	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+	                return; 
+	            }
+	            
+	            //================
+	            String name= employee.loadName(username);
+	            int id= receptionist.loadReceptionistId(username);
+	            int empid= employee.loadEmployeeId(username);
+	            String gender= employee.loadGender(username);
+	            int exp= employee.loadExperience(username);
+	            String con= employee.loadContact(username);
+	            String workingHrs=employee.loadWorkingHours(username); 
+	            employee.initReceptionist(empid,name,username,password_,gender,exp,workingHrs,con);
+	            receptionist.init(id, "");
+	            //================
+			}
+			else 
+			{
+				 if (employee == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
+			}
+
+
+        	
         	String fxmlFile;
             String stageTitle;
             
@@ -108,7 +156,17 @@ public class eHospital implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            eHospital controller = loader.getController();
+            controller.detailsNurse(
+                    employee.getName(),
+                    employee.getUsername(),
+                    receptionist.getReceptionistId(),
+                    employee.getEmployeeId(), 
+                    employee.getGender(),
+                    employee.getExperience(),
+                    employee.getContact(),
+                    employee.getWorkingHours()
+                );
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -863,9 +921,9 @@ public class eHospital implements Initializable {
 		            String gender= employee.loadGender(username);
 		            int exp= employee.loadExperience(username);
 		            String con= employee.loadContact(username);
-		            //System.out.println("Sf"+con);
 		            String workingHrs=employee.loadWorkingHours(username); 
-		            employee.initNurse(id,name,username,password_,gender,exp,workingHrs,con);
+		            employee.initNurse(empid,name,username,password_,gender,exp,workingHrs,con);
+		            nurse.init(id, "");
 		            //================
 				}
 				else 
@@ -1314,7 +1372,7 @@ public class eHospital implements Initializable {
 	            boolean[] workdays= doctor.convertDaysToBooleanArray(days);
 	            String gen=employee.loadGender(username);
 	            employee.init(empid, DoctorName, username, password_, gen, exp, wHrs, con);
-	            doctor.init(id, workdays, employee.getExperience());
+	            doctor.init(id, workdays, 0);
 	            //===========================
 			
 			}

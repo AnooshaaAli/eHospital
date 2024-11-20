@@ -5,6 +5,7 @@ public class Employee {
 	private String name;
 	private static Employee instance; 
 	private static Employee instanceNurse; 
+	private static Employee instanceReceptionist; 
 	private String username;
 	private String passowrd;
 	private String gender;
@@ -40,6 +41,19 @@ public class Employee {
         this.workingHours = workinghours;
         this.contact = con;
 	}
+	public void initReceptionist(int id, String name, String username, String pass, String gender,int exp,
+			String workinghours, String con)
+	{
+		this.employeeId = id;
+        this.name = name;
+        this.username = username;
+        this.passowrd = pass;
+        this.gender = gender;
+        this.experience = exp;
+        this.workingHours = workinghours;
+        this.contact = con;
+	}
+	
 	public static Employee getInstance() 
 	{
 		if (instance == null) {
@@ -54,7 +68,13 @@ public class Employee {
         }
         return instanceNurse;
 	}
-	
+	public static Employee getInstanceReceptionist() 
+	{
+		if (instanceReceptionist == null) {
+			instanceReceptionist = new Employee();
+        }
+        return instanceReceptionist;
+	}
 	
 	public boolean LoginDoctor(String username,String password)
 	{
@@ -62,6 +82,13 @@ public class Employee {
 		boolean check = a.LoginDoctor(username, password);
 		return check;
 	}
+	public boolean LoginReceptionist(String username, String password)
+	{
+		Receptionist a= new Receptionist();
+		boolean check= a.LoginReceptionist(username, password);
+		return check;
+	}
+
 	public boolean LoginNurse(String username, String password)
 	{
 		Nurse a= new Nurse();
@@ -127,7 +154,14 @@ public class Employee {
 		return data;
 	}
 	
-
+	public int loadReceptionistId(String username)
+	{
+		Receptionist n= new Receptionist();
+		int id=n.loadReceptionistId(username);
+		return id;
+	}
+	
+	
 	public int getEmployeeId() {
 		return employeeId;
 	}

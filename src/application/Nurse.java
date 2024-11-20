@@ -16,7 +16,7 @@ public class Nurse extends Employee{
 		boolean check= db.LoginNurse(username, password);
 		return check;
 	}
-	public void init(int id, String sh, int app) {
+	public void init(int id, String sh) {
 		this.nurseId=id;
 		this.shift=sh;
 		
