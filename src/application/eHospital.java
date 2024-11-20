@@ -2250,7 +2250,20 @@ public class eHospital implements Initializable {
     @FXML
     private TableColumn<Bill,Double> amount;
     private ObservableList<Bill> observableBill;
-    
+    public void initBillTable()
+    {
+    	Patient patient= Patient.getInstance();
+    	
+    	observableBill = FXCollections.observableArrayList();
+    	
+    	bid.setCellValueFactory(new PropertyValueFactory<>("billId"));
+    	amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+		
+	//	InventoryItem invItem= new InventoryItem();
+	//	observableBill=invItem.displayCurrentInventory();
+		//System.out.println(observableBill.size());
+		billTable.setItems(observableBill);
+    }
     
     
     //MANAGE INVENTORY 
@@ -2282,10 +2295,9 @@ public class eHospital implements Initializable {
 		category.setCellValueFactory(new PropertyValueFactory<>("category"));
 		InventoryItem invItem= new InventoryItem();
 		observableInventory=invItem.displayCurrentInventory();
-		System.out.println(observableInventory.size());
+		//System.out.println(observableInventory.size());
 		inventoryTable.setItems(observableInventory);
     }
-    
     public void handleManageInventoryAddUC(MouseEvent event)
     {
     	if(event.getSource()==addInventory)

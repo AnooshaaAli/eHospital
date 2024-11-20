@@ -14,6 +14,7 @@ public class PatientRecord {
 	private List<Medication> medicine;
     private List<Appointment> appointments;
     private Bill bills;
+   // private List<Bill> bills;
     private int recordID;
     private DischargeSummary summary;
     PatientRecord()
