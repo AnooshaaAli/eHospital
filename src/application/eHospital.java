@@ -2315,7 +2315,13 @@ public class eHospital implements Initializable {
     	}
     }
     
-    
+    public void handlerManagerInventoryUpdateUC(MouseEvent event)
+    {
+    	if(event.getSource()==retrieveInventory)
+    	{
+    		
+    	}
+    }
     
     
     

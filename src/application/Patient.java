@@ -34,7 +34,6 @@ public class Patient {
 		this.username=uname;
 		this.gender= gen;
 		this.dob = DOB;
-		
 		this.contact=con;
 		this.dischargeStatus=st;
 		

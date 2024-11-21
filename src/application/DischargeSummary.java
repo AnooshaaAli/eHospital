@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class DischargeSummary {
-	private Patient patient;
+	//private Patient patient;
 	private int dischargeId;
 	private String instructions;
 	private Date date;	
