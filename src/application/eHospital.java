@@ -2313,7 +2313,7 @@ public class eHospital implements Initializable {
     			showAlert("Unsuccessful","Unable to add item","Error occured.");
     	}
     }
-    
+    //update
     public void handlerManagerInventoryUpdateUC(MouseEvent event)
     {
     	if(event.getSource()==retrieveInventory)
