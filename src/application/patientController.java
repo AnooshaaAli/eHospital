@@ -2,12 +2,19 @@ package application;
 
 import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -26,7 +33,7 @@ public class patientController implements Initializable{
 	
 	// ------------------------------------------------ ATTRIBUTES --------------------------------------------------------//
 	
-	private int patId;
+	private static int patId;
 	
 	// ----------------------------------------------- BUTTONS ----------------------------------------------------------- //
 	
@@ -48,6 +55,8 @@ public class patientController implements Initializable{
 	private Button ViewPrescription;
 	@FXML
 	private Button showBills;
+	@FXML
+	private Button ConfirmAppointment;
 	
 	// ----------------------------------------------- TEXT FIELDS ---------------------------------------------------- //
 	
@@ -61,6 +70,12 @@ public class patientController implements Initializable{
     private TextField dobTextField;
     @FXML
     private TextField contactTextField;
+    @FXML
+    private DatePicker appointmentDate;  
+    @FXML
+    private Label availabilityStatusLabel;  
+    @FXML
+    private Label nonAvailabilityStatusLabel;  
     
     // --------------------------------------------- FOR PROFILE --------------------------------------------------------//
     
@@ -80,10 +95,23 @@ public class patientController implements Initializable{
 	private TextField contact;
 	@FXML
 	private TextField dischargeStatus;
+	
     // -------------------------------------------- COMBO BOXES ------------------------------------------------------ //
     
+	@FXML
 	private ComboBox<String> genderComboBox;
+	@FXML
+	private ComboBox<Integer> DoctorIdComboBox;
+	@FXML
+	private ComboBox<String> timeslotsComboBox;
+	@FXML
+	private ComboBox<String> pidComboBox;
 	 
+	// ---------------------------------------------- PANES ----------------------------------------------------------- //
+	
+	@FXML
+	private AnchorPane ConfirmationPane;
+	
     // -------------------------------------------- TABLES ------------------------------------------------------------//
     
     @FXML
@@ -125,6 +153,19 @@ public class patientController implements Initializable{
     
     private ObservableList<Bill> billsList = FXCollections.observableArrayList();
     
+    // ----------------------------------------------- LABELS ------------------------------------------------------------ //
+    
+    @FXML
+    private Label DoctorLabel;
+    @FXML
+    private Label PatientLabel;
+    @FXML
+    private Label DateLabel;
+    @FXML
+    private Label TimeLabel;
+    @FXML
+    private Label BillLabel;
+    
     //----------------------------------------------- GET PATIENT ID ----------------------------------------------------//
     
     public int getPatientId() {
@@ -138,7 +179,8 @@ public class patientController implements Initializable{
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
-		 
+		
+		populateDoctorIdComboBox();
        // Populate genders for genderComboBox
        if (genderComboBox != null) 
        {
@@ -337,4 +379,201 @@ public class patientController implements Initializable{
 		        System.out.println("TextField  is null. Check FXML bindings.");
 		    
 	}
+	
+	public void handlePatientScheduleAppointment(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==scheduleAppointment)
+            {
+            	fxmlFile = "ScheduleAppointment.fxml";
+                stageTitle = "ScheduleAppointment";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------- POPULATE DOCTOR IDS ------------------------------------------------------- //
+	
+	public void populateDoctorIdComboBox() {
+		Doctor doctor = new Doctor();
+        ObservableList<Integer> docIdsList = doctor.getDoctorIdsList();
+        if (DoctorIdComboBox != null) {
+            DoctorIdComboBox.setItems(docIdsList);  
+        } else {
+            //System.out.println("DoctorIdComboBox is null!");  
+        }
+	}
+	
+	// -------------------------------------------------- IS DOCTOR AVAILABLE -------------------------------------------------------- //
+
+	public void handleDoctorAvailability() {
+	    Integer doctorId = DoctorIdComboBox.getValue(); 
+	    if (doctorId == null) {
+	        return;  
+	    }
+
+	    LocalDate date = appointmentDate.getValue();  
+	    if (date == null) {
+	        return;  
+	    }
+	    
+	    Doctor doctor = new Doctor();
+	    boolean isAvailable = doctor.checkDoctorAvailability(doctorId, date);
+	    
+	    if (isAvailable) {
+	    	nonAvailabilityStatusLabel.setVisible(false);
+	        availabilityStatusLabel.setVisible(true);
+			populateTimeSlotsComboBox();
+	    } else {
+	    	availabilityStatusLabel.setVisible(false);
+	    	nonAvailabilityStatusLabel.setVisible(true);
+	    }
+	}
+	
+	// --------------------------------------------- POPULATE TIMESLOTS COMBO BOX -------------------------------------------------- //
+	
+	public void populateTimeSlotsComboBox() {
+	    Integer doctorId = DoctorIdComboBox.getValue(); 
+	    if (doctorId == null) {
+	        return;  
+	    }
+
+	    LocalDate date = appointmentDate.getValue();  
+	    if (date == null) {
+	        return;  
+	    }
+		Doctor doctor = new Doctor();
+        ObservableList<String> timeSlotsList = doctor.getDoctorTimeSlotsList(doctorId, date);
+        if (timeslotsComboBox != null) {
+        	timeslotsComboBox.setItems(timeSlotsList);  
+        } else {
+            //System.out.println("DoctorIdComboBox is null!");  
+        }
+	}
+	
+	// ------------------------------------------- APPOINTMENT CONFIRMATION HANDLER -------------------------------------------------- //
+	
+	public void handleAppointmentConfirmation() {
+	    Integer doctorId = DoctorIdComboBox.getValue(); 
+	    if (doctorId == null) {
+	        return;  
+	    }
+	    
+	    int docId = doctorId;
+	    
+	    LocalDate date = appointmentDate.getValue();  
+	    if (date == null) {
+	        return;  
+	    }
+	    
+	    Patient patient = new Patient();
+	    System.out.println(patId);
+	    int recId = patient.getRecordId(patId);
+	    TimeSlot time = new TimeSlot();
+	    String startTime = timeslotsComboBox .getValue();
+	    
+	    if (startTime == null) {
+	        return;  
+	    }
+	    
+	    double bill = 1500.0; //hardcoded for each doctor
+	    int timeslotId = time.findTimeSlotId(startTime);
+		if(patient.addAppointment(recId, docId, date, timeslotId)) {
+			//System.out.println("Successful");
+			Patient p = new Patient();
+			p.addBill(recId, bill, "unknown");
+			DoctorLabel.setText("Doctor Id: " + docId);
+			PatientLabel.setText("Patient Id: " + patId);
+			DateLabel.setText("Date: " + date);
+			TimeLabel.setText("Time: " + startTime);
+			BillLabel.setText("Bill: " + bill);
+			ConfirmationPane.setVisible(true);
+		}
+		else {
+			System.out.println("Unsuccessful");
+		}
+	}
+	
+	// ------------------------------------------- APPOINTMENT CONFIRMATION HANDLER RECEPTIONIST -------------------------------------------------- //
+	
+	public void handleAppointmentConfirmationReceptionist() {
+	    Integer doctorId = DoctorIdComboBox.getValue(); 
+	    if (doctorId == null) {
+	        return;  
+	    }
+	    
+	    int docId = doctorId;
+	    
+	    LocalDate date = appointmentDate.getValue();  
+	    if (date == null) {
+	        return;  
+	    }
+	    
+	    Patient patient = new Patient();
+	    
+	    String pidString = pidComboBox.getSelectionModel().getSelectedItem();
+        int pid = 0;
+        if (pidString != null && !pidString.isEmpty()) {
+            try {
+                pid = Integer.parseInt(pidString);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Patient ID format. Please enter a valid number.");
+                return; 
+            }
+        } else {
+            System.out.println("Patient ID is not selected.");
+            return; 
+        }
+        
+	    int recId = patient.getRecordId(pid);
+	    TimeSlot time = new TimeSlot();
+	    String startTime = timeslotsComboBox .getValue();
+	    
+	    if (startTime == null) {
+	        return;  
+	    }
+	    
+	    double bill = 1500.0; //hardcoded for each doctor
+	    int timeslotId = time.findTimeSlotId(startTime);
+		if(patient.addAppointment(recId, docId, date, timeslotId)) {
+			//System.out.println("Successful");
+			Patient p = new Patient();
+			p.addBill(recId, bill, "unknown");
+			DoctorLabel.setText("Doctor Id: " + docId);
+			PatientLabel.setText("Patient Id: " + pid);
+			DateLabel.setText("Date: " + date);
+			TimeLabel.setText("Time: " + startTime);
+			BillLabel.setText("Bill: " + bill);
+			ConfirmationPane.setVisible(true);
+		}
+		else {
+			//System.out.println("Unsuccessful");
+		}
+	}
+
 }

@@ -130,4 +130,25 @@ public class PatientRecord {
 		return list;
 	}
 	
+	// ----------------------------------------- GET RECORD ID ------------------------------------------------- //
+	
+	public int getRecordId(int patId) {
+		int id = dbhandler.getRecordId(patId);
+		return id;
+	}
+	
+	// ------------------------------------------------ ADD A NEW APPOINTMENT --------------------------------------------------- //
+	
+	public boolean addAppointment(int recId, int docId, LocalDate date, int timeslotId) {
+		return dbhandler.addAppointment(recId, docId, date, timeslotId) ;
+	}
+	
+	// ------------------------------------------------------ ADD BILL ---------------------------------------------------------- //
+
+	public void addBill(int recId, double payment, String type) {
+		Bill b = new Bill();
+		b.addBill(recId, payment, type);
+	}
+	
 }
+

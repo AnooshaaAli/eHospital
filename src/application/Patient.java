@@ -106,6 +106,25 @@ public class Patient {
 		return record;
 	}
 	
+	// ----------------------------------------- Get Record Id on the basis of Patient ID ----------------------------------------------------- //
+	
+	public int getRecordId(int patId) {
+		int id = record.getRecordId(patId);
+		System.out.println(id);
+		return id;
+	}
+	
+	// ------------------------------------------------ Add a new Appointment --------------------------------------------------- //
+	
+	public boolean addAppointment(int recId, int docId, LocalDate date, int timeslotId) {
+		return record.addAppointment(recId, docId, date, timeslotId) ;
+	}
+	
+	// ------------------------------------------------------ Add bill ---------------------------------------------------------- //
+
+	public void addBill(int recId, double payment, String type) {
+		record.addBill(recId, payment, type);
+	}
 	
 	public void addMedications(String medName,int dosage,int pid)
 	{

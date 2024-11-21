@@ -1,10 +1,12 @@
 package application;
-
+import java.lang.Integer;
 import java.sql.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -820,4 +822,224 @@ public class DBHandler {
 		    return false;
 	 }
 	 
+	 // ----------------------------------------- GET ALL IDS OF DOCTORS ------------------------------------------------- //
+	 
+	public ObservableList<Integer> getDoctorIdsList() {
+	    ObservableList<Integer> docIdsList = FXCollections.observableArrayList();
+	   
+	    try (Connection conn = this.connect()) {
+	        String query = "SELECT did FROM doctor";
+	        Statement stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+
+	        while (rs.next()) {
+	            int did = rs.getInt("did");
+	            docIdsList.add(did);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return docIdsList;
+	}
+	
+	// --------------------------------------- IS DOCTOR AVAILABLE --------------------------------------------------------- //
+
+	public boolean checkDoctorAvailability(int doctorId, LocalDate appointmentDate) {
+
+	    DayOfWeek dayOfWeek = appointmentDate.getDayOfWeek();
+	    String dayString = dayOfWeek.toString(); 
+
+	    String query = "SELECT monday, tuesday, wednesday, thursday, friday, saturday FROM DOCTOR WHERE did = ?";
+
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setInt(1, doctorId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            boolean isAvailable = false;
+	            
+	            switch (dayString) {
+	                case "MONDAY":
+	                    isAvailable = rs.getBoolean("monday");
+	                    break;
+	                case "TUESDAY":
+	                    isAvailable = rs.getBoolean("tuesday");
+	                    break;
+	                case "WEDNESDAY":
+	                    isAvailable = rs.getBoolean("wednesday");
+	                    break;
+	                case "THURSDAY":
+	                    isAvailable = rs.getBoolean("thursday");
+	                    break;
+	                case "FRIDAY":
+	                    isAvailable = rs.getBoolean("friday");
+	                    break;
+	                case "SATURDAY":
+	                    isAvailable = rs.getBoolean("saturday");
+	                    break;
+	                default:
+	                    isAvailable = false;
+	            }
+
+	            return isAvailable;
+	        }
+
+	        return false;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;  
+	    }
+	}
+
+	// ------------------------------------------- GET FREE TIME SLOTS OF THE DOCTOR ---------------------------------------------- //
+	
+	public ObservableList<String> fetchAvailableTimeSlots(int doctorId, LocalDate selectedDate) {
+	    ObservableList<String> timeSlots = FXCollections.observableArrayList();
+	    
+	    Date sqlDate = Date.valueOf(selectedDate);
+	    String query = "SELECT t.starttime FROM DoctorTimeslot dt " +
+	                   "JOIN timeslot t ON dt.tid = t.tid " +
+	                   "WHERE dt.did = ? AND dt.date = ?";
+
+	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");  // Set the format to "HH:mm"
+	    
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        stmt.setInt(1, doctorId);
+	        stmt.setDate(2, sqlDate);
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            // Fetch the time from the result set as a Time object
+	            Time timeFromDB = rs.getTime("starttime");
+	            
+	            // Convert the SQL Time to LocalTime
+	            LocalTime localTime = timeFromDB.toLocalTime();
+	            
+	            // Format the LocalTime to "HH:mm"
+	            String formattedTime = localTime.format(timeFormatter);
+	            
+	            // Add the formatted time to the list
+	            timeSlots.add(formattedTime);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return timeSlots;
+	}
+	
+	// ---------------------------------------------- ADD APPOINTMENT ------------------------------------------------- //
+
+	public boolean addAppointment(int recordID, int doctorId, LocalDate appDate, int timeSlotId) {
+	    String insertQuery = "INSERT INTO APPOINTMENT (recordID, did, APPDATE, tid, status) " +
+	                         "VALUES (?, ?, ?, ?, ?)";
+
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+
+	        // Set the parameters for the insert query
+	        stmt.setInt(1, recordID);  // Patient record ID
+	        stmt.setInt(2, doctorId);   // Doctor ID
+	        stmt.setDate(3, Date.valueOf(appDate)); // Appointment date
+	        stmt.setInt(4, timeSlotId); // Time slot ID
+	        stmt.setInt(5, 0);          // Status (default to 0 for new appointments)
+
+	        // Execute the insert query
+	        int rowsAffected = stmt.executeUpdate();
+
+	        // If one row is inserted successfully, return true
+	        if (rowsAffected > 0) {
+	            return true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Return false if something goes wrong
+	    return false;
+	}
+
+	// ---------------------------------------------- GET PATIENT RECORD ID ------------------------------------------------------ //
+	
+	public int getRecordId(int patId) {
+	    // SQL query to get patientId for the provided username
+	    String query = "SELECT recordID FROM PATIENTRECORD WHERE pid = ?";
+	    
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        // Set the username parameter in the query
+	        stmt.setInt(1, patId);
+	
+	        // Execute the query
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Retrieve patientId from the result set
+	                return rs.getInt("recordID");
+	            } else {
+	                // Return -1 or any value to indicate the username was not found
+	                return -1;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return -1; // In case of error, return -1 or handle it as needed
+	    }
+	}
+	
+	// --------------------------------------------- GET TIME SLOT ID ----------------------------------------------------- //
+	
+	public int getTimeSlotIdByStartTime(String startTime) {
+	    String query = "SELECT tid FROM timeslot WHERE starttime = ?";
+	    int timeSlotId = -1; // Default value to indicate that no match was found
+
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        // Set the parameter (startTime) for the query
+	        stmt.setString(1, startTime);
+	        
+	        // Execute the query
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // Check if the result set has a matching record
+	        if (rs.next()) {
+	            timeSlotId = rs.getInt("tid");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return timeSlotId;
+	}
+	
+	// ------------------------------------------------- ADD BILL ----------------------------------------------------------------- //
+	
+	public void addBill(int recordId, double payment, String paymentType) {
+	    String insertBillQuery = "INSERT INTO BILL (recordId, payment, paymentType, status) VALUES (?, ?, ?, ?)";
+
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(insertBillQuery, Statement.RETURN_GENERATED_KEYS)) {
+
+	        // Set the parameters for the query
+	        stmt.setInt(1, recordId);
+	        stmt.setDouble(2, payment);
+	        stmt.setString(3, paymentType);
+	        stmt.setInt(4, 0); // Default status is 0
+
+	        // Execute the insert query
+	        int rowsInserted = stmt.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 }

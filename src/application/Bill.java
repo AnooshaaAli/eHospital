@@ -70,4 +70,10 @@ public class Bill {
 		return list;
 	}
 	
+	// ------------------------------------------------------ ADD BILL ---------------------------------------------------------- //
+
+	public void addBill(int recId, double payment, String type) {
+		dbhandler.addBill(recId, payment, type);
+	}
+	
 }

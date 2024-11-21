@@ -284,8 +284,6 @@ public class eHospital extends patientController implements Initializable {
 	@FXML 
     private Button RegisterPatient;
 	@FXML
-    private Button scheduleAppointment;
-	@FXML
 	private Button PayBills;
 	@FXML
 	private Button ViewPrescription;
@@ -402,42 +400,6 @@ public class eHospital extends patientController implements Initializable {
             {
             	fxmlFile = "Medications.fxml";
                 stageTitle = "Medications";
-            }
-            else
-            {
-            	throw new IllegalArgumentException("Unexpected button source");
-            }
-            
-            // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle(stageTitle);
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
-	public void handlePatientScheduleAppointment(MouseEvent  event) {
-		try {
-        	String fxmlFile;
-            String stageTitle;
-            
-            if(event.getSource()==scheduleAppointment)
-            {
-            	fxmlFile = "ScheduleAppointment.fxml";
-                stageTitle = "ScheduleAppointment";
             }
             else
             {
@@ -1937,6 +1899,7 @@ public class eHospital extends patientController implements Initializable {
 		 // Populate the ComboBoxes with time options and action options
 		 populatePid1ComboBox();
 		 populatePidComboBox();
+		 populateDoctorIdComboBox();
 		
 	     // Populate time options for startTimeComboBox and endTimeComboBox
 		 if (startTimeComboBox != null) 

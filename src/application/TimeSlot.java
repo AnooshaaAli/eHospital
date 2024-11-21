@@ -7,8 +7,13 @@ public class TimeSlot {
 	private int slotId;
 	private Time start_time;
 	private Time end_time;
+	DBHandler dbhandler;
 	
 	// ---------------------------------- GETTERS AND SETTERS --------------------------------------------- //
+	
+	TimeSlot() {
+		dbhandler = new DBHandler();
+	}
 	
 	public int getSlotId() {
 		return slotId;
@@ -29,4 +34,9 @@ public class TimeSlot {
 		this.end_time = end_time;
 	}
 	
+	// ------------------------------ GET TIME SLOT ID -------------------------------------------------- //
+	
+	public int findTimeSlotId(String startTime) {
+		return dbhandler.getTimeSlotIdByStartTime(startTime)
+;	}
 }
