@@ -52,15 +52,15 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="name" editable="false" prefHeight="26.0" prefWidth="361.0" text="[Admin Name]">
+            <TextField fx:id="name" editable="false" prefHeight="26.0" prefWidth="361.0" style="-fx-background-color: transparent;" text="[Admin Name]">
                <font>
-                  <Font name="Calibri" size="36.0" />
+                  <Font name="Calibri Bold" size="36.0" />
                </font></TextField>
-            <TextField fx:id="Username" editable="false" promptText="[username]" text="Username: [username]">
+            <TextField fx:id="Username" editable="false" promptText="[username]" style="-fx-background-color: transparent;" text="Username: [username]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font></TextField>
-            <TextField fx:id="Id" prefHeight="35.0" prefWidth="494.0" text="Id: [ Patient Id ]">
+            <TextField fx:id="Id" prefHeight="35.0" prefWidth="494.0" style="-fx-background-color: transparent;" text="Id: [ Patient Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>

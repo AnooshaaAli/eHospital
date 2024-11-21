@@ -52,32 +52,32 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="name" editable="false" text="[Doctor Name ]">
+            <TextField fx:id="name" editable="false" style="-fx-background-color: transparent;" text="[Doctor Name ]">
                <font>
                   <Font name="Calibri Bold" size="36.0" />
                </font>
             </TextField>
-            <TextField fx:id="Username" editable="false" text="Username: [ Username ]">
+            <TextField fx:id="Username" editable="false" style="-fx-background-color: transparent;" text="Username: [ Username ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="Id" editable="false" prefHeight="35.0" prefWidth="493.0" text="Id: [ Doctor Id ]">
+            <TextField fx:id="Id" editable="false" prefHeight="35.0" prefWidth="493.0" style="-fx-background-color: transparent;" text="Id: [ Doctor Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="empID" editable="false" text="Employee Id: [ Emp Id ]">
+            <TextField fx:id="empID" editable="false" style="-fx-background-color: transparent;" text="Employee Id: [ Emp Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="experience" editable="false" text="Experience: [ Years ]">
+            <TextField fx:id="experience" editable="false" style="-fx-background-color: transparent;" text="Experience: [ Years ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="workingDays" editable="false" prefHeight="86.0" prefWidth="430.0" text="Available Days: Mon, Tue, Wed, Thurs, Fri, Sat ">
+            <TextField fx:id="workingDays" editable="false" prefHeight="86.0" prefWidth="430.0" style="-fx-background-color: transparent;" text="Available Days: Mon, Tue, Wed, Thurs, Fri, Sat ">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>

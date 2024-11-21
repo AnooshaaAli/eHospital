@@ -57,37 +57,37 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="name" text="Patient name">
+            <TextField fx:id="name" editable="false" style="-fx-background-color: #f3f0dd;" text="Patient name">
                <font>
                   <Font name="Calibri Bold" size="36.0" />
                </font>
             </TextField>
-            <TextField fx:id="Username" text="Username: [ Username ]">
+            <TextField fx:id="Username" editable="false" style="-fx-background-color: #f3f0dd;" text="Username: [ Username ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="Id" text="Id: [ Patient Id ]">
+            <TextField fx:id="Id" editable="false" style="-fx-background-color: #f3f0dd;" text="Id: [ Patient Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="gender" text="Gender: [ Patient Gender ]  ">
+            <TextField fx:id="gender" editable="false" style="-fx-background-color: #f3f0dd;" text="Gender: [ Patient Gender ]  ">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="DOB" text="Date of Birth: [ DOB ]">
+            <TextField fx:id="DOB" editable="false" style="-fx-background-color: #f3f0dd;" text="Date of Birth: [ DOB ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="contact" text="Contact: [ Phone Number ]">
+            <TextField fx:id="contact" editable="false" style="-fx-background-color: #f3f0dd;" text="Contact: [ Phone Number ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="dischargeStatus" text="Discharge Status: No ">
+            <TextField fx:id="dischargeStatus" editable="false" style="-fx-background-color: #f3f0dd;" text="Discharge Status: No ">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>

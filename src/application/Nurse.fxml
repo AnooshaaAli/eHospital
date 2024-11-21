@@ -57,42 +57,42 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="name" editable="false" text="[Nurse Name ]">
+            <TextField fx:id="name" editable="false" style="-fx-background-color: transparent;" text="[Nurse Name ]">
                <font>
                   <Font name="Calibri Bold" size="36.0" />
                </font>
             </TextField>
-            <TextField fx:id="Username" editable="false" text="Username: [ Username ]">
+            <TextField fx:id="Username" editable="false" style="-fx-background-color: transparent;" text="Username: [ Username ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="Id" editable="false" text="Id: [ Nurse Id ]">
+            <TextField fx:id="Id" editable="false" style="-fx-background-color: transparent;" text="Id: [ Nurse Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="empID" editable="false" text="Employee Id: [ Emp Id ]">
+            <TextField fx:id="empID" editable="false" style="-fx-background-color: transparent;" text="Employee Id: [ Emp Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="gender" editable="false" text="Gender: [...]">
+            <TextField fx:id="gender" editable="false" style="-fx-background-color: transparent;" text="Gender: [...]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="experience" editable="false" text="Experience: [ Years ]">
+            <TextField fx:id="experience" editable="false" style="-fx-background-color: transparent;" text="Experience: [ Years ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="contact" editable="false" text="Contact:[...]">
+            <TextField fx:id="contact" editable="false" style="-fx-background-color: transparent;" text="Contact:[...]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="workingHours" editable="false" text="Working Hours: [...]">
+            <TextField fx:id="workingHours" editable="false" style="-fx-background-color: transparent;" text="Working Hours: [...]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
