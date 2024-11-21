@@ -662,7 +662,16 @@ public class eHospital implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==ViewPrescription)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+            	Patient p= Patient.getInstance();
+            	controller.pidComboBox= new ComboBox<String>();
+            	
+            	if (controller.pidComboBox != null) 
+            	    controller.pidComboBox.setValue(String.valueOf(Patient.getInstance().getId()));
+ 	            controller.initTable();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -2028,9 +2037,8 @@ public class eHospital implements Initializable {
             }
             
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -2245,7 +2253,6 @@ public class eHospital implements Initializable {
     private Button payCash;
     @FXML
     private Button payCard;
-    
     public void handlePayBillsUC(MouseEvent event)
     {
     	Patient p= Patient.getInstance();
@@ -2299,7 +2306,8 @@ public class eHospital implements Initializable {
             billID.getItems().clear();
         }
     }
-   
+   //view prescription patient
+    
     
     
     
