@@ -926,9 +926,93 @@ public class DBHandler {
 		    	return true;
 		    return false;
 	 }
-	 
+	 public String loadBloopPressure(int id)
+	 {
+		 String data="";
+		 String sql = "SELECT blood_pressure FROM PATIENTRECORD WHERE pid = '" + id + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("blood_pressure");
+		        } else {
+		            System.out.println("Patient record not found for username: " + id);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient blood pressure.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public String loadTemperature(int id)
+	 {
+		 String data="";
+		 String sql = "SELECT temperature FROM PATIENTRECORD WHERE pid = '" + id + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("temperature");
+		        } else {
+		            System.out.println("Patient record not found for id: " + id);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient temperature.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public String loadHeartRate(int id)
+	 {
+		 String data="";
+		 String sql = "SELECT heart_rate FROM PATIENTRECORD WHERE pid = '" + id + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	data = rs.getString("heart_rate");
+		        } else {
+		            System.out.println("Patient record not found for id: " + id);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient heart rate.");
+		        e.printStackTrace();
+		    }
+		 return data;
+	 }
+	 public int loadRecordID(int id)
+	 {
+		 int rid=-20;
+		 String sql = "SELECT recordID FROM PATIENTRECORD WHERE pid = '" + id + "'";
+
+		    try (Connection con = connect();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        if (rs.next()) {
+		            // Retrieve the name from the result set
+		        	rid = rs.getInt("recordID");
+		        } else {
+		            System.out.println("Patient not found for id: " + id);
+		        }
+		    } catch (SQLException e) {
+		        System.out.println("Error retrieving patient id.");
+		        e.printStackTrace();
+		    }
+		 return rid;
+	 }
 	 
 	 //load item names in combo box
+
 	 public ObservableList<String> loadItemNames() {
 		    ObservableList<String> itemNames = FXCollections.observableArrayList();
 		    Connection connection = null;
@@ -1096,7 +1180,133 @@ public class DBHandler {
 
 		    return isUpdated;  // Return whether the update was successful
 		}
+	 //load bill
+	 public ObservableList<Bill> loadBills(int id)
+	 {
+		 	ObservableList<Bill> billsList = FXCollections.observableArrayList(); // List to hold bills
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    ResultSet resultSet = null;
 
-	 
+		    try {
+		        connection = connect(); // Assuming 'connect()' method establishes the database connection
+		        String query = "SELECT bid, payment FROM BILL WHERE recordId = ?";
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, id); // Set the recordId in the query
+		        
+		        resultSet = preparedStatement.executeQuery();
 
+		        while (resultSet.next()) {
+		            int bid = resultSet.getInt("bid");
+		            double payment = resultSet.getDouble("payment");
+		            
+		            // Create a Bill object and add it to the list
+		            Bill bill = new Bill(bid, payment);
+		            billsList.add(bill);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace(); // Log any exceptions
+		    } finally {
+		        // Close resources
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return billsList; // Re	
+	 }
+	 public ObservableList<Integer> loadBillID(int id)
+	 {
+		 ObservableList<Integer> BillID = FXCollections.observableArrayList();
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;;
+		    ResultSet resultSet = null;
+
+		    try {
+		        connection = connect(); // Ensure the 'connect()' method is implemented
+		        String query = "SELECT bid FROM BILL WHERE recordId = ? and status=0";
+
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, id);  // Bind the parameter to the query
+
+		        resultSet = preparedStatement.executeQuery();
+
+		        // Add Bill IDs to the list
+		        while (resultSet.next()) {
+		            int billId = resultSet.getInt("bid");
+		            BillID.add(billId);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        // Close resources
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+		    return BillID;
+ 	 }
+	 public boolean payByCash(int id)
+	 {
+		 	Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+
+		    try {
+		        connection = connect();  
+		        String query = "UPDATE BILL SET paymentType = 'Cash', status = 1 WHERE recordId = ?";
+
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, id);  // Bind the recordId to the query
+
+		        int rowsAffected = preparedStatement.executeUpdate();
+		        return rowsAffected > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;  // Return false if an error occurs
+		    } finally {
+		        // Close resources
+		        try {
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+			
+	 }
+	 public boolean payByCard(int id)
+	 {
+		 Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+
+		    try {
+		        connection = connect();  
+		        String query = "UPDATE BILL SET paymentType = 'Credit Card', status = 1 WHERE recordId = ?";
+
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, id);  // Bind the recordId to the query
+
+		        int rowsAffected = preparedStatement.executeUpdate();
+		        return rowsAffected > 0;
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;  // Return false if an error occurs
+		    } finally {
+		        // Close resources
+		        try {
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+	 }
 }

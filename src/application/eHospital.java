@@ -764,24 +764,23 @@ public class eHospital implements Initializable {
                 stageTitle = "PayBill";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
             
+            ;
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==PayBills)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.loadBillID();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
             newFormStage.setTitle(stageTitle);
-
-            // Show the new form
             newFormStage.show();
-
-            // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
             
@@ -808,7 +807,11 @@ public class eHospital implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==showBills)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initBillTable();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -835,7 +838,6 @@ public class eHospital implements Initializable {
 	
 	
 	
-	//NURSE
 	//NURSE
 	@FXML 
     private Button NurseSignIn;
@@ -1052,7 +1054,7 @@ public class eHospital implements Initializable {
              e.printStackTrace();
          }
     }
-    //use case Update patietn record
+    //use case Update patient record
     @FXML
     public void setMedicationDetails(List<String> medicationDetails) {
         if (medicationDetails != null && !medicationDetails.isEmpty()) {
@@ -1202,7 +1204,6 @@ public class eHospital implements Initializable {
         }
     }
     //end
-    //end
     public void handleViewPatientRecord(MouseEvent  event)
     {
     	 try {
@@ -1286,7 +1287,7 @@ public class eHospital implements Initializable {
 	
 	
 
-	//DOCTOR
+	
 	//DOCTOR
     @FXML
     private Button DoctorSignIn;
@@ -1541,7 +1542,7 @@ public class eHospital implements Initializable {
 	
 	
 	
-	//ADMIN
+	
 	//ADMIN
 	@FXML
     private Button AdminSignIn;
@@ -1559,8 +1560,6 @@ public class eHospital implements Initializable {
 	private Button ManageInventory;
 	@FXML
 	private Button HandlePayrolls;
-	
-	
 	@FXML
 	private Button addInventory;
 	@FXML
@@ -2068,7 +2067,6 @@ public class eHospital implements Initializable {
 	
 	
 	
-	//PM USE CASE
 	//prescribe Medications
 	@FXML
 	private Button AddMed;
@@ -2188,7 +2186,6 @@ public class eHospital implements Initializable {
       //  System.out.println("done");
         
     }
-	//DH USE CASE
     //discharge patient
     @FXML
     private Button dischargeSummary;
@@ -2244,8 +2241,28 @@ public class eHospital implements Initializable {
 		
     }
 	//pay bills use case
-    public void handlePayBillsUC()
+    @FXML
+    private Button payCash;
+    @FXML
+    private Button payCard;
+    
+    public void handlePayBillsUC(MouseEvent event)
     {
+    	Patient p= Patient.getInstance();
+    	boolean check=false;
+    	if(event.getSource()==payCash)
+    	{
+    		check=p.payByCash();
+    	}
+    	else if(event.getSource()==payCard)
+    	{
+    		check=p.payByCard();
+    	}
+    	if(check)
+    		showAlert("Successful","Payment received","Status updated");
+    	else
+    		showAlert("Unsuccessful","Payment cancelled","No changes made");
+    	
     	
     }
     @FXML
@@ -2255,20 +2272,43 @@ public class eHospital implements Initializable {
     @FXML
     private TableColumn<Bill,Double> amount;
     private ObservableList<Bill> observableBill;
+    @FXML
+    private ComboBox<Integer> billID;
+    
     public void initBillTable()
     {
     	Patient patient= Patient.getInstance();
-    	
+    	System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
     	observableBill = FXCollections.observableArrayList();
     	
     	bid.setCellValueFactory(new PropertyValueFactory<>("billId"));
     	amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 		
-	//	InventoryItem invItem= new InventoryItem();
-	//	observableBill=invItem.displayCurrentInventory();
-		//System.out.println(observableBill.size());
+		observableBill =patient.loadBills();
+	
 		billTable.setItems(observableBill);
     }
+    public void loadBillID()
+    {
+    	Patient p= Patient.getInstance();
+    	ObservableList<Integer> id= p.loadBillID();
+    	if (billID!=null && id != null && !id.isEmpty()) {
+    		billID.setItems(id);
+        } else {
+            System.out.println("No bills to load.");
+            billID.getItems().clear();
+        }
+    }
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     //MANAGE INVENTORY   use case
@@ -2287,8 +2327,6 @@ public class eHospital implements Initializable {
     private TextField itemQuantity;
     @FXML
     private TextField itemCategory;
-    
-    
     @FXML
     public void initInventoryTable()
     {
@@ -2317,7 +2355,6 @@ public class eHospital implements Initializable {
     			showAlert("Unsuccessful","Unable to add item","Error occured.");
     	}
     }
-    //update
     @FXML
     private ComboBox<String> itemNameBox;
     public void handleManagerInventoryUpdateUC(MouseEvent event)
@@ -2361,24 +2398,8 @@ public class eHospital implements Initializable {
 
 
     }
+ 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
     @FXML
 	private TextField Username;
 	@FXML
