@@ -50,7 +50,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="retrieveInventory" layoutX="169.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#handlerManagerInventoryUpdateUC" prefHeight="37.0" prefWidth="179.0" style="-fx-background-color: #dd403a;" text="Update Details" textFill="#fffce8">
+                        <Button fx:id="retrieveInventory" layoutX="169.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#handleManagerInventoryUpdateUC" prefHeight="37.0" prefWidth="179.0" style="-fx-background-color: #dd403a;" text="Update Details" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>

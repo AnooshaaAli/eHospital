@@ -2042,7 +2042,7 @@ public class eHospital implements Initializable {
             	eHospital controller = loader.getController(); // Get the same controller
  	            controller.initInventoryTable();
             }
-            else if(event.getSource()==retrieveInventory)
+            else if(event.getSource()==retrieveInventory || event.getSource()==deleteInventory)
             {
             	eHospital controller = loader.getController(); // Get the same controller
  	            controller.loadItemNames();
@@ -2311,7 +2311,6 @@ public class eHospital implements Initializable {
     		int quantity= Integer.parseInt(itemQuantity.getText());
     		InventoryItem inv= new InventoryItem();
     		boolean check =inv.addInventoryItem(quantity,category,itemname);
-    		//System.out.println("valie"+check);
     		if(check)
     			showAlert("Successful","Item added","Your inventory is updated.");
     		else
@@ -2321,7 +2320,7 @@ public class eHospital implements Initializable {
     //update
     @FXML
     private ComboBox<String> itemNameBox;
-    public void handlerManagerInventoryUpdateUC(MouseEvent event)
+    public void handleManagerInventoryUpdateUC(MouseEvent event)
     {
     	if(event.getSource()==retrieveInventory)
     	{
@@ -2349,7 +2348,19 @@ public class eHospital implements Initializable {
         }
     	
     }
-    
+    public void handleManageInventoryDeleteUC(MouseEvent event)
+    {
+    	String itemname= itemNameBox.getValue();
+		int amt= Integer.parseInt(itemQuantity.getText());
+		InventoryItem inv= new InventoryItem();
+		boolean check =inv.deleteInventoryItem(amt,itemname);
+		if(check)
+			showAlert("Successful","Item deleted","Your inventory is updated.");
+		else
+			showAlert("Unsuccessful","Unable to delete item","The quantity to be removed exceeds the available stock.");
+
+
+    }
     
     
     
@@ -2478,6 +2489,7 @@ public class eHospital implements Initializable {
 		        e.printStackTrace();
 		    }
 		}
+	//menu page functions
 	private void details(String Name, String usrname,int id) {
 		  //  System.out.println("Setting admin name: " + Name);
 		    if (name != null) {
@@ -2489,7 +2501,6 @@ public class eHospital implements Initializable {
 		        System.out.println("TextField  is null. Check FXML bindings.");
 		    
 	}
-	 
 	private void detailsPatient(String Name, String usrname,int id,String Gender, String dob,String Contact,String st) {
 		  //  System.out.println("Setting admin name: " + Name);
 		    if (name != null) {

@@ -992,7 +992,7 @@ public class DBHandler {
 		 return inv;
 				
 	 }
-	 //add inventory 
+	 //add + update + delete inventory 
 	 public boolean addInventoryItem(int amt, String category, String name) 
 	 {
 		    String query = "INSERT INTO INVENTORYITEM (quantity, name, category) VALUES (" 
@@ -1048,6 +1048,55 @@ public class DBHandler {
 		        }
 		    }
 		 }
+	 public boolean deleteInventoryItem(int quantity, String name) {
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    boolean isUpdated = false;
 
+		    try {
+		        connection = connect();
+
+		        // First, retrieve the current quantity for the specified item
+		        String selectQuery = "SELECT quantity FROM INVENTORYITEM WHERE name = ?";
+		        preparedStatement = connection.prepareStatement(selectQuery);
+		        preparedStatement.setString(1, name);
+
+		        ResultSet resultSet = preparedStatement.executeQuery();
+		        if (resultSet.next()) {
+		            int currentQuantity = resultSet.getInt("quantity");
+
+		            // Check if the current quantity is sufficient to remove the specified amount
+		            if (currentQuantity >= quantity) {
+		                // SQL query to update the inventory
+		                String updateQuery = "UPDATE INVENTORYITEM SET quantity = quantity - ? WHERE name = ?";
+
+		                // Prepare statement for update
+		                preparedStatement = connection.prepareStatement(updateQuery);
+		                preparedStatement.setInt(1, quantity);  // Subtract the specified quantity
+		                preparedStatement.setString(2, name);   // Specify item name
+
+		                // Execute update
+		                int rowsAffected = preparedStatement.executeUpdate();
+		                isUpdated = rowsAffected > 0;  // Returns true if update was successful
+		            } else {
+		                System.out.println("Not enough inventory to delete the specified amount.");
+		            }
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();  // Log the exception
+		    } finally {
+		        // Close resources
+		        try {
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return isUpdated;  // Return whether the update was successful
+		}
+
+	 
 
 }

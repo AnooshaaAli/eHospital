@@ -70,5 +70,9 @@ public class InventoryItem {
 		boolean check= db.updateInventoryItem( amt,  type, name);
 		return check;
 	}
-	
+	public boolean deleteInventoryItem(int quantity,String name)
+	{
+		boolean check =db.deleteInventoryItem(quantity, name);
+		return check;
+	}
 }
