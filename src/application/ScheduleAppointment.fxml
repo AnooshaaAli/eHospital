@@ -51,6 +51,11 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="FollowUpReminders" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewPrescription" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Follow Up Reminders">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </left>

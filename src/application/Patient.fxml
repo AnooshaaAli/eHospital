@@ -49,6 +49,11 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
+            <Button fx:id="FollowUpReminders" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewPrescription" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Follow Up Reminders">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </left>
@@ -120,6 +125,14 @@
                </font>
             </Label>
             <Label layoutX="14.0" layoutY="352.0" text="- Pay your Bills" textFill="#747572">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <Label layoutX="14.0" layoutY="396.0" text="- View and Update Follow-ups Status" textFill="#747572">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
