@@ -60,4 +60,15 @@ public class InventoryItem {
 		this.category = category;
 	}
 	
+	public ObservableList<String> loadItemNames()
+	{
+		ObservableList<String> list= db.loadItemNames();
+		return list;
+	}
+	public boolean updateInventoryItem(int amt, String type, String name)
+	{
+		boolean check= db.updateInventoryItem( amt,  type, name);
+		return check;
+	}
+	
 }

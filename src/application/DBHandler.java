@@ -928,6 +928,40 @@ public class DBHandler {
 	 }
 	 
 	 
+	 //load item names in combo box
+	 public ObservableList<String> loadItemNames() {
+		    ObservableList<String> itemNames = FXCollections.observableArrayList();
+		    Connection connection = null;
+		    Statement statement = null;
+		    ResultSet resultSet = null;
+
+		    try {
+		        connection = connect(); // Ensure the 'connect()' method is implemented
+
+		        String query = "SELECT name FROM INVENTORYITEM"; // Replace with actual table/column names
+		        statement = connection.createStatement();
+		        resultSet = statement.executeQuery(query);
+
+		        // Add item names to the list
+		        while (resultSet.next()) {
+		            String itemName = resultSet.getString("name");
+		            itemNames.add(itemName);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        // Close resources
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (statement != null) statement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return itemNames; // Return the list of item names
+		}
 	 //display current inventory 
 	 public  ObservableList<InventoryItem> displayCurrentInventory()
 	 {
@@ -980,7 +1014,40 @@ public class DBHandler {
 		        return false; // Return false if there was an error
 		    }
 		}
-
+	 public boolean updateInventoryItem(int amt, String type, String name)
+	 {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "UPDATE INVENTORYITEM SET quantity = ?, category = ? WHERE name = ?";
+		
+		try {
+		    // Establish database connection
+			connection = connect();
+			
+			// Prepare the SQL query
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, amt);   // Set the amount
+			preparedStatement.setString(2, type); // Set the type
+			preparedStatement.setString(3, name); // Set the name
+			
+			// Execute the update
+			int rowsUpdated = preparedStatement.executeUpdate();
+		    return rowsUpdated > 0;
+		
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    return false; // Return false in case of any error
+		} finally {
+		    try {
+		        // Close resources
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } 
+		    catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		 }
 
 
 }

@@ -2042,6 +2042,11 @@ public class eHospital implements Initializable {
             	eHospital controller = loader.getController(); // Get the same controller
  	            controller.initInventoryTable();
             }
+            else if(event.getSource()==retrieveInventory)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.loadItemNames();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -2314,14 +2319,36 @@ public class eHospital implements Initializable {
     	}
     }
     //update
+    @FXML
+    private ComboBox<String> itemNameBox;
     public void handlerManagerInventoryUpdateUC(MouseEvent event)
     {
     	if(event.getSource()==retrieveInventory)
     	{
+    		String itemname= itemNameBox.getValue();
+    		int amt= Integer.parseInt(itemQuantity.getText());
+    		String category=itemCategory.getText();
+    		InventoryItem inv= new InventoryItem();
+    		boolean check =inv.updateInventoryItem(amt,category,itemname);
+    		if(check)
+    			showAlert("Successful","Item updated","Your inventory is updated.");
+    		else
+    			showAlert("Unsuccessful","Unable to update item","Error occured.");
     		
     	}
     }
-    
+    public void loadItemNames()
+    {
+    	InventoryItem inv=new InventoryItem();
+    	ObservableList<String> names= inv.loadItemNames();
+    	if (itemNameBox!=null && names != null && !names.isEmpty()) {
+            itemNameBox.setItems(names);
+        } else {
+            System.out.println("No items to load.");
+            itemNameBox.getItems().clear();
+        }
+    	
+    }
     
     
     
@@ -2387,6 +2414,7 @@ public class eHospital implements Initializable {
 		 // Populate the ComboBoxes with time options and action options
 		 populatePid1ComboBox();
 		 populatePidComboBox();
+		// loadItemNames();
 		
 	     // Populate time options for startTimeComboBox and endTimeComboBox
 		 if (startTimeComboBox != null) 
