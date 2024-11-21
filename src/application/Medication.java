@@ -1,5 +1,7 @@
 package application;
 
+import java.util.List;
+
 import javafx.collections.ObservableList;
 
 public class Medication {
@@ -31,12 +33,59 @@ public class Medication {
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
+
+	public int getMedicationId() {
+		return medicationId;
+	}
 	
+	public void setMedicationId(int medicationId) {
+		this.medicationId = medicationId;
+	}
+	
+	public ObservableList<String> getMedications(int rpid) {
+		DBHandler db=new DBHandler();
+				
+		        ObservableList<String> medicationList = db.getMedications(rpid);
+
+
+		        return medicationList;    
+		        }
+			
+			public ObservableList<String> getMedications() {
+				DBHandler db=new DBHandler();
+				
+		        ObservableList<String> medicationList = db.getMedications();;
+
+
+		        return medicationList;
+		    }
+			
+			public void EnterMedicationDetails(int pid,String medicationName,int dosage)
+			{
+				DBHandler db=new DBHandler();
+				db.EnterMedicationDetails(pid,medicationName,dosage);
+				
+			}
+			
+			 public List<String> GetMedicationDetails(int pid) {
+			        DBHandler db = new DBHandler();
+
+			        // Get the list of medication details
+			        List<String> medicationDetails = db.FindMedicationDetails(pid);
+
+			        // Check if the list is empty
+			        if (medicationDetails.isEmpty()) {
+			            System.out.println("No medication details found for PID: " + pid);
+			        } else {
+			            System.out.println("Medication Details for PID " + pid + ":");
+			            medicationDetails.forEach(System.out::println);
+			        }
+			        
+					return medicationDetails;
+			    }
 	public ObservableList<Medication> showExistingMedication(int pid)
 	{
 		ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
 		return list;
 	}
-	
-	
 }

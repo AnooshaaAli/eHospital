@@ -27,11 +27,11 @@ public class Patient {
 	private PatientRecord record;
 	private DBHandler dbhandler;
 	
-	Patient() {
-		dbhandler = new DBHandler();
-		record = new PatientRecord();
+	Patient()
+	{
+		dbhandler=new DBHandler();
+		record= new PatientRecord();
 	}
-	
 	public String getUsername() {
 		return username;
 	}
@@ -106,6 +106,7 @@ public class Patient {
 		return record;
 	}
 	
+	
 	public void addMedications(String medName,int dosage,int pid)
 	{
 		
@@ -145,5 +146,32 @@ public class Patient {
 	{
 		boolean check =dbhandler.LoginPatient(username,password);
 		return check;
+	}
+	
+	public String loadPatientName(String username)
+	{
+		String name= dbhandler.loadPatientName(username);
+		return name;
+	}
+	public int loadPatientId(String username)
+	{
+		int id=dbhandler.loadPatientId(username);
+		return id;
+	}
+	public String loadPatientGender(String username) {
+		String data= dbhandler.loadPatientGender(username);
+		return data;
+	}
+	public String loadPatientDOB(String username) {
+		String data= dbhandler.loadPatientDOB(username);
+		return data;
+	}
+	public String loadPatientDischargeStatus(String username) {
+		String data = dbhandler.loadPatientDischargeStatus(username) ? "Discharged" : "Not Discharged";
+		return data;
+	}
+	public String loadPatientContact(String username) {
+		String data= dbhandler.loadPatientContact(username);
+		return data;
 	}
 }
