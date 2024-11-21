@@ -2266,7 +2266,7 @@ public class eHospital implements Initializable {
     }
     
     
-    //MANAGE INVENTORY 
+    //MANAGE INVENTORY   use case
     private ObservableList<InventoryItem> observableInventory;
     @FXML
     private TableView<InventoryItem> inventoryTable;
