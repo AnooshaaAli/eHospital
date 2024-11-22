@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -43,8 +45,15 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="200.0" layoutY="23.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #f3f0dd;" />
-                        <Button fx:id="NurseSignIn" layoutX="203.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#handleLoginButtonNurse" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Back" textFill="#fffce8">
+                        <ComboBox fx:id="pidComboBox" layoutX="200.0" layoutY="23.0" onAction="#initTable" prefHeight="25.0" prefWidth="185.0" promptText="chose patient id" style="-fx-background-color: #f3f0dd;" />
+                        <TableView fx:id="medicationTable" layoutX="79.0" layoutY="156.0" prefHeight="247.0" prefWidth="323.0">
+                          <columns>
+                            <TableColumn fx:id="medicationId" prefWidth="108.0" text="medicationId" />
+                            <TableColumn fx:id="medicineName" prefWidth="110.39994812011719" text="medicineName" />
+                              <TableColumn fx:id="dosage" prefWidth="103.99998779296874" text="dosage" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="Close" layoutX="205.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#handleClose" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Close" textFill="#fffce8">
                            <font>
                               <Font size="16.0" />
                            </font>
