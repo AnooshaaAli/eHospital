@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -42,6 +44,13 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
+                        <TableView fx:id="medicationTable" layoutX="64.0" layoutY="113.0" prefHeight="302.0" prefWidth="378.0">
+                          <columns>
+                            <TableColumn fx:id="medicationId" prefWidth="114.4000244140625" text="Medication Id" />
+                            <TableColumn fx:id="medicineName" prefWidth="179.19993591308594" text="Medicine Name" />
+                              <TableColumn fx:id="dosage" prefWidth="80.800048828125" text="Dosage" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </children>
