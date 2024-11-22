@@ -15,8 +15,25 @@ public class PatientRecord {
 	private List<Medication> medicine;
     private List<Appointment> appointments;
     private List<Bill> bills;
-    private DBHandler dbhandler;
+	private static PatientRecord instance;
+	private DBHandler dbhandler;
     private DischargeSummary summary;
+   
+    public static PatientRecord getInstance() 
+	{
+		if (instance == null) {
+            instance = new PatientRecord();
+        }
+        return instance;
+	}
+    
+    public void initPatientRecord(int id)
+	{
+    	this.bloodPressure= dbhandler.loadBloopPressure(id);
+    	this.temperature=dbhandler.loadTemperature(id);
+    	this.heartRate=dbhandler.loadHeartRate(id);
+    	this.recordID= dbhandler.loadRecordID(id);
+	}
     
     PatientRecord() {
     	dbhandler = new DBHandler();
@@ -36,44 +53,17 @@ public class PatientRecord {
 	
 	public void addPrescribeMedication(String medName,int dosage,int pid)
 	{
-		dbhandler.addPrescribeMedication(medName,dosage, pid);
+		Medication med= new Medication();
+		med.addPrescribeMedication(medName,dosage,pid);
+		//dbhandler.addPrescribeMedication(medName,dosage, pid);
 	}
 	
-	public String getTemperature() {
-		return temperature;
-	}
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
-	}
-	public String getBloodPressure() {
-		return bloodPressure;
-	}
-	public void setBloodPressure(String bloodPressure) {
-		this.bloodPressure = bloodPressure;
-	}
-	public String getHeartRate() {
-		return heartRate;
-	}
-	public void setHeartRate(String heartRate) {
-		this.heartRate = heartRate;
-	}
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
-	public List<Bill> getBills() {
-		return bills;
-	}
-	public void setBills(List<Bill> bills) {
-		this.bills = bills;
-	}
-	public int getRecordID() {
-		return recordID;
-	}
-	public void setRecordID(int recordID) {
-		this.recordID = recordID;
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+		Medication med = new Medication();
+		ObservableList<Medication> list = med.showExistingMedication(pid);
+		medicine= list;
+		return list;
 	}
 	
 	public ObservableList<String> getPatientIds(int pid)
@@ -84,21 +74,97 @@ public class PatientRecord {
 	
 	}
 	
-	// ---------------------------------------- UPDATE PATIENT RECORD ------------------------------------------------ //
-	
 	public void updatePatientRecord(int pid,String PatientRecord,String bloodPressureText,String heartRateText)
 	{
 		DBHandler db=new DBHandler();
 		db.updatePatientRecord(pid,PatientRecord,bloodPressureText,heartRateText);
 	}
 	
-	// ---------------------------------------- DISCHARGE PATIENT ------------------------------------------------ //
-	
 	public void dischargePatient(String inst,LocalDate date,int pid)
 	{
 		//System.out.println("this is the record id " +this.getRecordID() );
 		summary.createDischargePatient(inst, date,pid);
 	}
+
+	public ObservableList<Bill> loadBills()
+	{
+		Bill a = new Bill();
+		ObservableList<Bill> bill= a.getBills(recordID);
+		return bill;
+	}
+	public ObservableList<Integer> loadBillID()
+	{
+		ObservableList<Integer> list= dbhandler.loadBillID(recordID);
+		return list;
+	}
+	
+	public boolean payByCash()
+	{
+		boolean check= dbhandler.payByCash(recordID);
+		return check;
+	}
+	public boolean payByCard()
+	{
+		boolean check= dbhandler.payByCard(recordID);
+		return check;
+	}
+	public String getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
+	}
+
+	public String getBloodPressure() {
+		return bloodPressure;
+	}
+
+	public void setBloodPressure(String bloodPressure) {
+		this.bloodPressure = bloodPressure;
+	}
+
+	public String getHeartRate() {
+		return heartRate;
+	}
+
+	public void setHeartRate(String heartRate) {
+		this.heartRate = heartRate;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	public List<Bill> getBills() {
+		return bills;
+	}
+
+	public void setBills(List<Bill> bills) {
+		this.bills = bills;
+	}
+
+	public int getRecordID() {
+		return recordID;
+	}
+
+	public void setRecordID(int recordID) {
+		this.recordID = recordID;
+	}
+
+	public DischargeSummary getSummary() {
+		return summary;
+	}
+
+	public void setSummary(DischargeSummary summary) {
+		this.summary = summary;
+	}
+	
+	// -------------------------------------------- ANOOSHA'S FUNCS --------------------------------------------------- //
 	
 	// ---------------------------------------- INSERT DEFAULT RECORD ------------------------------------------------ //
 	
@@ -119,15 +185,6 @@ public class PatientRecord {
 		Bill b = new Bill();
 		bills = b.getBills(patId);
 		return this;
-	}
-	
-	// ---------------------------------------- SHOW MEDICATIONS ------------------------------------------------ //
-	
-	public ObservableList<Medication> showExistingMedication(int pid)
-	{
-		ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
-		medicine= list;
-		return list;
 	}
 	
 	// ----------------------------------------- GET RECORD ID ------------------------------------------------- //
@@ -173,5 +230,3 @@ public class PatientRecord {
 		apt.markAptCompleted();
 	}
 }
-
-
