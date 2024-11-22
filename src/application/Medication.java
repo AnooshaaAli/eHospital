@@ -8,10 +8,10 @@ public class Medication {
 	private int medicationId;
 	private String medicineName; 
 	private int dosage; 
-	
-	Medication()
+	private DBHandler db;
+ 	Medication()
 	{
-		
+		db= new DBHandler();
 	}
 	
 	
@@ -35,7 +35,19 @@ public class Medication {
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
-	
+	public void addPrescribeMedication(String medName,int dosage,int pid)
+	{
+		//Medication med= new Medication();
+		//med.addPrescribeMedication(medName,dosage,pid);
+		db.addPrescribeMedication(medName,dosage, pid);
+	}
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+
+		ObservableList<Medication> list=db.showExistingMedication(pid);
+		
+		return list;
+	}
 //	public void enterMedicationDetails(String name)
 //	{}
 //	public void updateMedicationDetails()
@@ -65,7 +77,7 @@ public class Medication {
 		        return medicationList;    
 		        }
 			
-			public ObservableList<String> getMedications() {
+	public ObservableList<String> getMedications() {
 				DBHandler db=new DBHandler();
 				
 		        ObservableList<String> medicationList = db.getMedications();;
@@ -74,28 +86,28 @@ public class Medication {
 		        return medicationList;
 		    }
 			
-			public void EnterMedicationDetails(int pid,String medicationName,int dosage)
-			{
-				DBHandler db=new DBHandler();
-				db.EnterMedicationDetails(pid,medicationName,dosage);
-				
-			}
+	public void EnterMedicationDetails(int pid,String medicationName,int dosage)
+	{
+		DBHandler db=new DBHandler();
+		db.EnterMedicationDetails(pid,medicationName,dosage);
+		
+	}
 			
-			 public List<String> GetMedicationDetails(int pid) {
-			        DBHandler db = new DBHandler();
+	public List<String> GetMedicationDetails(int pid) {
+	        DBHandler db = new DBHandler();
 
-			        // Get the list of medication details
-			        List<String> medicationDetails = db.FindMedicationDetails(pid);
+	        // Get the list of medication details
+	        List<String> medicationDetails = db.FindMedicationDetails(pid);
 
-			        // Check if the list is empty
-			        if (medicationDetails.isEmpty()) {
-			            System.out.println("No medication details found for PID: " + pid);
-			        } else {
-			            System.out.println("Medication Details for PID " + pid + ":");
-			            medicationDetails.forEach(System.out::println);
-			        }
-			        
-					return medicationDetails;
-			    }
+	        // Check if the list is empty
+	        if (medicationDetails.isEmpty()) {
+	            System.out.println("No medication details found for PID: " + pid);
+	        } else {
+	            System.out.println("Medication Details for PID " + pid + ":");
+	            medicationDetails.forEach(System.out::println);
+	        }
+	        
+			return medicationDetails;
+	    }
 	
 }

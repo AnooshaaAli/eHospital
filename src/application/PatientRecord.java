@@ -51,11 +51,15 @@ public class PatientRecord {
 	}
 	public void addPrescribeMedication(String medName,int dosage,int pid)
 	{
-		dbhandler.addPrescribeMedication(medName,dosage, pid);
+		Medication med= new Medication();
+		med.addPrescribeMedication(medName,dosage,pid);
+		//dbhandler.addPrescribeMedication(medName,dosage, pid);
 	}
 	public ObservableList<Medication> showExistingMedication(int pid)
 	{
-		ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
+		Medication med= new Medication();
+		ObservableList<Medication> list=med.showExistingMedication(pid);
+		//ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
 		medicine= list;
 		return list;
 	}
