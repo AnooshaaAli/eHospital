@@ -55,13 +55,13 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="183.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Show Existing Medications" textFill="#fffce8" />
+            <Button fx:id="existingMed" layoutX="185.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#handlePrescribeMedicationUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Show Existing Medications" textFill="#fffce8" />
             <Label layoutX="146.0" layoutY="55.0" text="Patient Id: " textFill="#747572">
                <font>
                   <Font name="Calibri" size="17.0" />
                </font>
             </Label>
-            <ComboBox layoutX="272.0" layoutY="53.0" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #f3f0dd;" />
+            <ComboBox fx:id="pidComboBox" layoutX="272.0" layoutY="53.0" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #f3f0dd;" />
             <Line endX="443.0" layoutX="101.0" layoutY="164.0" startX="-100.0" stroke="#747572" />
             <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Add New Medications ">
                <font>
@@ -76,14 +76,14 @@
                   <Font name="Calibri" size="17.0" />
                </font>
             </Label>
-            <TextField layoutX="254.0" layoutY="239.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: #f3f0dd;" />
+            <TextField fx:id="medName" layoutX="254.0" layoutY="239.0" prefHeight="25.0" prefWidth="155.0" style="-fx-background-color: #f3f0dd;" />
             <Label layoutX="116.0" layoutY="289.0" text="Dosage: " textFill="#747572">
                <font>
                   <Font name="Calibri" size="17.0" />
                </font>
             </Label>
-            <TextField layoutX="181.0" layoutY="287.0" prefHeight="25.0" prefWidth="228.0" style="-fx-background-color: #f3f0dd;" />
-            <Button layoutX="184.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Add" textFill="#fffce8" />
+            <TextField fx:id="Dosage" layoutX="181.0" layoutY="287.0" prefHeight="25.0" prefWidth="228.0" style="-fx-background-color: #f3f0dd;" />
+            <Button fx:id="AddMed" layoutX="184.0" layoutY="342.0" mnemonicParsing="false" onMouseClicked="#handlePrescribeMedicationUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Add" textFill="#fffce8" />
          </children>
       </AnchorPane>
    </center>
