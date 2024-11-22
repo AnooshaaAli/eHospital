@@ -77,4 +77,9 @@ public class Appointment {
 		return list;
 	}
 
+	// ------------------------------------------------------ MARK APPOINTMENT AS DONE ------------------------------------------------- //
+	
+	public void markAptCompleted() {
+		dbhandler.makeAptCompleted(this.appointmentId);
+	}
 }

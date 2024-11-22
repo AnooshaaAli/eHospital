@@ -126,6 +126,27 @@ public class Patient {
 		record.addBill(recId, payment, type);
 	}
 	
+	
+	// ----------------------------------------------------- GET PENDING APPOINTMENTS LIST -------------------------------------- //
+	
+	public ObservableList<Appointment> getPendingAppointments(int patId)
+	{
+		ObservableList<Appointment> list = record.getPendingAppointments(patId);
+		return list;
+	}
+	
+    // ----------------------------------------------------- GET PENDING APPOINTMENT IDS ----------------------------------------------- //
+    
+	public ObservableList<Integer> getPendingAppointmentIdsList(int patId) {
+		return record.getPendingAppointmentIdsList(patId);
+	}
+	
+	// ------------------------------------------------------ MARK APPOINTMENT AS DONE ------------------------------------------------- //
+	
+	public void markAptCompleted(int aptId) {
+		record.markAptCompleted(aptId);
+	}
+	
 	public void addMedications(String medName,int dosage,int pid)
 	{
 		

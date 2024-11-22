@@ -106,6 +106,8 @@ public class patientController implements Initializable{
 	private ComboBox<String> timeslotsComboBox;
 	@FXML
 	private ComboBox<String> pidComboBox;
+	@FXML
+	private ComboBox<Integer> appointmentIdsComboBox;
 	 
 	// ---------------------------------------------- PANES ----------------------------------------------------------- //
 	
@@ -179,7 +181,6 @@ public class patientController implements Initializable{
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		populateDoctorIdComboBox();
        // Populate genders for genderComboBox
        if (genderComboBox != null) 
@@ -575,5 +576,87 @@ public class patientController implements Initializable{
 			//System.out.println("Unsuccessful");
 		}
 	}
+	
+	// ------------------------------------------- FOLLOW UP REMINDER FROM HANDLER --------------------------------------------------------- //
+	
+	public void handleFollowUpReminder(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+        	fxmlFile = "FollowUpReminder.fxml";
+            stageTitle = "Manage Follow Ups";
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            patientController controller = loader.getController();
+            
+            controller.displayPendingAppointments();
+            controller.populateAppointmentIdComboBox();
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------- DISPLAY PENDING APPOINTMENTS ------------------------------------------------- //
+	
+	public void displayPendingAppointments() {
+	    aptIdcolumn.setCellValueFactory(new PropertyValueFactory<Appointment, Integer>("appointmentId")); 
+	    startTimeColumn.setCellValueFactory(cellData -> {
+	        // Access the Time object from the Appointment object
+	        Time startTime = cellData.getValue().getTime().getStart_time();
+	        // If startTime is not null, return it as a string. Otherwise, return "N/A"
+	        return new SimpleStringProperty(startTime != null ? startTime.toString() : "N/A");
+	    });
+
+	    endTimeColumn.setCellValueFactory(cellData -> {
+	        // Access the Time object from the Appointment object
+	        Time endTime = cellData.getValue().getTime().getEnd_time();
+	        // If endTime is not null, return it as a string. Otherwise, return "N/A"
+	        return new SimpleStringProperty(endTime != null ? endTime.toString() : "N/A");
+	    });
+
+	    dateColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Date>("appointmentDate")); 
+	    statusColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Boolean>("status")); 
+        Patient patient = new Patient();
+        appointmentsList = FXCollections.observableArrayList(patient.getPendingAppointments(patId));
+        appointmentsTable.setItems(appointmentsList);
+	}
+	
+	// ------------------------------------------------- POPULATE APPOINTMENT IDS ------------------------------------------------------- //
+	
+	public void populateAppointmentIdComboBox() {
+		Patient patient = new Patient();
+        ObservableList<Integer> aptIdsList = patient.getPendingAppointmentIdsList(patId);
+        if (appointmentIdsComboBox != null) {
+        	appointmentIdsComboBox.setItems(aptIdsList);  
+        } else {
+            System.out.println("AptIdComboBox is null!");  
+        }
+	}
+	
+	// -------------------------------------------------- UPDATE APPOINTMENT STATUS ----------------------------------------------------- //
+	
+	public void updateAptStatus() {
+		int aptId = appointmentIdsComboBox.getValue();
+		Patient patient = new Patient();
+		patient.setPatientId(patId);
+		patient.markAptCompleted(aptId);
+		displayPendingAppointments();
+	}
 }

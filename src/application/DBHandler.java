@@ -1041,5 +1041,89 @@ public class DBHandler {
 	    }
 	}
 
+	// -------------------------------------------- GET PENDING APPOINTMENTS LIST ----------------------------------------------- //
+	
+	public ObservableList<Appointment> getPendingAppointments(int pid) {
+	    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+	    String recordIdQuery = "SELECT recordID FROM PATIENTRECORD WHERE pid = " + pid;
 
+	    try (Connection conn = connect(); 
+	         Statement stmt = conn.createStatement()) {
+
+	        // First, get the recordID
+	        ResultSet rsRecordId = stmt.executeQuery(recordIdQuery);
+
+	        if (rsRecordId.next()) {
+	            int recordID = rsRecordId.getInt("recordID");
+
+	            // Query the APPOINTMENT table and join with TIMESLOT to fetch all required details
+	            String appointmentQuery = 
+	                "SELECT a.aid, a.appdate, a.did, a.status, t.starttime, t.endtime " +
+	                "FROM APPOINTMENT a " +
+	                "JOIN TIMESLOT t ON a.tid = t.tid " +
+	                "WHERE a.recordID = " + recordID + "and a.status = " + 0;
+
+	            ResultSet rsAppointment = stmt.executeQuery(appointmentQuery);
+
+	            // Fetch appointment details and add to ObservableList
+	            while (rsAppointment.next()) {
+	                int aptId = rsAppointment.getInt("aid");
+	                Date appdate = rsAppointment.getDate("appdate");
+	                int doctorId = rsAppointment.getInt("did");
+	                boolean status = rsAppointment.getBoolean("status");
+	                Time startTime = rsAppointment.getTime("starttime");
+	                Time endTime = rsAppointment.getTime("endtime");
+
+	                // Create an Appointment object (ensure it has fields for startTime and endTime)
+	                Appointment appointment = new Appointment(aptId, appdate, status, startTime, endTime);
+	                appointments.add(appointment);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return appointments;
+	}
+
+    // ----------------------------------------- GET PENDING APPOINTMENT IDS LIST ---------------------------------------------- //
+	
+    public ObservableList<Integer> getPendingAppointmentIdsList(int recordId) {
+        ObservableList<Integer> pendingAppointments = FXCollections.observableArrayList();
+        String query = "SELECT aid FROM appointment WHERE recordID = ? AND status = " + 0;
+
+        try (PreparedStatement preparedStatement = this.connect().prepareStatement(query)) {
+            // Set the patient ID parameter
+            preparedStatement.setInt(1, recordId);
+
+            // Execute the query and process the result set
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Loop through the result set and add each appointment ID to the list
+            while (resultSet.next()) {
+                int appointmentId = resultSet.getInt("aid");
+                pendingAppointments.add(appointmentId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pendingAppointments;
+    }
+    
+    // ------------------------------------------------------ MARK AS COMPLETED --------------------------------------------------------- //
+    
+    public void makeAptCompleted(int appointmentId) {
+        String updateQuery = "UPDATE Appointment SET status = " + 1 + "WHERE aid = ?";
+
+        try (PreparedStatement stmt = this.connect().prepareStatement(updateQuery)) {
+            // Set the appointmentId parameter
+            stmt.setInt(1, appointmentId);
+
+            // Execute the update query
+            int rowsUpdated = stmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println("Error while marking appointment as completed: " + e.getMessage());
+        }
+    }
 }
