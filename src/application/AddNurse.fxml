@@ -119,12 +119,12 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="276.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Evening">
+                        <CheckBox layoutX="270.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Evening">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="373.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Night">
+                        <CheckBox layoutX="365.0" layoutY="368.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Night">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
