@@ -75,7 +75,7 @@
                   <Insets left="180.0" />
                </padding>
             </Label>
-            <Button layoutX="189.0" layoutY="305.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Pay by Cash" textFill="#fffce8" />
+            <Button fx:id="payCash" layoutX="189.0" layoutY="305.0" mnemonicParsing="false" onMouseClicked="#handlePayBillsUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Pay by Cash" textFill="#fffce8" />
             <Label layoutX="5.0" layoutY="49.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Pay Your Bills">
                <font>
                   <Font name="Cambria" size="20.0" />
@@ -84,13 +84,13 @@
                   <Insets left="200.0" />
                </padding>
             </Label>
-            <Button layoutX="189.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Pay by Card" textFill="#fffce8" />
+            <Button fx:id="payCard" layoutX="189.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#handlePayBillsUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Pay by Card" textFill="#fffce8" />
             <Label layoutX="158.0" layoutY="247.0" text="Bill Id:" textFill="#747572">
                <font>
                   <Font name="Calibri" size="17.0" />
                </font>
             </Label>
-            <ComboBox layoutX="211.0" layoutY="245.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
+            <ComboBox fx:id="billID" layoutX="211.0" layoutY="245.0" prefHeight="25.0" prefWidth="188.0" style="-fx-background-color: #f3f0dd;" />
             <AnchorPane layoutX="122.0" layoutY="413.0" prefHeight="201.0" prefWidth="313.0" style="-fx-border-color: #dd403a;" visible="false">
                <children>
                   <Label layoutX="37.0" layoutY="35.0" text="Card Number:" textFill="#747572">
