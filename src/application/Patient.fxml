@@ -7,14 +7,13 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
    <left>
-      <VBox onMouseClicked="#handleFollowUpReminder" prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -61,44 +60,47 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="name" style="-fx-background-color: transparent;" text="Patient name">
+            <TextField fx:id="name" editable="false" style="-fx-background-color: #f3f0dd;" text="Patient name">
                <font>
                   <Font name="Calibri Bold" size="36.0" />
                </font>
             </TextField>
-            <TextField fx:id="Username" layoutX="14.0" layoutY="58.0" style="-fx-background-color: transparent;" text="Username: [ Username ]">
+            <TextField fx:id="Username" editable="false" style="-fx-background-color: transparent;" text="Username: [ Username ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="Id" layoutX="14.0" layoutY="85.0" style="-fx-background-color: transparent;" text="Id: [ Patient Id ]">
+            <TextField fx:id="Id" editable="false" style="-fx-background-color: transparent;" text="Id: [ Patient Id ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="gender" layoutX="14.0" layoutY="111.0" style="-fx-background-color: transparent;" text="Gender: [ Patient Gender ]  ">
+            <TextField fx:id="gender" editable="false" style="-fx-background-color: transparent;" text="Gender: [ Patient Gender ]  ">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="DOB" layoutX="14.0" layoutY="165.0" style="-fx-background-color: transparent;" text="Date of Birth: [ DOB ]">
+            <TextField fx:id="DOB" editable="false" style="-fx-background-color: transparent;" text="Date of Birth: [ DOB ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="contact" layoutX="14.0" layoutY="138.0" style="-fx-background-color: transparent;" text="Contact: [ Phone Number ]">
+            <TextField fx:id="contact" editable="false" style="-fx-background-color: transaparent;" text="Contact: [ Phone Number ]">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="dischargeStatus" layoutX="14.0" layoutY="190.0" style="-fx-background-color: transparent;" text="Discharge Status: No ">
+            <TextField fx:id="dischargeStatus" editable="false" style="-fx-background-color: transparent;" text="Discharge Status: No ">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
+               <padding>
+                  <Insets bottom="20.0" left="10.0" />
+               </padding>
             </TextField>
-            <Label layoutX="-1.0" layoutY="258.0" prefHeight="33.0" prefWidth="560.0" style="-fx-background-color: #f3f0dd;" text="What you can do?">
+            <Label layoutX="-1.0" layoutY="258.0" prefHeight="47.0" prefWidth="544.0" style="-fx-background-color: #f3f0dd;" text="What you can do?">
                <font>
                   <Font name="Calibri Bold" size="24.0" />
                </font>
@@ -106,10 +108,13 @@
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Label layoutX="37.0" layoutY="308.0" text="- Schedule Appointment with a Doctor " textFill="#747572">
+            <Label layoutX="37.0" layoutY="308.0" prefHeight="22.0" prefWidth="349.0" text="- Schedule Appointment with a Doctor " textFill="#747572">
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
+               <padding>
+                  <Insets left="20.0" top="10.0" />
+               </padding>
             </Label>
             <Label layoutX="14.0" layoutY="374.0" text="- View Your Current Record " textFill="#747572">
                <font>
@@ -123,6 +128,9 @@
                <font>
                   <Font name="Cambria" size="18.0" />
                </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
             </Label>
             <Label layoutX="14.0" layoutY="352.0" text="- Pay your Bills" textFill="#747572">
                <font>
@@ -141,6 +149,9 @@
                </padding>
             </Label>
          </children>
-      </AnchorPane>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
    </center>
 </BorderPane>
