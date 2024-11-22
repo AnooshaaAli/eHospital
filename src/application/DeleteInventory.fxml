@@ -39,28 +39,28 @@
                               <Insets left="160.0" />
                            </padding>
                         </Label>
-                        <Label layoutX="109.0" layoutY="185.0" text="Nurse Id:">
+                        <Label layoutX="93.0" layoutY="185.0" prefHeight="23.0" prefWidth="107.0" text="Item Name">
                            <font>
                               <Font name="Calibri" size="20.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="201.0" layoutY="184.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
-                        <Button fx:id="RemoveItem" layoutX="159.0" layoutY="262.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="176.0" style="-fx-background-color: #dd403a;" text="Remove" textFill="#fff3e8">
+                        <ComboBox fx:id="itemNameBox" layoutX="201.0" layoutY="184.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
+                        <Button fx:id="deleteInventory" layoutX="159.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryDeleteUC" prefHeight="35.0" prefWidth="176.0" style="-fx-background-color: #dd403a;" text="Remove" textFill="#fff3e8">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="ManageInventory" layoutX="160.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAdmin" prefHeight="35.0" prefWidth="174.0" style="-fx-background-color: #13b2b2;" text="Cancel" textFill="#fffce8">
+                        <Button fx:id="Close" layoutX="160.0" layoutY="316.0" mnemonicParsing="false" onMouseClicked="#handleClose" prefHeight="35.0" prefWidth="174.0" style="-fx-background-color: #13b2b2;" text="Cancel" textFill="#fffce8">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Label layoutX="109.0" layoutY="221.0" text="Quantity:">
+                        <Label layoutX="93.0" layoutY="221.0" prefHeight="23.0" prefWidth="93.0" text="Quantity">
                            <font>
                               <Font name="Calibri" size="20.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="201.0" layoutY="220.0" prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="itemQuantity" layoutX="201.0" layoutY="220.0" prefHeight="25.0" prefWidth="174.0" style="-fx-background-color: #f3f0dd;" />
                      </children>
                   </AnchorPane>
                </children>
