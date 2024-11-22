@@ -1,3 +1,5 @@
+// ---------------------------------------------- NOOR KA EHOSPITAL ------------------------------------------------------- //
+
 package application;
 
 import java.awt.event.ActionEvent;
@@ -8,12 +10,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -41,8 +47,7 @@ import javafx.scene.control.*;
 
 public class eHospital extends patientController implements Initializable {
 	
-	NurseController nurseController = new NurseController();
-	private Patient patient = new Patient();
+//	private Patient patient= new Patient();
 	
 	//RECEPTIONIST
 	@FXML 
@@ -71,8 +76,11 @@ public class eHospital extends patientController implements Initializable {
     @FXML
     private TextField contactTextField;
     
-	public void handleReceptionistButtonClick(MouseEvent  event) {
+    // ------------------------------------------------------------------ RECEPTIONIST BUTTON HANDLER ---------------------------------------------------------------------------- //
+	
+    public void handleReceptionistButtonClick(MouseEvent  event) {
 	        try {
+	        	
 	        	String fxmlFile;
 	            String stageTitle;
 	            
@@ -86,11 +94,11 @@ public class eHospital extends patientController implements Initializable {
 	            	throw new IllegalArgumentException("Unexpected button source");
 	            }
 	            
-	            // Load the new FXML file
 	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 	            Parent newFormRoot = loader.load();
 
-	            // Create a new scene and stage for the new form
+	           
+	            
 	            Scene newFormScene = new Scene(newFormRoot);
 	            Stage newFormStage = new Stage();
 	            newFormStage.setScene(newFormScene);
@@ -107,29 +115,63 @@ public class eHospital extends patientController implements Initializable {
 	            e.printStackTrace();
 	        }
 	    }
+    
+    // ------------------------------------------------------------------ RECEPTIONIST LOGIN HANDLER ---------------------------------------------------------------------------- //
+    
 	public void handleLoginButtonReceptionist(MouseEvent event) {
 		try {
 			
+			//=======================
+        	String username="";
+			String password_ ="";
+			Employee employee= Employee.getInstanceReceptionist();
+			Receptionist receptionist= Receptionist.getInstance();
+			if(Username!=null && password !=null)
+			{
+				username = Username.getText();
+	            password_ = password.getText();
+	
+	            if (username.isEmpty() || password_.isEmpty()) 
+	            {
+	              //  System.out.println("Username or password cannot be empty.");
+	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+	                return; 
+	            }
+	
+	            Employee a = new Employee();
+	            boolean check = a.LoginReceptionist(username, password_);
+	
+	            if (!check) {
+	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+	                return; 
+	            }
+	            
+	            //================
+	            String name= employee.loadName(username);
+	            int id= receptionist.loadReceptionistId(username);
+	            int empid= employee.loadEmployeeId(username);
+	            String gender= employee.loadGender(username);
+	            int exp= employee.loadExperience(username);
+	            String con= employee.loadContact(username);
+	            String workingHrs=employee.loadWorkingHours(username); 
+	            employee.initReceptionist(empid,name,username,password_,gender,exp,workingHrs,con);
+	            receptionist.init(id, "");
+	            //================
+			}
+			else 
+			{
+				 if (employee == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
+			}
+
+
+        	
         	String fxmlFile;
             String stageTitle;
             
             if(event.getSource()==ReceptionistSignIn)
             {
-            	fxmlFile = "Receptionist.fxml";
-                stageTitle = "Receptionist";
-            }
-            else if(event.getSource()==RegisterPatientByReceptionist)
-            {
-                String name = nameTextField.getText();
-                String username = usernameTextField.getText();
-                String password = passwordTextField.getText();
-                String gender = genderComboBox.getValue();
-                String dob = dobTextField.getText();
-                String contact = contactTextField.getText();
-
-                Patient patient = new Patient();
-                patient.registerPatient(name, username, password, gender, dob, contact);
-                
             	fxmlFile = "Receptionist.fxml";
                 stageTitle = "Receptionist";
             }
@@ -141,7 +183,17 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            eHospital controller = loader.getController();
+            controller.detailsNurse(
+                    employee.getName(),
+                    employee.getUsername(),
+                    receptionist.getReceptionistId(),
+                    employee.getEmployeeId(), 
+                    employee.getGender(),
+                    employee.getExperience(),
+                    employee.getContact(),
+                    employee.getWorkingHours()
+                );
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -159,6 +211,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+    // ------------------------------------------------------------------ SCHEDULE FOLLOW UP RECEPTIONIST ---------------------------------------------------------------------------- //
+	
 	public void handleScheduleFollowUpReceptionist(MouseEvent event)
 	{
 		try {
@@ -197,6 +252,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+    // ------------------------------------------------------------------ SCHEDULE APPOINTMENT RECEPTIONIST ---------------------------------------------------------------------------- //
+	
 	public void handleScheduleAppointmentReceptionist(MouseEvent event)
 	{
 		try {
@@ -235,6 +293,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+    // ------------------------------------------------------------------ REGISTER PATIENT RECEPTIONIST ---------------------------------------------------------------------------- //
+	
 	public void handleRegisterPatientButtonClick(MouseEvent  event) {
         try {
         	
@@ -284,6 +345,10 @@ public class eHospital extends patientController implements Initializable {
 	@FXML 
     private Button RegisterPatient;
 	@FXML
+    private Button scheduleAppointment;
+	@FXML
+    private Button ViewRecord;
+	@FXML
 	private Button PayBills;
 	@FXML
 	private Button ViewPrescription;
@@ -295,25 +360,21 @@ public class eHospital extends patientController implements Initializable {
     private Button updatePatientRecordupdateUC;
  	@FXML
     private TextField temp;
- 
  	@FXML
     private TextField blood_p;
- 
  	@FXML
     private TextField heart_b;
- 
     @FXML
     private Button trackMedicationUpdate;
-    
     @FXML
     private Button trackMedicationView;
-
     @FXML
     private ComboBox<String> MedicationNameComboBox;
-    
     @FXML
     private ListView<String> medicationListView;
 
+ // ------------------------------------------------------------------ PATIENT BUTTON HANDLER ---------------------------------------------------------------------------- //
+    
 	public void handlePatientButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -355,6 +416,123 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+	
+	// ------------------------------------------------------------------ REGISTER PATIENT BY PATIENT ---------------------------------------------------------------------------- //
+	
+	public void handleRegisterButtonClick(MouseEvent  event)
+	{
+		try {
+			//======================================================
+			String username="";
+			String password_=""; 
+			Patient patient= Patient.getInstance();
+			if(Username!=null && password != null)
+			{
+				username = Username.getText();
+		        password_ = password.getText();
+	
+		        if (username.isEmpty() || password_.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+	
+		        Patient a = new Patient();
+		        boolean check = a.LoginPatient(username, password_);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+		        
+		        
+		      //======================================
+	            String patientName = patient.loadPatientName(username);
+	            int id= patient.loadPatientId(username);
+	            String gender = patient.loadPatientGender(username);
+	            String contact = patient.loadPatientContact(username);
+                String discharge = patient.loadPatientDischargeStatus(username);
+                String dob1 = patient.loadPatientDOB(username); // e.g., "2024-11-20"
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localDate = null; // Initializes to null
+                java.sql.Date sqlDob=null;
+                try {
+                    // Parse the string into a LocalDate
+                    localDate = LocalDate.parse(dob1, formatter);
+                    LocalDateTime localDateTime = localDate.atStartOfDay();
+                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                    sqlDob = new java.sql.Date(utilDob.getTime());
+                    System.out.println("Converted Date: " + sqlDob);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Invalid date format.");
+                }
+	            patient.init(id, username, patientName, gender, sqlDob, contact, check);
+		
+		}
+		else 
+		{
+			 if (patient == null) 
+	                showAlert("Error", "Missing Data", "No user is logged in.");
+		}
+		//=========================================
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==RegisterPatient)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            	throw new IllegalArgumentException("Unexpected button source");
+            
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            
+          //==========================================
+            eHospital controller = loader.getController();
+            String st= patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob= patient.getDob();
+            String dobString ="";
+            if (dob != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob);
+                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
+                                           patient.getGender(), dobString, patient.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
+            		,dobString,patient.getContact(),st);
+            //==========================================
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ PATIENT SIGN IN ---------------------------------------------------------------------------- //
+	
 	public void handleSignInClick(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -373,7 +551,7 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -391,6 +569,129 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ LOGIN PATIENT ---------------------------------------------------------------------------- //
+	
+	public void handleLoginButtonPatinet(MouseEvent  event) {
+		try {
+			//===============================
+			String username="";
+			String password_=""; 
+			Patient patient= Patient.getInstance();
+			if(Username!=null && password != null)
+			{
+				username = Username.getText();
+		        password_ = password.getText();
+	
+		        if (username.isEmpty() || password_.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+	
+		        Patient a = new Patient();
+		        boolean check = a.LoginPatient(username, password_);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+		        
+			       //======================================
+		            String patientName = patient.loadPatientName(username);
+		            int id= patient.loadPatientId(username);
+		            String gender = patient.loadPatientGender(username);
+		            String contact = patient.loadPatientContact(username);
+	                String discharge = patient.loadPatientDischargeStatus(username);
+	                String dob1 = patient.loadPatientDOB(username); // e.g., "2024-11-20"
+	                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	                LocalDate localDate = null; // Initializes to null
+	                java.sql.Date sqlDob=null;
+	                try {
+	                    // Parse the string into a LocalDate
+	                    localDate = LocalDate.parse(dob1, formatter);
+	                    
+	                    // Convert LocalDate to LocalDateTime (at the start of the day)
+	                    LocalDateTime localDateTime = localDate.atStartOfDay();
+	                    
+	                    // Convert LocalDateTime to java.util.Date
+	                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+	                    
+	                    // Convert java.util.Date to java.sql.Date
+	                    sqlDob = new java.sql.Date(utilDob.getTime());
+
+	                    System.out.println("Converted Date: " + sqlDob);
+
+	                    // Now you can pass sqlDob (java.sql.Date) to your init method
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    System.out.println("Invalid date format.");
+	                }
+		            patient.init(id, username, patientName, gender, sqlDob, contact, check);
+			
+			}
+			else 
+			{
+				 if (patient == null) 
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+			}
+			//=========================================
+        	String fxmlFile;
+            String stageTitle;
+            //String username = Username.getText();
+	       
+            if(event.getSource()==PatientSignIn)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            	throw new IllegalArgumentException("Unexpected button source");
+            
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            //==========================================
+            eHospital controller = loader.getController();
+            String st= patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob= patient.getDob();
+            String dobString ="";
+            if (dob != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob);
+                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
+                                           patient.getGender(), dobString, patient.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
+            		,dobString,patient.getContact(),st);
+            //==========================================
+            
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ VIEW PRESCRIPTION OF PATIENT ---------------------------------------------------------------------------- //
+	
 	public void handlePatientViewPrescription(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -409,7 +710,16 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==ViewPrescription)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+            	Patient p= Patient.getInstance();
+            	controller.pidComboBox= new ComboBox<String>();
+            	
+            	if (controller.pidComboBox != null) 
+            	    controller.pidComboBox.setValue(String.valueOf(Patient.getInstance().getId()));
+ 	            controller.initTable();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -427,6 +737,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ PAY BILLS HANDLER ---------------------------------------------------------------------------- //
+	
 	public void handlePatientPayBills(MouseEvent event)
 	{
 		try {
@@ -439,24 +752,23 @@ public class eHospital extends patientController implements Initializable {
                 stageTitle = "PayBill";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
             
+            ;
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==PayBills)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.loadBillID();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
             newFormStage.setTitle(stageTitle);
-
-            // Show the new form
             newFormStage.show();
-
-            // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             currentStage.close();
             
@@ -464,6 +776,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ SHOW PATIENT BILLS ---------------------------------------------------------------------------- //
+	
 	public void handleshowBills(MouseEvent event)
 	{
 		try {
@@ -483,7 +798,11 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if (event.getSource()==showBills)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initBillTable();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -501,7 +820,7 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
-
+	
 	//NURSE
 	@FXML 
     private Button NurseSignIn;
@@ -516,12 +835,15 @@ public class eHospital extends patientController implements Initializable {
 	@FXML
 	private Button ViewPatientRecordNurse;
 	@FXML
-	private Button ViewPrescriptionNurse; 
+	private Button ViewPrescriptionNurse;
 	@FXML
 	private AnchorPane RecordAnchorPane;
+	   
+	// ------------------------------------------------------------------ NURSE BUTTON HANDLER ---------------------------------------------------------------------------- //
 	
 	public void handleNurseButtonClick(MouseEvent  event) {
         try {
+        	
         	String fxmlFile;
             String stageTitle;
             
@@ -556,8 +878,56 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+	
+	// ------------------------------------------------------------------ LOGIN NURSE ---------------------------------------------------------------------------- //
+	
 	public void handleLoginButtonNurse(MouseEvent  event) {
 		 try {
+			//=======================
+	        	String username="";
+				String password_ ="";
+				Employee employee= Employee.getInstanceNurse();
+				Nurse nurse= Nurse.getInstance();
+				if(Username!=null && password !=null)
+				{
+					username = Username.getText();
+		            password_ = password.getText();
+		
+		            if (username.isEmpty() || password_.isEmpty()) 
+		            {
+		                System.out.println("Username or password cannot be empty.");
+		                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		                return; 
+		            }
+		
+		            Employee a = new Employee();
+		            boolean check = a.LoginNurse(username, password_);
+		
+		            if (!check) {
+		                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		                return; 
+		            }
+		            
+		            //================
+		            String name= employee.loadName(username);
+		            int id= nurse.loadNurseId(username);
+		            int empid= employee.loadEmployeeId(username);
+		            String gender= employee.loadGender(username);
+		            int exp= employee.loadExperience(username);
+		            String con= employee.loadContact(username);
+		            String workingHrs=employee.loadWorkingHours(username); 
+		            employee.initNurse(empid,name,username,password_,gender,exp,workingHrs,con);
+		            nurse.init(id, "");
+		            //================
+				}
+				else 
+				{
+					 if (employee == null) {
+			                showAlert("Error", "Missing Data", "No user is logged in.");
+			            }
+				}
+	        	//=========================
+	        	
 	        	String fxmlFile;
 	            String stageTitle;
 	            
@@ -574,7 +944,17 @@ public class eHospital extends patientController implements Initializable {
 	            // Load the new FXML file
 	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 	            Parent newFormRoot = loader.load();
-
+	            eHospital controller = loader.getController();
+	            controller.detailsNurse(
+	                    employee.getName(),
+	                    employee.getUsername(),
+	                    nurse.getNurseId(),
+	                    employee.getEmployeeId(), 
+	                    employee.getGender(),
+	                    employee.getExperience(),
+	                    employee.getContact(),
+	                    employee.getWorkingHours()
+	                );
 	            // Create a new scene and stage for the new form
 	            Scene newFormScene = new Scene(newFormRoot);
 	            Stage newFormStage = new Stage();
@@ -592,6 +972,9 @@ public class eHospital extends patientController implements Initializable {
 	            e.printStackTrace();
 	        }
 	}
+	
+	// ------------------------------------------------------------------ UPDATE PATIENT RECORD ---------------------------------------------------------------------------- //
+	
 	public void handleUpdatePatientRecordNurse(MouseEvent  event)
     {
 		 try {
@@ -629,6 +1012,9 @@ public class eHospital extends patientController implements Initializable {
 	            e.printStackTrace();
 	        }
     }
+	
+	// ------------------------------------------------------------------ TRACK MEDICATIONS ---------------------------------------------------------------------------- //
+	
     public void handleTrackMedication(MouseEvent  event)
     {
     	 try {
@@ -666,7 +1052,9 @@ public class eHospital extends patientController implements Initializable {
              e.printStackTrace();
          }
     }
-    //use case Update patietn record
+    
+    // ------------------------------------------------------------------ SET MEDICATION DETAILS ---------------------------------------------------------------------------- //
+    
     @FXML
     public void setMedicationDetails(List<String> medicationDetails) {
         if (medicationDetails != null && !medicationDetails.isEmpty()) {
@@ -675,7 +1063,9 @@ public class eHospital extends patientController implements Initializable {
             medicationListView.getItems().add("No medication details available.");
         }
     }
-    //Track medication use case
+    
+    // -------------------------------------------------------------- TRACK MEDICATIONS USE CASE ---------------------------------------------------------------------------- //
+    
     @FXML 
     public void handleNurseTrackMedicationView(MouseEvent event) {
     	String pidString = pidComboBox.getSelectionModel().getSelectedItem();
@@ -736,6 +1126,9 @@ public class eHospital extends patientController implements Initializable {
         
 
     }
+    
+    // ------------------------------------------------------------------ HANDLE TRACK MEDICATIONS ---------------------------------------------------------------------------- //
+    
     @FXML
     public void handleNurseTrackMedication(MouseEvent event) {
         try {
@@ -779,6 +1172,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    // ------------------------------------------------------------------ POPULATE MEDICATIONS BOX ---------------------------------------------------------------------------- //
+    
     @FXML
     public void populateMediComboBox() {
         Medication medicationService = new Medication();
@@ -816,7 +1212,9 @@ public class eHospital extends patientController implements Initializable {
         }
     }
     //end
-    //end
+    
+    // ------------------------------------------------------------------ VIEW PATIENT PRESCRIPTION NURSE ---------------------------------------------------------------------------- //
+    
     public void handleViewPatientRecord(MouseEvent  event)
     {
     	 try {
@@ -836,8 +1234,7 @@ public class eHospital extends patientController implements Initializable {
              // Load the new FXML file
              FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
              Parent newFormRoot = loader.load();
-             
-             
+
              // Create a new scene and stage for the new form
              Scene newFormScene = new Scene(newFormRoot);
              Stage newFormStage = new Stage();
@@ -856,7 +1253,7 @@ public class eHospital extends patientController implements Initializable {
          }
     }
     
-    // ------------------------------ Anooshaa ---------------------------------- //
+    // ------------------------------------------------------------------ VIEW PATIENT RECORD NURSE ---------------------------------------------------------------------------- //
     
     public void handleViewPatientRecordNurse(MouseEvent event) {
         try {
@@ -882,8 +1279,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
+    
+    // ------------------------------------------------------------------ VIEW PATIENT PRESCRIPTION NURSE ---------------------------------------------------------------------------- //
+    
     public void handleViewPrescriptionNurse(MouseEvent  event)
     {
     	 try {
@@ -913,10 +1311,9 @@ public class eHospital extends patientController implements Initializable {
 
              // Show the new form
              newFormStage.show();
-             
              // Close the current form
-             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-             currentStage.close();
+            // Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+           //  currentStage.close();
              //handleViewPrescriptionUC(loader);
              
          } catch (IOException e) {
@@ -929,11 +1326,8 @@ public class eHospital extends patientController implements Initializable {
 	
 	
 	
-	
-
 	//DOCTOR
-	//DOCTOR
-	@FXML
+    @FXML
     private Button DoctorSignIn;
 	@FXML
 	private Button DoctorButton;
@@ -943,6 +1337,9 @@ public class eHospital extends patientController implements Initializable {
     private Button DischargePatient;
 	@FXML
     private Button PatientRecord;
+	
+	// ------------------------------------------------------------------ DOCTOR BUTTON HANDLER ---------------------------------------------------------------------------- //
+	
 	public void handleDoctorButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -979,17 +1376,23 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+	
+	// ------------------------------------------------------------------ LOGIN DOCTOR ---------------------------------------------------------------------------- //
+	
 	public void handleLoginButtonDoctor(MouseEvent  event) {
 		try {	
-			
+			String username="";
+			String password_ ="";
+			Employee employee = Employee.getInstance();
+			Doctor doctor = Doctor.getInstance();
 			if(Username!=null && password != null)
 			{
-				String username = Username.getText();
-		        String password_ = password.getText();
+				username = Username.getText();
+		        password_ = password.getText();
 	
 		        if (username.isEmpty() || password_.isEmpty()) 
 		        {
-		            System.out.println("Username or password cannot be empty.");
+		            //System.out.println("Username or password cannot be empty.");
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
@@ -1001,7 +1404,27 @@ public class eHospital extends patientController implements Initializable {
 		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		            return; 
 		        }
+		        //=====================
+		       
+	            String DoctorName = employee.loadName(username);
+	            int id= employee.loadDoctorId(username);
+	            int empid=employee.loadEmployeeId(username);
+	            int exp= employee.loadExperience(username);
+	            String con=employee.loadContact(username);
+	            String wHrs=employee.loadWorkingHours(username);
+	            String days= employee.loadDoctorWorkingDays(username);
+	            boolean[] workdays= doctor.convertDaysToBooleanArray(days);
+	            String gen=employee.loadGender(username);
+	            employee.init(empid, DoctorName, username, password_, gen, exp, wHrs, con);
+	            doctor.init(id, workdays, 0);
+	            //===========================
 			
+			}
+			else 
+			{
+				 if (employee == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
 			}
 			
 			
@@ -1015,14 +1438,23 @@ public class eHospital extends patientController implements Initializable {
                 stageTitle = "Doctor";
             }
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            
+            eHospital controller = loader.getController();
+            controller.detailsDoctor(
+                    employee.getName(),
+                    employee.getUsername(),
+                    doctor.getDoctorId(),
+                    employee.getEmployeeId(),
+                    employee.getExperience(),
+                    doctor.convertBooleanArrayToDays(doctor.getAvailableDays())
+                );
+            
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -1040,6 +1472,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ PRESCRIBE MEDICATIONS ---------------------------------------------------------------------------- //
+	
 	public void handlePrescribeMedicationsDoctor(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1076,6 +1511,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ DISCHARGE PATIENT ---------------------------------------------------------------------------- //
+	
 	public void handleDischargePatientDoctor(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1113,6 +1551,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ VIEW PATIENT RECORD DOCTOR ---------------------------------------------------------------------------- //
+	
 	public void handlePatientRecordDoctor(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1172,22 +1613,6 @@ public class eHospital extends patientController implements Initializable {
 	@FXML
 	private Button HandlePayrolls;
 	@FXML
-	private TextField Username;
-	@FXML
-	private TextField password;
-	@FXML
-	private TextField name;
-	@FXML
-	private TextField Id;
-	@FXML
-	private TextField gender;
-	@FXML
-	private TextField DOB;
-	@FXML
-	private TextField contact;
-	@FXML
-	private TextField dischargeStatus;
-	@FXML
 	private Button addInventory;
 	@FXML
 	private Button deleteInventory;
@@ -1195,6 +1620,9 @@ public class eHospital extends patientController implements Initializable {
 	private Button currentInventory;
 	@FXML
 	private Button retrieveInventory;
+	
+	// ------------------------------------------------------------------ ADMIN BUTTON HANDLER ---------------------------------------------------------------------------- //
+	
 	public void handleAdminButtonClick(MouseEvent  event) {
         try {
         	String fxmlFile;
@@ -1231,29 +1659,50 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+	
+	// ------------------------------------------------------------------ LOGIN BUTTON ADMIN ---------------------------------------------------------------------------- //
+	
 	public void handleLoginButtonAdmin(MouseEvent  event) {
 		try {
 			
+			String username="";
+			String password_ ="";
+			Admin admin= Admin.getInstance();
 			//=========================
-			
-			String username = Username.getText();
-            String password_ = password.getText();
-
-            if (username.isEmpty() || password_.isEmpty()) 
-            {
-                System.out.println("Username or password cannot be empty.");
-                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-                return; 
-            }
-
-            Admin a = new Admin();
-            boolean check = a.LoginAdmin(username, password_);
-
-            if (!check) {
-                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-                return; 
-            }
-            
+			if(Username!=null && password !=null)
+			{
+				username = Username.getText();
+	            password_ = password.getText();
+	
+	            if (username.isEmpty() || password_.isEmpty()) 
+	            {
+	                System.out.println("Username or password cannot be empty.");
+	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+	                return; 
+	            }
+	
+	            Admin a = new Admin();
+	            boolean check = a.LoginAdmin(username, password_);
+	
+	            if (!check) {
+	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+	                return; 
+	            }
+	            
+	            
+	            //==================
+	            
+	            String adminName = admin.loadAdminName(username);
+	            int id= admin.loadAdminId(username);
+	            admin.init(id, adminName, username, password_);
+	            //====================
+			}
+			else 
+			{
+				 if (admin == null) {
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+		            }
+			}
 
 			//=========================
         	String fxmlFile;
@@ -1274,11 +1723,7 @@ public class eHospital extends patientController implements Initializable {
             Parent newFormRoot = loader.load();
             
             eHospital controller = loader.getController();
-            // Retrieve admin name from the database and set it in the TextField
-            Admin b = new Admin();
-            String adminName = b.loadAdminName(username);
-            int id= b.loadAdminId(username);
-            controller.details(adminName, username,id);
+            controller.details(admin.getAdminName(), admin.getUsername(),admin.getAdminId());
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -1299,6 +1744,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ MANAGE EMPLOYEES ---------------------------------------------------------------------------- //
+	
 	public void handleManageEmployeesAdmin(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1335,6 +1783,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE DOCTOR CRUD OPS ---------------------------------------------------------------------------- //
+	
 	public void handleCRUDopAdminToDoc(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1371,6 +1822,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ MANAGE INVENTORY ---------------------------------------------------------------------------- //
+	
 	public void handleManageInventoryAdmin(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1407,6 +1861,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE DOCTOR CRUDS ---------------------------------------------------------------------------- //
+	
 	public void handleCRUDdoctor(MouseEvent event)
 	{
 		try {
@@ -1463,6 +1920,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE RECEPTIONIST CRUDS ---------------------------------------------------------------------------- //
+	
 	public void handleCRUDreceptionist(MouseEvent event)
 	{
 		try {
@@ -1519,6 +1979,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE NURSE CRUDS ---------------------------------------------------------------------------- //
+	
 	public void handleCRUDnurse(MouseEvent event)
 	{
 		try {
@@ -1575,6 +2038,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE PAYROLLS ---------------------------------------------------------------------------- //
+	
 	public void handleHandlePayrollsAdmin(MouseEvent event)
 	{
 		try {
@@ -1612,6 +2078,9 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ HANDLE INVENTORY CRUD OPS ---------------------------------------------------------------------------- //
+	
 	public void handleInventoryCRUDadmin(MouseEvent event)
 	{
 		try {
@@ -1627,6 +2096,7 @@ public class eHospital extends patientController implements Initializable {
             {
             	fxmlFile = "CurrentInventory.fxml";
                 stageTitle = "CurrentInventory";
+                
             }
             else if(event.getSource()==deleteInventory)
             {
@@ -1640,14 +2110,23 @@ public class eHospital extends patientController implements Initializable {
             }
             
             else
-            {
             	throw new IllegalArgumentException("Unexpected button source");
-            }
+            
             
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
 
+            if (event.getSource()==currentInventory)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initInventoryTable();
+            }
+            else if(event.getSource()==retrieveInventory || event.getSource()==deleteInventory)
+            {
+            	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.loadItemNames();
+            }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -1658,8 +2137,8 @@ public class eHospital extends patientController implements Initializable {
             newFormStage.show();
 
             // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            //Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            //currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -1667,10 +2146,8 @@ public class eHospital extends patientController implements Initializable {
 	}
 	
 	
+	// ------------------------------------------------------------------ USE CASE : HANDLE PRESCRIBE MEDICATIONS ---------------------------------------------------------------------------- //
 	
-	
-	//PM USE CASE
-	//prescribe Medications
 	@FXML
 	private Button AddMed;
 	@FXML
@@ -1679,6 +2156,7 @@ public class eHospital extends patientController implements Initializable {
 	private TextField Dosage;
 	@FXML 
 	private Button existingMed;
+	
 	public void handlePrescribeMedicationUC(MouseEvent event)
 	{
 		int pid = Integer.parseInt(pidComboBox.getValue());
@@ -1713,6 +2191,7 @@ public class eHospital extends patientController implements Initializable {
 		}
 		else if(event.getSource()==AddMed)
 		{
+			Patient patient= Patient.getInstance();
 			String medicationName = medName.getText();
 	        int dosageValue = Integer.parseInt(Dosage.getText());
 	        
@@ -1741,6 +2220,7 @@ public class eHospital extends patientController implements Initializable {
 			medicineName.setCellValueFactory(new PropertyValueFactory<>("medicineName"));
 			medicationId.setCellValueFactory(new PropertyValueFactory<>("medicationId"));
 			dosage.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+			Patient patient = Patient.getInstance();
 			observableMedication=patient.showExistingMedication(pid);
 			medicationTable.setItems(observableMedication);
 		   
@@ -1748,7 +2228,8 @@ public class eHospital extends patientController implements Initializable {
 
 	}
 
-	//update patient record
+	// ------------------------------------------------------------------ UPDATE PATIENT RECORD BY NURSE ---------------------------------------------------------------------------- //
+	
 	@FXML
     public void handleupdatePatientRecordViewNurseUC() {
     	try {
@@ -1760,6 +2241,7 @@ public class eHospital extends patientController implements Initializable {
     	}
     	 
     }
+	
     @FXML
     public void handleupdatePatientRecordupdateNurseUC() {
     	String pidString = pidComboBox.getSelectionModel().getSelectedItem();
@@ -1787,8 +2269,10 @@ public class eHospital extends patientController implements Initializable {
       //  System.out.println("done");
         
     }
-	//DH USE CASE
-    //discharge patient
+
+
+    // ------------------------------------------------------------------ USE CASE: DISCHARGE PATIENT  ---------------------------------------------------------------------------- //
+    
     @FXML
     private Button dischargeSummary;
     @FXML
@@ -1832,6 +2316,7 @@ public class eHospital extends patientController implements Initializable {
 			}
 			else if(event.getSource()==dischargeSummary)
 			{
+				Patient patient= Patient.getInstance();
 				String FollowUPinstructions = instructions.getText();
 				String inputDate = date.getText();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -1841,11 +2326,33 @@ public class eHospital extends patientController implements Initializable {
 		}
 		
     }
-	//pay bills use case
-    public void handlePayBillsUC()
+    
+    // ------------------------------------------------------------------  USE CASE: PAY BILLS ---------------------------------------------------------------------------- //
+    
+    @FXML
+    private Button payCash;
+    @FXML
+    private Button payCard;
+    public void handlePayBillsUC(MouseEvent event)
     {
+    	Patient p= Patient.getInstance();
+    	boolean check=false;
+    	if(event.getSource()==payCash)
+    	{
+    		check=p.payByCash();
+    	}
+    	else if(event.getSource()==payCard)
+    	{
+    		check=p.payByCard();
+    	}
+    	if(check)
+    		showAlert("Successful","Payment received","Status updated");
+    	else
+    		showAlert("Unsuccessful","Payment cancelled","No changes made");
+    	
     	
     }
+    
     @FXML
     private TableView<Bill> billTable;
     @FXML
@@ -1854,18 +2361,154 @@ public class eHospital extends patientController implements Initializable {
     private TableColumn<Bill,Double> amount;
     private ObservableList<Bill> observableBill;
     @FXML
+    private ComboBox<Integer> billID;
+    
     public void initBillTable()
     {
+    	Patient patient= Patient.getInstance();
+    	System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
+    	observableBill = FXCollections.observableArrayList();
     	
+    	bid.setCellValueFactory(new PropertyValueFactory<>("billId"));
+    	amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+		
+		observableBill =patient.loadBills();
+	
+		billTable.setItems(observableBill);
+    }
+    
+    public void loadBillID()
+    {
+    	Patient p= Patient.getInstance();
+    	ObservableList<Integer> id= p.loadBillID();
+    	if (billID!=null && id != null && !id.isEmpty()) {
+    		billID.setItems(id);
+        } else {
+            System.out.println("No bills to load.");
+            billID.getItems().clear();
+        }
     }
     
     
+     
     
     
-   
+    // ------------------------------------------------------------------ USE CASE: MANAGE INVENTORY ---------------------------------------------------------------------------- //
+    
+    private ObservableList<InventoryItem> observableInventory;
+    @FXML
+    private TableView<InventoryItem> inventoryTable;
+    @FXML
+    private TableColumn<InventoryItem,Integer> invID;
+    @FXML
+    private TableColumn<InventoryItem,Integer> quantity;
+    @FXML
+    private TableColumn<InventoryItem,String> itemname;
+    @FXML
+    private TableColumn<InventoryItem,String> category;
+    @FXML
+    private TextField itemQuantity;
+    @FXML
+    private TextField itemCategory;
     
     @FXML
+    public void initInventoryTable()
+    {
+    	observableInventory = FXCollections.observableArrayList();
+    	itemname.setCellValueFactory(new PropertyValueFactory<>("name"));
+		invID.setCellValueFactory(new PropertyValueFactory<>("invID"));
+		quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+		category.setCellValueFactory(new PropertyValueFactory<>("category"));
+		InventoryItem invItem= new InventoryItem();
+		observableInventory=invItem.displayCurrentInventory();
+		//System.out.println(observableInventory.size());
+		inventoryTable.setItems(observableInventory);
+    }
+    
+    public void handleManageInventoryAddUC(MouseEvent event)
+    {
+    	if(event.getSource()==addInventory)
+    	{
+    		String itemname= name.getText();
+    		String category= itemCategory.getText();
+    		int quantity= Integer.parseInt(itemQuantity.getText());
+    		InventoryItem inv= new InventoryItem();
+    		boolean check =inv.addInventoryItem(quantity,category,itemname);
+    		if(check)
+    			showAlert("Successful","Item added","Your inventory is updated.");
+    		else
+    			showAlert("Unsuccessful","Unable to add item","Error occured.");
+    	}
+    }
+    
+    @FXML
+    private ComboBox<String> itemNameBox;
+    public void handleManagerInventoryUpdateUC(MouseEvent event)
+    {
+    	if(event.getSource()==retrieveInventory)
+    	{
+    		String itemname= itemNameBox.getValue();
+    		int amt= Integer.parseInt(itemQuantity.getText());
+    		String category=itemCategory.getText();
+    		InventoryItem inv= new InventoryItem();
+    		boolean check =inv.updateInventoryItem(amt,category,itemname);
+    		if(check)
+    			showAlert("Successful","Item updated","Your inventory is updated.");
+    		else
+    			showAlert("Unsuccessful","Unable to update item","Error occured.");
+    		
+    	}
+    }
+    
+    public void loadItemNames()
+    {
+    	InventoryItem inv=new InventoryItem();
+    	ObservableList<String> names= inv.loadItemNames();
+    	if (itemNameBox!=null && names != null && !names.isEmpty()) {
+            itemNameBox.setItems(names);
+        } else {
+            System.out.println("No items to load.");
+            itemNameBox.getItems().clear();
+        }
+    	
+    }
+    
+    public void handleManageInventoryDeleteUC(MouseEvent event)
+    {
+    	String itemname= itemNameBox.getValue();
+		int amt= Integer.parseInt(itemQuantity.getText());
+		InventoryItem inv= new InventoryItem();
+		boolean check =inv.deleteInventoryItem(amt,itemname);
+		if(check)
+			showAlert("Successful","Item deleted","Your inventory is updated.");
+		else
+			showAlert("Unsuccessful","Unable to delete item","The quantity to be removed exceeds the available stock.");
+
+
+    }
+ 
+    
+    @FXML
+	private TextField Username;
+	@FXML
+	private TextField password;
+	@FXML
+	private TextField name;
+	@FXML
+	private TextField Id;
+	@FXML
+	private TextField gender;
+	@FXML
+	private TextField DOB;
+	@FXML
+	private TextField contact;
+	@FXML
+	private TextField dischargeStatus;
+    @FXML
     private Button Close;
+    
+    // ------------------------------------------------------------------ CLOSE BUTTON HANDLER ---------------------------------------------------------------------------- //
+    
     public void handleClose(MouseEvent event)
     {
     	if(event.getSource()==Close)
@@ -1874,7 +2517,9 @@ public class eHospital extends patientController implements Initializable {
 	         currentStage.close();  
     	}
     }
-    //load login 
+    
+    // ------------------------------------------------------------------ MESSAGE ALERT ---------------------------------------------------------------------------- //
+    
 	private void showAlert(String title, String header, String content) {
 	        Alert alert = new Alert(Alert.AlertType.ERROR);
 	        alert.setTitle(title);
@@ -1883,18 +2528,18 @@ public class eHospital extends patientController implements Initializable {
 	        alert.showAndWait();
 	}
 	
+	// ------------------------------------------------------------------ LOAD COMBO BOXES ---------------------------------------------------------------------------- //
 	
-	//LOAD COMBOBOX
-	 @FXML
-	 private ComboBox<String> startTimeComboBox;
-	 @FXML
-	 private ComboBox<String> endTimeComboBox;
-	 @FXML
-	 private ComboBox<String> ActionComboBox;
-	 @FXML
+	@FXML
+ 	private ComboBox<String> startTimeComboBox;
+	@FXML
+	private ComboBox<String> endTimeComboBox;
+	@FXML
+	private ComboBox<String> ActionComboBox;
+	@FXML
 	 private ComboBox<String> genderComboBox;
-	 
-	 @Override
+	
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		 // Populate the ComboBoxes with time options and action options
 		 populatePid1ComboBox();
@@ -1909,23 +2554,23 @@ public class eHospital extends patientController implements Initializable {
 	         endTimeComboBox.setItems(timeOptions);
 		 }
 
-        // Populate action options for ActionComboBox
-        if (ActionComboBox != null) 
-        {
-            ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
-            ActionComboBox.setItems(crudOps);
-        }
-        
-        // Populate genders for genderComboBox
-        if (genderComboBox != null) 
-        {
-            ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
-            genderComboBox.setItems(genders);
-        }
-        
-    }
+       // Populate action options for ActionComboBox
+       if (ActionComboBox != null) 
+       {
+           ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+           ActionComboBox.setItems(crudOps);
+       }
+       
+       // Populate genders for genderComboBox
+       if (genderComboBox != null) 
+       {
+           ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
+           genderComboBox.setItems(genders);
+       }
+       
+   }
 	 
-	 // Method to generate time options from 8:00 AM to 10:00 PM in 60-minute intervals
+	
 	private ObservableList<String> generateTimeOptions() {
         ObservableList<String> timeOptions = FXCollections.observableArrayList();
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -1973,7 +2618,9 @@ public class eHospital extends patientController implements Initializable {
 		        e.printStackTrace();
 		    }
 		}
-
+	
+	// ------------------------------------------------------------------ STORE USER DETAILS ---------------------------------------------------------------------------- //
+	
 	private void details(String Name, String usrname,int id) {
 		  //  System.out.println("Setting admin name: " + Name);
 		    if (name != null) {
@@ -1982,8 +2629,74 @@ public class eHospital extends patientController implements Initializable {
 		        Id.setText(Integer.toString(id));
 		    } 
 		    else 
-		        System.out.println("TextField 'name' is null. Check FXML bindings.");
+		        System.out.println("TextField  is null. Check FXML bindings.");
 		    
+	}
+	
+	// ------------------------------------------------------------------ STORE PATIENT DETAILS ---------------------------------------------------------------------------- //
+	
+	private void detailsPatient(String Name, String usrname,int id,String Gender, String dob,String Contact,String st) {
+		  //  System.out.println("Setting admin name: " + Name);
+		    if (name != null) {
+		        name.setText(Name);
+		        Username.setText(usrname);
+		        Id.setText(Integer.toString(id));
+		        DOB.setText(dob);
+		        contact.setText(Contact);
+		        gender.setText(Gender);
+		        dischargeStatus.setText(st);
+		    } 
+		    else 
+				showAlert("Error"," ","TextField  is null. Check FXML bindings.");
+		    
+	}
+	
+	// ------------------------------------------------------------------ STORE DOCTOR DETAILS ---------------------------------------------------------------------------- //
+	
+	private void detailsDoctor(String Name, String username, int id,int empid,int exp, String days)
+	{
+		if (name != null) {
+	        name.setText(Name);
+	        Username.setText(username);
+	        Id.setText(Integer.toString(id));
+	        empID.setText(Integer.toString(empid));
+	        workingDays.setText(days);
+	        experience.setText(Integer.toString(exp));
+	       
+	    } 
+	    else 
+	    	showAlert("Error"," ","TextField  is null. Check FXML bindings.");
+	}
+	
+	// ------------------------------------------------------------------ STORE NURSE DETAILS ---------------------------------------------------------------------------- //
+	
+	private void detailsNurse(String nme,String username,int id, int empid, String gen,int exp,String con, String workinghrs)
+	{
+		if(name!=null)
+		{
+			 name.setText(nme);
+		     Username.setText(username);
+		     Id.setText(Integer.toString(id));
+		     empID.setText(Integer.toString(empid));
+		     gender.setText(gen);
+		     experience.setText(Integer.toString(exp));
+		     contact.setText(con);
+		     workingHours.setText(workinghrs);
 		}
-	 
+		else 
+			showAlert("Error"," ","TextField  is null. Check FXML bindings.");
+	}
+	
+	@FXML
+	private TextField workingHours;
+	@FXML
+	private TextField experience;
+	@FXML
+	private TextField workingDays;
+	@FXML
+	private TextField empID;
+	
+	//
 }
+
+
