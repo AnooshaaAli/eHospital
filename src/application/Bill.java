@@ -14,6 +14,12 @@ public class Bill {
 		dbhandler = new DBHandler();
 	}
 	
+	Bill(int id, double amt)
+	{
+		this.billId=id;
+		this.amount=amt;
+	}
+	
 	public Bill(int bid, double payment, String paymentType, boolean status) {
 	    this.billId = bid;
 	    this.amount = payment;
@@ -25,31 +31,31 @@ public class Bill {
 	public int getBillId() {
 		return billId;
 	}
-
+	
 	public void setBillId(int billId) {
 		this.billId = billId;
 	}
-
+	
 	public boolean isStatus() {
 		return status;
 	}
-
+	
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
+	
 	public String getPaymentType() {
 		return paymentType;
 	}
-
+	
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
-
+	
 	public double getAmount() {
 		return amount;
 	}
-
+	
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
@@ -75,5 +81,5 @@ public class Bill {
 	public void addBill(int recId, double payment, String type) {
 		dbhandler.addBill(recId, payment, type);
 	}
-	
+
 }
