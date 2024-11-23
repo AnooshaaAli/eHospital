@@ -22,8 +22,11 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -116,6 +119,8 @@ public class eHospital extends patientController implements Initializable {
 	            e.printStackTrace();
 	        }
 	    }
+    
+    // ------------------------------------------------------------------ RECEPTIONIST LOGIN HANDLER ---------------------------------------------------------------------------- //
     
     // ------------------------------------------------------------------ RECEPTIONIST LOGIN HANDLER ---------------------------------------------------------------------------- //
     
@@ -1942,6 +1947,13 @@ public class eHospital extends patientController implements Initializable {
 	
 	public void handleManageEmployeesAdmin(MouseEvent  event) {
 		try {
+			
+        	if (AdminRightComboBox == null) {
+        	    System.out.println("AdminRightComboBox is null!");
+        	} else {
+        	    System.out.println("AdminRightComboBox value: " + AdminRightComboBox.getValue());
+        	}
+
         	String fxmlFile;
             String stageTitle;
             
@@ -2009,7 +2021,7 @@ public class eHospital extends patientController implements Initializable {
 
             // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            //currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -2057,71 +2069,101 @@ public class eHospital extends patientController implements Initializable {
 	
 	// ------------------------------------------------------------------ HANDLE DOCTOR CRUDS ---------------------------------------------------------------------------- //
 	
-	public void handleCRUDdoctor(MouseEvent event)
-	{
-		try {
-        	String fxmlFile="";
-            String stageTitle="";
-            String selectedAction = ActionComboBox.getValue();
-            if(event.getSource()==CRUDdoctor)
-            {
-            	if(selectedAction=="Add")
-            	{
-            		fxmlFile = "AddDoctor.fxml";
-                    stageTitle = "AddDoctor";
-            	}
-            	else if(selectedAction=="Retrieve")
-            	{
-            		fxmlFile = "ReadDoctor.fxml";
-                    stageTitle = "ReadDoctor";
-            	}
-            	else if(selectedAction=="Update")
-            	{
-            		fxmlFile = "UpdateDoctor.fxml";
-                    stageTitle = "UpdateDoctor";
-            	}
-            	else if(selectedAction=="Delete")
-            	{
-            		fxmlFile = "DeleteDoctor.fxml";
-                    stageTitle = "DeleteDoctor";
-            	}
-            	
-            }
-            else
-            {
-            	throw new IllegalArgumentException("Unexpected button source");
-            }
-            
-            // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent newFormRoot = loader.load();
+	@FXML
+	public void handleCRUDdoctor(MouseEvent event) {
+	    try {
+	        // Initialize options for AdminRightComboBox
+	        ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+	        AdminRightComboBox.setItems(options);
 
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle(stageTitle);
+	        // Add listener to AdminRightComboBox to monitor selection changes
+	        AdminRightComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+	            System.out.println("Selected value changed: " + newValue);
+	        });
+	        String selectedAction = AdminRightComboBox.getValue(); 
 
-            // Show the new form
-            newFormStage.show();
+	        if (selectedAction == null) {
+	            System.out.println("No action selected. Ensure an action is chosen.");
+	            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+	            
+	            return;
+	        }
+	        
+    	   
+	        String fxmlFile = "";
+	        String stageTitle = "";
 
-            // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+	        // Determine action based on ComboBox value and event source
+	        if (event.getSource() == CRUDdoctor) {
+	            switch (selectedAction) {
+	                case "Add":
+	                    fxmlFile = "AddDoctor.fxml";
+	                    stageTitle = "Add Doctor";
+	                    break;
+	                case "Retrieve":
+	                    fxmlFile = "ReadDoctor.fxml";
+	                    stageTitle = "Retrieve Doctor";
+	                    break;
+	                case "Update":
+	                    fxmlFile = "UpdateDoctor.fxml";
+	                    stageTitle = "Update Doctor";
+	                    break;
+	                case "Delete":
+	                    fxmlFile = "DeleteDoctor.fxml";
+	                    stageTitle = "Delete Doctor";
+	                    break;
+	                default:
+	                    System.out.println("Invalid action selected: " + selectedAction);
+	                    return;
+	            }
+	        } else {
+	            throw new IllegalArgumentException("Unexpected button source");
+	        }
+
+	        // Load the FXML file
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	        Parent newFormRoot = loader.load();
+
+	        // Create a new scene and stage for the new form
+	        Scene newFormScene = new Scene(newFormRoot);
+	        Stage newFormStage = new Stage();
+	        newFormStage.setScene(newFormScene);
+	        newFormStage.setTitle(stageTitle);
+
+	        // Show the new form
+	        newFormStage.show();
+
+	        // Close the current stage
+	        Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	        //currentStage.close();
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	// ------------------------------------------------------------------ HANDLE RECEPTIONIST CRUDS ---------------------------------------------------------------------------- //
 	
-	public void handleCRUDreceptionist(MouseEvent event)
+    @FXML
+    public void handleCRUDreceptionist(MouseEvent event)
 	{
-		try {
-        	String fxmlFile="";
-            String stageTitle="";
-            String selectedAction = ActionComboBox.getValue();
+    	try {
+			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+		        AdminRightComboBox.setItems(options);
+
+		        // Add listener to AdminRightComboBox to monitor selection changes
+		        AdminRightComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+		            System.out.println("Selected value changed: " + newValue);
+		        });
+		        String selectedAction = AdminRightComboBox.getValue(); 
+
+		        if (selectedAction == null) {
+		            System.out.println("No action selected. Ensure an action is chosen.");
+		            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+		            return;
+		        }
+       	String fxmlFile="";
+           String stageTitle="";
             if(event.getSource()==CRUDReceptionist)
             {
             	if(selectedAction=="Add")
@@ -2166,7 +2208,7 @@ public class eHospital extends patientController implements Initializable {
 
             // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            //currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -2178,9 +2220,23 @@ public class eHospital extends patientController implements Initializable {
 	public void handleCRUDnurse(MouseEvent event)
 	{
 		try {
+			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+		        AdminRightComboBox.setItems(options);
+
+		        // Add listener to AdminRightComboBox to monitor selection changes
+		        AdminRightComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+		            System.out.println("Selected value changed: " + newValue);
+		        });
+		        String selectedAction = AdminRightComboBox.getValue(); 
+
+		        if (selectedAction == null) {
+		            System.out.println("No action selected. Ensure an action is chosen.");
+		            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+		            return;
+		        }
         	String fxmlFile="";
             String stageTitle="";
-            String selectedAction = ActionComboBox.getValue();
+            
             if(event.getSource()==CRUDNurse)
             {
             	if(selectedAction=="Add")
@@ -2203,7 +2259,6 @@ public class eHospital extends patientController implements Initializable {
             		fxmlFile = "DeleteNurse.fxml";
                     stageTitle = "DeleteNurse";
             	}
-            	
             }
             else
             {
@@ -2225,7 +2280,7 @@ public class eHospital extends patientController implements Initializable {
 
             // Close the current form
             Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
+            //currentStage.close();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -2472,6 +2527,9 @@ public class eHospital extends patientController implements Initializable {
     private TextField instructions;
     @FXML
     private TextField date;
+	@FXML
+	private AnchorPane DischargeConfirmationPane;
+	
     public void handleDischargePatientUC(MouseEvent event)
     {
     	int pid = Integer.parseInt(pidComboBox.getValue());
@@ -2515,6 +2573,7 @@ public class eHospital extends patientController implements Initializable {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate date = LocalDate.parse(inputDate, formatter);
 				patient.dischargePatient(FollowUPinstructions, date,pid);
+				DischargeConfirmationPane.setVisible(true);
 			}
 		}
 		
@@ -2732,38 +2791,61 @@ public class eHospital extends patientController implements Initializable {
 	private ComboBox<String> ActionComboBox;
 	@FXML
 	 private ComboBox<String> genderComboBox;
-	
+	 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		 // Populate the ComboBoxes with time options and action options
+	    // Set gender options in genderComboBox
+	    if (genderComboBox != null) {
+	        ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
+	        genderComboBox.setItems(genders);
+	        genderComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+	            System.out.println("Gender selected: " + newValue);
+	        });
+	    } else {
+	        System.out.println("genderComboBox is not injected!");
+	    }
+
+	    // Set admin rights options in AdminRightComboBox
+	    if (AdminRightComboBox != null) {
+	        ObservableList<String> options = FXCollections.observableArrayList("Add", "Read", "Update", "Delete");
+	        AdminRightComboBox.setItems(options);
+	        AdminRightComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+	            System.out.println("Admin right selected: " + newValue);
+	        });
+	    } else {
+	        System.out.println("AdminRightComboBox is not injected!");
+	    }
+
+	    // Set start time options in startTimeComboBox
+	    if (startTimeComboBox != null) {
+	        ObservableList<String> timeOptions = generateTimeOptions();
+	        startTimeComboBox.setItems(timeOptions);
+	        startTimeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+	            selectedStartTime.set(newValue);  // Store the selected start time
+	            System.out.println("Start time selected: " + newValue);
+	        });
+	    } else {
+	        System.out.println("startTimeComboBox is not injected!");
+	    }
+	    if (endTimeComboBox != null) {
+	        ObservableList<String> timeOptions = generateTimeOptions();
+	        endTimeComboBox.setItems(timeOptions);
+	        endTimeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+	            selectedEndTime.set(newValue);  // Store the selected end time
+	            System.out.println("End time selected: " + newValue);
+	        });
+	    } else {
+	        System.out.println("endTimeComboBox is not injected!");
+	    }
+
+	    populateDidComboBox();
+	    populateNidComboBox();
+	    populateRidComboBox();
 		 populatePid1ComboBox();
 		 populatePidComboBox();
 		 populateDoctorIdComboBox();
-		
-	     // Populate time options for startTimeComboBox and endTimeComboBox
-		 if (startTimeComboBox != null) 
-		 {
-			 ObservableList<String> timeOptions = generateTimeOptions();
-	         startTimeComboBox.setItems(timeOptions);
-	         endTimeComboBox.setItems(timeOptions);
-		 }
+	}
 
-       // Populate action options for ActionComboBox
-       if (ActionComboBox != null) 
-       {
-           ObservableList<String> crudOps = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
-           ActionComboBox.setItems(crudOps);
-       }
-       
-       // Populate genders for genderComboBox
-       if (genderComboBox != null) 
-       {
-           ObservableList<String> genders = FXCollections.observableArrayList("Male", "Female", "Other");
-           genderComboBox.setItems(genders);
-       }
-       
-   }
-	 
 	
 	private ObservableList<String> generateTimeOptions() {
         ObservableList<String> timeOptions = FXCollections.observableArrayList();
@@ -2788,8 +2870,8 @@ public class eHospital extends patientController implements Initializable {
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
-		   // String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		    //String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 
 		    // Connect to the database and fetch the PIDs
 		    try (Connection conn = DriverManager.getConnection(url)) {
@@ -2890,7 +2972,711 @@ public class eHospital extends patientController implements Initializable {
 	@FXML
 	private TextField empID;
 	
-	//
+	//-------------------------------------------------------------- SARA AKBAR USE CASES ------------------------------------------------------------------------------- //
+	
+	AtomicReference<String> selectedEndTime = new AtomicReference<>(null);
+	AtomicReference<String> selectedStartTime = new AtomicReference<>(null);
+	
+    @FXML
+    private void AdminDeleteNurse(MouseEvent event)
+    {
+    	 String nidString = nidComboBox.getSelectionModel().getSelectedItem();
+    	 int nid=0;
+		if (nidString != null && !nidString.isEmpty()) {
+		    try {
+		         nid = Integer.parseInt(nidString);
+		        System.out.println("Selected Nurse ID as Integer: " + nid);
+		       
+		        
+		    } catch (NumberFormatException e) {
+		        System.err.println("Error: Selected Nurse ID is not a valid integer.");
+		        showAlert("Error","Failure", "The Error occured");
+		        e.printStackTrace();
+		        return;
+		    }
+		} else {
+		    System.err.println("No Nurse ID selected or the selected value is empty.");
+		    showAlert("Error","Failure", "The Error occured");
+		    return;
+		}
+		Admin a=new Admin();
+		a.DeleteNurse(nid);
+		System.out.println("Done");
+		showAlert("Success","Success", "The Nurse has been Added");
+    }
+    
+    public void UpdateNurse(MouseEvent event)
+    {
+    	String nidString = nidComboBox.getSelectionModel().getSelectedItem();
+
+        if (nidString == null || nidString.isEmpty()) {
+            System.out.println("Nurse ID is not selected.");
+            showAlert("Error", "Nurse ID", "Select Proper ID");
+            return;
+        }
+
+        int nid = Integer.parseInt(nidString);
+        System.out.println("Nurse ID to update: " + nid);
+
+        // Check if either both start and end times are selected or neither is selected
+        if ((selectedStartTime.get() != null && selectedEndTime.get() == null) || 
+            (selectedStartTime.get() == null && selectedEndTime.get() != null)) {
+            System.out.println("Both start and end time must be selected together.");
+            return;
+        }
+        int workingHours=0;
+        if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
+            try {
+                workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+                System.out.println("Working hours: " + workingHours);
+                if (workingHours<0)
+                {
+                	showAlert("Error", "Working Hours", "Invalid WorkingHours");
+                	return;
+                }
+            } catch (Exception e) {
+                System.err.println("Error calculating working hours: " + e.getMessage());
+                return;
+            }
+        }
+
+        // Proceed with the form submission logic
+        String gender = genderComboBox.getValue();
+        String name = nameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+        String experience = experienceTextField.getText();
+        String contact = contactTextField.getText();
+
+        int experienceInt = 0;
+        if(!experience.isEmpty())
+        {
+        	 try {
+ 	        	
+ 	            experienceInt = Integer.parseInt(experience);
+ 	            if(experienceInt<-1)
+ 	            {
+ 	            	showAlert("Error", "experience", "Invalid experience");
+ 	            	return;
+ 	            }
+ 	        } catch (NumberFormatException e) {
+ 	            System.err.println("Invalid input for experience. Please enter a valid number.");
+ 	        }
+
+        }
+        List<String>  ShiftTime  = new ArrayList<>();
+        if (morningCheckBox.isSelected())  ShiftTime .add("morning");
+        if (eveningCheckBox.isSelected())  ShiftTime .add("evening");
+        if (nightCheckbox.isSelected())  ShiftTime .add("night");
+      
+        
+        Admin admin = new Admin();
+		int empid=admin.GetnidFromDid(nid);
+        System.out.println("empid " +empid);
+        if (name != null && !name.isEmpty()) {
+        	  System.out.println("Name: " + name);
+        	    admin.updateNameEmployee(empid,name);
+        }
+        
+        if (gender != null && !gender.isEmpty()) {
+            System.out.println("Gender: " + gender);
+            admin.updateGenderEmployee(empid, gender);
+        }
+
+        if (username != null && !username.isEmpty()) {
+            System.out.println("Username: " + username);
+            admin.updateUserNameEmployee(empid,username);
+        }
+
+        if (password != null && !password.isEmpty()) {
+            System.out.println("Password: " + password);
+            admin.updatePasswordEmployee(empid,password);
+        }
+
+        if (workingHours != 0) { 
+            System.out.println("Experience: " + experienceInt); 
+            admin.updateworkingHourseNurse(empid, workingHours); 
+        }
+        
+        if (contact != null && !contact.isEmpty()) {
+            System.out.println("Contact: " + contact);
+            admin.updateContactEmployee(empid,contact);
+        }
+
+        if (experienceInt != 0 ) {
+            System.out.println("Contact: " + experienceInt);
+            admin.updateExperienceEmployee(empid,experienceInt);
+        }
+
+       if (!ShiftTime.isEmpty()) {
+            System.out.println("ShiftTime " + ShiftTime);
+            admin.updateShiftTimeNurse(nid,ShiftTime);
+        }
+        
+        System.out.println("done");
+        showAlert("Success", "Updation", "Updation has been done");
+    }
+   
+    @FXML
+    private void populateDidComboBox() {
+        Admin a= new Admin();
+        ObservableList<String> didList = a.getDoctorIds();
+
+
+        if (didComboBox != null) {
+            // Set the items in the ComboBox
+            didComboBox.setItems(didList);
+
+            // Add a listener for selection changes
+            didComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("Selected Doctor ID: " + newValue); 
+               
+            });
+        }
+    }
+    @FXML
+    public void populateNidComboBox() {
+        Nurse nurse = new Nurse(); 
+        ObservableList<String> NidList = nurse.getNurseIds();
+
+        if (nidComboBox != null) {
+            nidComboBox.setItems(NidList); 
+            nidComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("Selected Nurse ID: " + newValue); 
+            });
+        } 
+    }
+    @FXML
+    private ComboBox<String> RidComboBox;
+    
+    public void populateRidComboBox()
+    {
+    	 Receptionist r = new Receptionist(); 
+	        ObservableList<String> RidList = r.getReceptionistIds();
+
+	        if (RidComboBox != null) {
+	            RidComboBox.setItems(RidList); 
+	            RidComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+	                System.out.println("Selected Receptionist ID: " + newValue); 
+	            });
+	        } 
+    }
+
+    @FXML
+    private Button handleSubmitRecpetionist;
+    
+    public void handleSubmitRecpetionist(MouseEvent event)
+    {
+    	  if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
+	            int workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+	            System.out.println("Working hours: " + workingHours);
+
+	            if(workingHours<=0)
+		        {
+		        	showAlert("Error", "Failed ", "Invalid Working hours");
+		        	return;
+		        }
+	            String gender = genderComboBox.getValue();
+	            String name = nameTextField.getText();
+	            String username = usernameTextField.getText();
+	            String password = passwordField.getText();
+	            String experience = experienceTextField.getText();
+	            String contact = contactTextField.getText();
+	            if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
+		            showAlert("Error", "Missing Input", "Please fill in all required fields.");
+		            return;
+		        }
+	            Admin admin = new Admin();
+		        if (admin.isUsernameTaken(username)) {
+		            showAlert("Error", "Username Taken", "The username is already taken. Please choose a different username.");
+		            return;
+		        }
+	            int experienceInt = 0;
+	            try {
+	                experienceInt = Integer.parseInt(experience);
+	                if(experienceInt <0)
+		            {
+		            	showAlert("Error", "Invalid Experience", "Please enter a valid number for experience.");
+		            	return;
+		            }
+	            } catch (NumberFormatException e) {
+	            	 System.err.println("Invalid input for experience. Please enter a valid number.");
+		                showAlert("Error", "Invalid Experience", "Please enter a valid number for experience.");
+	            }
+
+	            // Add Doctor to database logic
+	            List<String> ShiftTime = new ArrayList<>();
+	            if (morningCheckBox.isSelected()) ShiftTime.add("Morning");
+	            if (eveningCheckBox.isSelected()) ShiftTime.add("Evening");
+	            if (nightCheckbox.isSelected()) ShiftTime.add("Night");
+
+	            System.out.println("Shift Time: " + ShiftTime);
+	            
+	            
+	           Admin a = new Admin();
+	         boolean check= a.AddReceptionist(name, username, password, gender, experienceInt, contact,ShiftTime, workingHours);
+	           
+	            if (check) {
+		            showAlert("Success", "Receptionist Added", "The receptionist was added successfully.");
+		            System.out.println("Receptionist Added");
+		        }
+	        } else {
+	            System.out.println("Error: Either Start or End time is not selected.");
+	            showAlert("Error", "Fields left", "Fields can't be left empty");
+	        }
+    }
+    
+    public void deleteReceptionist(MouseEvent event)
+    {
+    	String ridString = RidComboBox.getSelectionModel().getSelectedItem();
+
+        if (ridString == null || ridString.isEmpty()) {
+            System.out.println("Recpetionist ID is not selected.");
+            showAlert("Error","Failure", "Select Proper ID");
+            return;
+        }
+
+        try {
+            int rid = Integer.parseInt(ridString);
+            System.out.println("Receptionist ID to delete: " + rid);
+            Admin a=new Admin();
+            a.deleteReceptionist(rid);
+            System.out.println("Deletion Done");
+            showAlert("Success","Success", "The Deletion has been Done");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid Receptionist ID format. Please enter a valid number.");
+            showAlert("Failure","Failure", "The Deletion can't happen");
+        }
+    }
+    
+    public void UpdateReceptionist(MouseEvent event)
+    {
+    	String ridString = RidComboBox.getSelectionModel().getSelectedItem();
+
+        if (ridString == null || ridString.isEmpty()) {
+            System.out.println("Nurse ID is not selected.");
+            return;
+        }
+
+        int rid = Integer.parseInt(ridString);
+        System.out.println("Receptionist ID to update: " + rid);
+
+        // Check if either both start and end times are selected or neither is selected
+        if ((selectedStartTime.get() != null && selectedEndTime.get() == null) || 
+            (selectedStartTime.get() == null && selectedEndTime.get() != null)) {
+            System.out.println("Both start and end time must be selected together.");
+            return;
+        }
+        int workingHours=0;
+        if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
+            try {
+                workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+                System.out.println("Working hours: " + workingHours);
+            } catch (Exception e) {
+                System.err.println("Error calculating working hours: " + e.getMessage());
+                return;
+            }
+        }
+
+        // Proceed with the form submission logic
+        String gender = genderComboBox.getValue();
+        String name = nameTextField.getText();
+        String username = usernameTextField.getText();
+        String password = passwordField.getText();
+        String experience = experienceTextField.getText();
+        String contact = contactTextField.getText();
+
+        int experienceInt = 0;
+        if(!experience.isEmpty())
+        {
+        	 try {
+ 	        	
+ 	            experienceInt = Integer.parseInt(experience);
+ 	        } catch (NumberFormatException e) {
+ 	            System.err.println("Invalid input for experience. Please enter a valid number.");
+ 	        }
+
+        }
+        List<String>  ShiftTime  = new ArrayList<>();
+        if (morningCheckBox.isSelected())  ShiftTime .add("morning");
+        if (eveningCheckBox.isSelected())  ShiftTime .add("evening");
+        if (nightCheckbox.isSelected())  ShiftTime .add("night");
+      
+        
+        Admin admin = new Admin();
+		int empid=admin.GetempidFromrid(rid);
+        System.out.println("empid " +empid);
+        if (name != null && !name.isEmpty()) {
+        	  System.out.println("Name: " + name);
+        	    admin.updateNameEmployee(empid,name);
+        }
+        
+        if (gender != null && !gender.isEmpty()) {
+            System.out.println("Gender: " + gender);
+            admin.updateGenderEmployee(empid, gender);
+        }
+
+        if (username != null && !username.isEmpty()) {
+            System.out.println("Username: " + username);
+            admin.updateUserNameEmployee(empid,username);
+        }
+
+        if (password != null && !password.isEmpty()) {
+            System.out.println("Password: " + password);
+            admin.updatePasswordEmployee(empid,password);
+        }
+
+        if (workingHours != 0) { 
+            System.out.println("Experience: " + experienceInt); 
+            admin.updateworkingHourseReceptionist(empid, workingHours); 
+        }
+        
+        if (contact != null && !contact.isEmpty()) {
+            System.out.println("Contact: " + contact);
+            admin.updateContactEmployee(empid,contact);
+        }
+
+        if (experienceInt != 0 ) {
+            System.out.println("Contact: " + experienceInt);
+            admin.updateExperienceEmployee(empid,experienceInt);
+        }
+
+       if (!ShiftTime.isEmpty()) {
+            System.out.println("ShiftTime " + ShiftTime);
+           admin.updateShiftTimeReceptionist(rid,ShiftTime);
+        }
+        
+        System.out.println("done");
+    }
+    
+    @FXML
+    private CheckBox morningCheckBox;
+  
+    @FXML
+    private CheckBox eveningCheckBox;
+    
+    @FXML
+    private CheckBox nightCheckbox;
+    
+    @FXML
+    private void handleSubmitNurse(MouseEvent event)
+    {
+    	   if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
+	            int workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+	            System.out.println("Working hours: " + workingHours);
+	          
+	            if(workingHours<=0)
+		        {
+		        	showAlert("Error", "Failed ", "Invalid Working hours");
+		        	return;
+		        }
+	            String gender = genderComboBox.getValue();
+	            String name = nameTextField.getText();
+	            String username = usernameTextField.getText();
+	            String password = passwordField.getText();
+	            String experience = experienceTextField.getText();
+	            String contact = contactTextField.getText();
+
+		        if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
+		            showAlert("Error", "Missing Input", "Please fill in all required fields.");
+		            return;
+		        }
+		        Admin admin = new Admin();
+		        if (admin.isUsernameTaken(username)) {
+		            showAlert("Error", "Username Taken", "The username is already taken. Please choose a different username.");
+		            return;
+		        }
+	            int experienceInt = 0;
+	            try {
+	                experienceInt = Integer.parseInt(experience);
+	                if(experienceInt <0)
+		            {
+		            	showAlert("Error", "Invalid Experience", "Please enter a valid number for experience.");
+		            	return;
+		            }
+	            } catch (NumberFormatException e) {
+	                System.err.println("Invalid input for experience. Please enter a valid number.");
+	                showAlert("Error", "Invalid Experience", "Please enter a valid number for experience.");
+	            }
+	            
+	            // Add Doctor to database logic
+	            List<String> ShiftTime = new ArrayList<>();
+	            if (morningCheckBox.isSelected()) ShiftTime.add("Morning");
+	            if (eveningCheckBox.isSelected()) ShiftTime.add("Evening");
+	            if (nightCheckbox.isSelected()) ShiftTime.add("Night");
+
+	            System.out.println("Shift Time: " + ShiftTime);
+	            
+	           Admin a = new Admin();
+	           boolean check=a.AddNurse(name, username, password, gender, experienceInt, contact,ShiftTime, workingHours);
+	           if (check) {
+		            showAlert("Success", "Nurse Added", "The nurse was added successfully.");
+		            System.out.println("Nurse Added");
+		        }
+	        
+	        } else {
+	            System.out.println("Error: Either Start or End time is not selected.");
+	            showAlert("Error", "Error Occured", "Please select all Fields");
+	        }
+    	
+    }
+    
+	    @FXML
+	    private ComboBox<String> nidComboBox;
+	
+	   // @FXML
+	   // private TextLabel AdminComboBox;
+	    @FXML
+	    private ComboBox<String> didComboBox;
+	    
+	    @FXML
+	    private ComboBox<String> AdminRightComboBox;
+	   
+	    @FXML
+	    private TextField passwordField;
+	    
+	    @FXML
+	    private TextField experienceTextField;
+	    
+	    @FXML
+	    private CheckBox mondayCheckBox;
+	    
+	    @FXML
+	    private CheckBox tuesdayCheckBox;
+	    
+	    @FXML
+	    private CheckBox wednesdayCheckBox;
+	    
+	    @FXML
+	    private CheckBox thursdayCheckBox;
+	    
+	    @FXML
+	    private CheckBox fridayCheckBox;
+	    
+	    @FXML
+	    private CheckBox saturdayCheckBox;
+	    
+	    
+	    @FXML
+	    private Button submitButton;
+
+	    @FXML
+	    private Button deleteButton;
+	    
+	    
+	    @FXML
+	    public void deleteDoctor(MouseEvent event) 
+	    { 
+	       String didString = didComboBox.getSelectionModel().getSelectedItem();
+
+	        if (didString == null || didString.isEmpty()) {
+	            System.out.println("Doctor ID is not selected.");
+	            showAlert("Error","ID Selection", "Select an ID");
+	            return;
+	        }
+
+	        try {
+	            int did = Integer.parseInt(didString);
+	            System.out.println("Doctor ID to delete: " + did);
+	            Admin a=new Admin();
+	            a.deleteDctor(did);
+	            showAlert("Success","Doctor Deleted", "The doctor has been removed successfully");
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid Doctor ID format. Please enter a valid number.");
+	        }
+	    }
+	   
+	    @FXML
+	    public void updateDoctor() {
+	        String didString = didComboBox.getSelectionModel().getSelectedItem();
+
+	        if (didString == null || didString.isEmpty()) {
+	            System.out.println("Doctor ID is not selected.");
+	            showAlert("Error","ID Selection", "Select an ID");
+	            return;
+	        }
+
+	        int did = Integer.parseInt(didString);
+	        System.out.println("Doctor ID to update: " + did);
+	        if ((selectedStartTime.get() != null && selectedEndTime.get() == null) || 
+	            (selectedStartTime.get() == null && selectedEndTime.get() != null)) {
+	            System.out.println("Both start and end time must be selected together.");
+	            return;
+	        }
+	        int workingHours=0;
+	        if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
+	            try {
+	                workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+	                System.out.println("Working hours: " + workingHours);
+	            } catch (Exception e) {
+	                System.err.println("Error calculating working hours: " + e.getMessage());
+	                return;
+	            }
+	        }
+	        String gender = genderComboBox.getValue();
+	        String name = nameTextField.getText();
+	        String username = usernameTextField.getText();
+	        String password = passwordField.getText();
+	        String experience = experienceTextField.getText();
+	        String contact = contactTextField.getText();
+
+	        int experienceInt = 0;
+	        if(!experience.isEmpty())
+	        {
+	        	 try {
+	 	        	
+	 	            experienceInt = Integer.parseInt(experience);
+	 	        } catch (NumberFormatException e) {
+	 	            System.err.println("Invalid input for experience. Please enter a valid number.");
+	 	        }
+
+	        }
+	        if(workingHours<=0)
+	        {
+	        	showAlert("Error", "Failed ", "Invalid Working hours");
+	        	return;
+	        }
+	        List<String> availableDays = new ArrayList<>();
+	        if (mondayCheckBox.isSelected()) availableDays.add("Monday");
+	        if (tuesdayCheckBox.isSelected()) availableDays.add("Tuesday");
+	        if (wednesdayCheckBox.isSelected()) availableDays.add("Wednesday");
+	        if (thursdayCheckBox.isSelected()) availableDays.add("Thursday");
+	        if (fridayCheckBox.isSelected()) availableDays.add("Friday");
+	        
+	        DBHandler db = new DBHandler();
+			int empid=db.GetempidFromDid(did);
+	        System.out.println("empid " +empid);
+	        Admin admin = new Admin();
+	        if (name != null && !name.isEmpty()) {
+	        	  System.out.println("Name: " + name);
+	        	    admin.updateNameEmployee(empid,name);
+	        }
+	        
+	        if (gender != null && !gender.isEmpty()) {
+	            System.out.println("Gender: " + gender);
+	            admin.updateGenderEmployee(empid, gender);
+	        }
+
+	        if (username != null && !username.isEmpty()) {
+	            System.out.println("Username: " + username);
+	            admin.updateUserNameEmployee(empid,username);
+	        }
+
+	        if (password != null && !password.isEmpty()) {
+	            System.out.println("Password: " + password);
+	            admin.updatePasswordEmployee(empid,password);
+	        }
+
+	        if (workingHours != 0) { 
+	            System.out.println("Experience: " + experienceInt); 
+	            admin.updateworkingHourseEmployee(did,empid, selectedStartTime.get(), selectedEndTime.get(), workingHours); 
+	        }
+	        
+	        if (contact != null && !contact.isEmpty()) {
+	            System.out.println("Contact: " + contact);
+	            admin.updateContactEmployee(empid,contact);
+	        }
+
+	        if (experienceInt != 0 ) {
+	            System.out.println("Contact: " + experienceInt);
+	            admin.updateExperienceEmployee(empid,experienceInt);
+	        }
+
+	        if (!availableDays.isEmpty()) {
+	            System.out.println("Available Days: " + availableDays);
+	            admin.updateAvailabeDaysDoctor(did,availableDays);
+	        }
+	        System.out.println("done");
+	        showAlert("Success", "Updation", "Updation has been done");
+	    }
+
+	    @FXML
+	    private CheckBox startTimeCheckBox;
+	  
+	    @FXML
+	    private CheckBox endTimeCheckBox;
+	    public static int calculateWorkingHours(String startTimeStr, String endTimeStr) {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+	        LocalTime startTime = LocalTime.parse(startTimeStr, formatter);
+	        LocalTime endTime = LocalTime.parse(endTimeStr, formatter);
+
+	        long minutes = ChronoUnit.MINUTES.between(startTime, endTime);
+	        int hours = (int) (minutes / 60);
+	        return hours;
+	    }
+
+	    @FXML
+	    public void handleSubmit() {
+	        // Ensure that the start and end times are selected
+	        if (selectedStartTime.get() == null || selectedEndTime.get() == null) {
+	            showAlert("Error", "Time Selection Missing", "Please select both start and end times.");
+	            return;
+	        }
+
+	        // Calculate working hours if both start and end times are selected
+	        int workingHours = calculateWorkingHours(selectedStartTime.get(), selectedEndTime.get());
+	        if (workingHours <= 0) {
+	            showAlert("Error", "Invalid Working Hours", "Working hours must be greater than zero.");
+	            return;
+	        }
+	        System.out.println("Working hours: " + workingHours);
+
+	        // Validate form inputs
+	        String gender = genderComboBox.getValue();
+	        String name = nameTextField.getText();
+	        String username = usernameTextField.getText();
+	        String password = passwordField.getText();
+	        String experience = experienceTextField.getText();
+	        String contact = contactTextField.getText();
+
+	        if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
+	            showAlert("Error", "Missing Input", "Please fill in all required fields.");
+	            return;
+	        }
+
+	        // Check if the username is already taken
+	        Admin admin = new Admin();
+	        if (admin.isUsernameTaken(username)) {
+	            showAlert("Error", "Username Taken", "The username is already taken. Please choose a different username.");
+	            return;
+	        }
+
+	        int experienceInt = 0;
+	        try {
+	            experienceInt = Integer.parseInt(experience);
+	            if (experienceInt < 0) {
+	                showAlert("Error", "Invalid Experience", "Experience must be a non-negative number.");
+	                return;
+	            }
+	        } catch (NumberFormatException e) {
+	            showAlert("Error", "Invalid Experience", "Please enter a valid number for experience.");
+	            return;
+	        }
+
+	        // Collect available days
+	        List<String> availableDays = new ArrayList<>();
+	        if (mondayCheckBox.isSelected()) availableDays.add("Monday");
+	        if (tuesdayCheckBox.isSelected()) availableDays.add("Tuesday");
+	        if (wednesdayCheckBox.isSelected()) availableDays.add("Wednesday");
+	        if (thursdayCheckBox.isSelected()) availableDays.add("Thursday");
+	        if (fridayCheckBox.isSelected()) availableDays.add("Friday");
+
+	        if (availableDays.isEmpty()) {
+	            showAlert("Error", "No Days Selected", "Please select at least one available day.");
+	            return;
+	        }
+
+	        // Attempt to add the doctor to the database
+	        boolean check = admin.AddDoctor(name, username, password, gender, experienceInt, contact, availableDays, selectedStartTime.get(), selectedEndTime.get(), workingHours);
+
+	        if (check) {
+	            showAlert("Success", "Doctor Added", "The doctor was added successfully.");
+	            System.out.println("Doctor Added");
+	        } else {
+	            showAlert("Error", "Database Error", "Failed to add the doctor. Please try again.");
+	        }
+	    }
 }
 
 

@@ -43,8 +43,8 @@
                               <Font name="Calibri" size="20.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="202.0" layoutY="208.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
-                        <Button layoutX="159.0" layoutY="262.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="176.0" style="-fx-background-color: #dd403a;" text="Remove" textFill="#fff3e8">
+                        <ComboBox fx:id="didComboBox" layoutX="202.0" layoutY="208.0" prefHeight="25.0" prefWidth="175.0" style="-fx-background-color: #f3f0dd;" />
+                        <Button fx:id="delete" layoutX="159.0" layoutY="262.0" mnemonicParsing="false" onMouseClicked="#deleteDoctor" prefHeight="35.0" prefWidth="176.0" style="-fx-background-color: #dd403a;" text="Remove" textFill="#fff3e8">
                            <font>
                               <Font size="16.0" />
                            </font>
