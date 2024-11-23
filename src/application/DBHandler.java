@@ -19,8 +19,8 @@ import javafx.collections.ObservableList;
 
 public class DBHandler {
 	
-   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-    // String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+   //String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+     String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
    DBHandler()
    {}
 	private Connection connect() {
@@ -1735,7 +1735,7 @@ public class DBHandler {
 	
 	public int getPatientId(String username) {
 	    // SQL query to get patientId for the provided username
-	    String query = "SELECT patientId FROM patients WHERE username = ?";
+	    String query = "SELECT pid FROM patient WHERE username = ?";
 	    
 	    try (Connection conn = this.connect();
 	         PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1747,7 +1747,7 @@ public class DBHandler {
 	        try (ResultSet rs = stmt.executeQuery()) {
 	            if (rs.next()) {
 	                // Retrieve patientId from the result set
-	                return rs.getInt("patientId");
+	                return rs.getInt("pid");
 	            } else {
 	                // Return -1 or any value to indicate the username was not found
 	                return -1;
