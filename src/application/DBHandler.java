@@ -1769,7 +1769,7 @@ public class DBHandler {
 	    }
 	}
 	
-	// ------------------------------------------- register a new patient ------------------------------------------------ //
+	// ------------------------------------------- REGISTER A NEW PATIENT ------------------------------------------------ //
 	
 	public int registerPatient(String name, String username, String password, String gender, String dob, String contact) {
 	
