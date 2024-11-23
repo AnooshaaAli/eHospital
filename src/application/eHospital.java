@@ -120,61 +120,78 @@ public class eHospital extends patientController implements Initializable {
     
 	public void handleLoginButtonReceptionist(MouseEvent event) {
 		try {
-			
-			//=======================
-        	String username="";
-			String password_ ="";
-			Employee employee= Employee.getInstanceReceptionist();
-			Receptionist receptionist= Receptionist.getInstance();
-			if(Username!=null && password !=null)
-			{
-				username = Username.getText();
-	            password_ = password.getText();
-	
-	            if (username.isEmpty() || password_.isEmpty()) 
-	            {
-	              //  System.out.println("Username or password cannot be empty.");
-	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-	                return; 
-	            }
-	
-	            Employee a = new Employee();
-	            boolean check = a.LoginReceptionist(username, password_);
-	
-	            if (!check) {
-	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-	                return; 
-	            }
-	            
-	            //================
-	            String name= employee.loadName(username);
-	            int id= receptionist.loadReceptionistId(username);
-	            int empid= employee.loadEmployeeId(username);
-	            String gender= employee.loadGender(username);
-	            int exp= employee.loadExperience(username);
-	            String con= employee.loadContact(username);
-	            String workingHrs=employee.loadWorkingHours(username); 
-	            employee.initReceptionist(empid,name,username,password_,gender,exp,workingHrs,con);
-	            receptionist.init(id, "");
-	            //================
-			}
-			else 
-			{
-				 if (employee == null) {
-		                showAlert("Error", "Missing Data", "No user is logged in.");
-		            }
-			}
 
-
-        	
         	String fxmlFile;
             String stageTitle;
+            Employee employee= Employee.getInstanceReceptionist();
+            Receptionist receptionist= Receptionist.getInstance();
             
             if(event.getSource()==ReceptionistSignIn)
             {
             	fxmlFile = "Receptionist.fxml";
                 stageTitle = "Receptionist";
+                
+    			//=======================
+            	String username="";
+    			String password_ = "";
+    			
+    			if(Username!=null && password !=null)
+    			{
+    				username = Username.getText();
+    	            password_ = password.getText();
+    	
+    	            if (username.isEmpty() || password_.isEmpty()) 
+    	            {
+    	              //  System.out.println("Username or password cannot be empty.");
+    	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+    	                return; 
+    	            }
+    	
+    	            Employee a = new Employee();
+    	            boolean check = a.LoginReceptionist(username, password_);
+    	
+    	            if (!check) {
+    	                showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+    	                return; 
+    	            }
+    	            
+    	            //================
+    	            String name= employee.loadName(username);
+    	            int id= receptionist.loadReceptionistId(username);
+    	            int empid= employee.loadEmployeeId(username);
+    	            String gender= employee.loadGender(username);
+    	            int exp= employee.loadExperience(username);
+    	            String con= employee.loadContact(username);
+    	            String workingHrs=employee.loadWorkingHours(username); 
+    	            employee.initReceptionist(empid,name,username,password_,gender,exp,workingHrs,con);
+    	            receptionist.init(id, "");
+    	            //================
+    			}
+    			else 
+    			{
+    				 if (employee == null) {
+    		                showAlert("Error", "Missing Data", "No user is logged in.");
+    		            }
+    			}
+
             }
+            
+            else if(event.getSource()==RegisterPatientByReceptionist)
+            {
+                String name = nameTextField.getText();
+                String p_username = usernameTextField.getText();
+                String password = passwordTextField.getText();
+                String gender = genderComboBox.getValue();
+                String dob = dobTextField.getText();
+                String contact = contactTextField.getText();
+
+                Patient patient = new Patient();
+                patient.registerPatient(name, p_username, password, gender, dob, contact);
+                
+            	fxmlFile = "Receptionist.fxml";
+                stageTitle = "Receptionist";
+            }
+            
             else
             {
             	throw new IllegalArgumentException("Unexpected button source");
@@ -422,44 +439,53 @@ public class eHospital extends patientController implements Initializable {
 	public void handleRegisterButtonClick(MouseEvent  event)
 	{
 		try {
+			
+			// Anoosha
+			
+        	String fxmlFile;
+            String stageTitle;
+            String name = nameTextField.getText();
+            String username = usernameTextField.getText();
+            String password = passwordTextField.getText();
+            String gender = genderComboBox.getValue();
+            String dob = dobTextField.getText();
+            String contact = contactTextField.getText();
+
+            Patient patient = new Patient();
+            patient.registerPatient(name, username, password, gender, dob, contact);
+            int id = patient.getPatientId(username);
+            setPatientId(id);
+        	fxmlFile = "Patient.fxml";
+            stageTitle = "Patient";
+            
+            // Anoosha
+            
 			//======================================================
-			String username="";
-			String password_=""; 
-			Patient patient= Patient.getInstance();
-			if(Username!=null && password != null)
+
+			Patient p = Patient.getInstance();
+			
+			if (usernameTextField != null && passwordTextField != null)
 			{
-				username = Username.getText();
-		        password_ = password.getText();
-	
-		        if (username.isEmpty() || password_.isEmpty()) 
+		        if (username.isEmpty() || password.isEmpty()) 
 		        {
 		            System.out.println("Username or password cannot be empty.");
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
 	
-		        Patient a = new Patient();
-		        boolean check = a.LoginPatient(username, password_);
+		        boolean check = patient.LoginPatient(username, password);
 	
 		        if (!check) {
 		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
 		            return; 
 		        }
 		        
-		        
-		      //======================================
-	            String patientName = patient.loadPatientName(username);
-	            int id= patient.loadPatientId(username);
-	            String gender = patient.loadPatientGender(username);
-	            String contact = patient.loadPatientContact(username);
-                String discharge = patient.loadPatientDischargeStatus(username);
-                String dob1 = patient.loadPatientDOB(username); // e.g., "2024-11-20"
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localDate = null; // Initializes to null
-                java.sql.Date sqlDob=null;
+                LocalDate localDate = null; 
+                java.sql.Date sqlDob = null;
                 try {
                     // Parse the string into a LocalDate
-                    localDate = LocalDate.parse(dob1, formatter);
+                    localDate = LocalDate.parse(dob, formatter);
                     LocalDateTime localDateTime = localDate.atStartOfDay();
                     java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
                     sqlDob = new java.sql.Date(utilDob.getTime());
@@ -468,7 +494,8 @@ public class eHospital extends patientController implements Initializable {
                     e.printStackTrace();
                     System.out.println("Invalid date format.");
                 }
-	            patient.init(id, username, patientName, gender, sqlDob, contact, check);
+                
+	            patient.init(id, username, name, gender, sqlDob, contact, check);
 		
 		}
 		else 
@@ -476,10 +503,9 @@ public class eHospital extends patientController implements Initializable {
 			 if (patient == null) 
 	                showAlert("Error", "Missing Data", "No user is logged in.");
 		}
+			
 		//=========================================
-        	String fxmlFile;
-            String stageTitle;
-            
+
             if(event.getSource()==RegisterPatient)
             {
             	fxmlFile = "Patient.fxml";
@@ -496,12 +522,12 @@ public class eHospital extends patientController implements Initializable {
             
           //==========================================
             eHospital controller = loader.getController();
-            String st= patient.isDischargeStatus()? "Discharged":"Not Discharged";
-            Date dob= patient.getDob();
+            String st = patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob1 = patient.getDob();
             String dobString ="";
-            if (dob != null) {
+            if (dob1 != null) {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                dobString = formatter.format(dob);
+                dobString = formatter.format(dob1);
                 controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
                                            patient.getGender(), dobString, patient.getContact(), st);
             } else {
@@ -671,6 +697,8 @@ public class eHospital extends patientController implements Initializable {
 
             controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
             		,dobString,patient.getContact(),st);
+            controller.setPatientId(patient.loadPatientId(username));
+            
             //==========================================
             
             Scene newFormScene = new Scene(newFormRoot);

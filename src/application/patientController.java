@@ -14,8 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -190,46 +193,6 @@ public class patientController implements Initializable{
        }
        
 	 }
-	 
-	public void handleRegisterButtonClick(MouseEvent  event)
-	{
-		try {
-        	String fxmlFile;
-            String stageTitle;
-            String name = nameTextField.getText();
-            String username = usernameTextField.getText();
-            String password = passwordTextField.getText();
-            String gender = genderComboBox.getValue();
-            String dob = dobTextField.getText();
-            String contact = contactTextField.getText();
-
-            Patient patient = new Patient();
-            patient.registerPatient(name, username, password, gender, dob, contact);
-            int id = patient.getPatientId(username);
-            setPatientId(id);
-        	fxmlFile = "Patient.fxml";
-            stageTitle = "Patient";
-            // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent newFormRoot = loader.load();
-
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle(stageTitle);
-
-            // Show the new form
-            newFormStage.show();
-
-            // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
 	
 	public void handlePatientViewRecord(MouseEvent  event) {
 		try {
@@ -504,17 +467,23 @@ public class patientController implements Initializable{
 	    
 	    double bill = 1500.0; //hardcoded for each doctor
 	    int timeslotId = time.findTimeSlotId(startTime);
-		if(patient.addAppointment(recId, docId, date, timeslotId)) {
-			//System.out.println("Successful");
-			Patient p = new Patient();
-			p.addBill(recId, bill, "unknown");
-			DoctorLabel.setText("Doctor Id: " + docId);
-			PatientLabel.setText("Patient Id: " + patId);
-			DateLabel.setText("Date: " + date);
-			TimeLabel.setText("Time: " + startTime);
-			BillLabel.setText("Bill: " + bill);
-			ConfirmationPane.setVisible(true);
-		}
+	    if (patient.addAppointment(recId, docId, date, timeslotId)) {
+	        // Add the time slot to DoctorTimeslot table
+	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
+	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
+	        if (added) {
+	            Patient p = new Patient();
+	            p.addBill(recId, bill, "unknown");
+	            DoctorLabel.setText("Doctor Id: " + docId);
+	            PatientLabel.setText("Patient Id: " + patId);
+	            DateLabel.setText("Date: " + date);
+	            TimeLabel.setText("Time: " + startTime);
+	            BillLabel.setText("Bill: " + bill);
+	            ConfirmationPane.setVisible(true);
+	        } else {
+	            System.out.println("Failed to add time slot to DoctorTimeslot table.");
+	        }
+	    }
 		else {
 			System.out.println("Unsuccessful");
 		}
@@ -561,17 +530,23 @@ public class patientController implements Initializable{
 	    
 	    double bill = 1500.0; //hardcoded for each doctor
 	    int timeslotId = time.findTimeSlotId(startTime);
-		if(patient.addAppointment(recId, docId, date, timeslotId)) {
-			//System.out.println("Successful");
-			Patient p = new Patient();
-			p.addBill(recId, bill, "unknown");
-			DoctorLabel.setText("Doctor Id: " + docId);
-			PatientLabel.setText("Patient Id: " + pid);
-			DateLabel.setText("Date: " + date);
-			TimeLabel.setText("Time: " + startTime);
-			BillLabel.setText("Bill: " + bill);
-			ConfirmationPane.setVisible(true);
-		}
+	    if (patient.addAppointment(recId, docId, date, timeslotId)) {
+	        // Add the time slot to DoctorTimeslot table
+	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
+	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
+	        if (added) {
+	            Patient p = new Patient();
+	            p.addBill(recId, bill, "unknown");
+	            DoctorLabel.setText("Doctor Id: " + docId);
+	            PatientLabel.setText("Patient Id: " + patId);
+	            DateLabel.setText("Date: " + date);
+	            TimeLabel.setText("Time: " + startTime);
+	            BillLabel.setText("Bill: " + bill);
+	            ConfirmationPane.setVisible(true);
+	        } else {
+	            System.out.println("Failed to add time slot to DoctorTimeslot table.");
+	        }
+	    }
 		else {
 			//System.out.println("Unsuccessful");
 		}

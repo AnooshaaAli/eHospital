@@ -64,7 +64,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="RegisterPatientByReceptionist" layoutX="167.0" layoutY="357.0" mnemonicParsing="false" onAction="#registerPatient" onMouseClicked="#handleLoginButtonReceptionist" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
+                        <Button fx:id="RegisterPatientByReceptionist" layoutX="167.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#handleLoginButtonReceptionist" prefHeight="36.0" prefWidth="165.0" style="-fx-background-color: #dd403a;" text="Register" textFill="#fffce8">
                            <font>
                               <Font name="Calibri" size="16.0" />
                            </font>

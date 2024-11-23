@@ -1,5 +1,9 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,6 +41,12 @@ public class Doctor extends Employee{
     
 	public ObservableList<String> getDoctorTimeSlotsList(int docId, LocalDate date) {
 		return dbhandler.fetchAvailableTimeSlots(docId, date);
+	}
+	
+	// ------------------------------------------------- ADD INTO DOCTOR'S TIMESLOT ----------------------------------------------------------- //
+	
+	public boolean addDoctorTimeslot(int doctorId, int timeslotId, LocalDate date) {
+		return dbhandler.addDoctorTimeslot(doctorId, timeslotId, date);
 	}
 	
 	public static Doctor getInstance() 

@@ -1495,25 +1495,27 @@ public class DBHandler {
 	}
 	
 	// ------------------------------------------- GET FREE TIME SLOTS OF THE DOCTOR ---------------------------------------------- //
-	
+
 	public ObservableList<String> fetchAvailableTimeSlots(int doctorId, LocalDate selectedDate) {
 	    ObservableList<String> timeSlots = FXCollections.observableArrayList();
 	    
 	    Date sqlDate = Date.valueOf(selectedDate);
-	    String query = "SELECT t.starttime FROM DoctorTimeslot dt " +
-	                   "JOIN timeslot t ON dt.tid = t.tid " +
-	                   "WHERE dt.did = ? AND dt.date = ?";
-	
-	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");  // Set the format to "HH:mm"
+	    String query = "SELECT t.starttime FROM timeslot t " +
+	                   "WHERE NOT EXISTS ( " +
+	                   "    SELECT 1 FROM DoctorTimeslot dt " +
+	                   "    WHERE dt.tid = t.tid AND dt.did = ? AND dt.date = ? " +
+	                   ")";
+	    
+	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");  // Format to "HH:mm"
 	    
 	    try (Connection conn = this.connect();
 	         PreparedStatement stmt = conn.prepareStatement(query)) {
 	        
 	        stmt.setInt(1, doctorId);
 	        stmt.setDate(2, sqlDate);
-	
+
 	        ResultSet rs = stmt.executeQuery();
-	
+
 	        while (rs.next()) {
 	            // Fetch the time from the result set as a Time object
 	            Time timeFromDB = rs.getTime("starttime");
@@ -1530,7 +1532,7 @@ public class DBHandler {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	
+
 	    return timeSlots;
 	}
 	
@@ -1819,4 +1821,24 @@ public class DBHandler {
 	        e.printStackTrace();
 	    }
 	}
+	
+	// ------------------------------------------------- ADD INTO DOCTOR'S TIMESLOT ----------------------------------------------------------- //
+	
+	public boolean addDoctorTimeslot(int doctorId, int timeslotId, LocalDate date) {
+	    String query = "INSERT INTO DoctorTimeslot (did, tid, date) VALUES (?, ?, ?)";
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+
+	        stmt.setInt(1, doctorId);
+	        stmt.setInt(2, timeslotId);
+	        stmt.setDate(3, Date.valueOf(date));
+
+	        int rowsInserted = stmt.executeUpdate();
+	        return rowsInserted > 0; // Returns true if the insertion was successful
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false; // Returns false in case of an error
+	    }
+	}
+
 }
