@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -35,7 +36,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ViewRecord" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" opacity="0.5" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Record">
+            <Button fx:id="ViewRecord" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewRecord" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Record">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -50,7 +51,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="FollowUpReminders" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleFollowUpReminder" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Follow Up Reminders">
+            <Button fx:id="FollowUpReminders" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientViewPrescription" opacity="0.5" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Follow Up Reminders">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -64,24 +65,12 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="-1.0" layoutY="-2.0" prefHeight="32.0" prefWidth="550.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+            <Label prefHeight="30.0" prefWidth="547.0" style="-fx-background-color: #f3f0dd;" text="  Pending Appointments">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
             </Label>
-            <Label layoutY="221.0" prefHeight="32.0" prefWidth="547.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
-               <font>
-                  <Font name="Cambria" size="20.0" />
-               </font>
-            </Label>
-            <TableView fx:id="medicationTable" layoutY="30.0" prefHeight="190.0" prefWidth="547.0">
-              <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="MedId" />
-                <TableColumn fx:id="nameColumn" prefWidth="75.0" text="MedName" />
-                  <TableColumn fx:id="dosageColumn" prefWidth="75.0" text="Dosage" />
-              </columns>
-            </TableView>
-            <TableView fx:id="appointmentsTable" layoutY="253.0" prefHeight="172.0" prefWidth="548.0">
+            <TableView fx:id="appointmentsTable" layoutY="29.0" prefHeight="304.0" prefWidth="548.0">
                <columns>
                   <TableColumn fx:id="aptIdcolumn" prefWidth="75.0" text="AptId" />
                   <TableColumn fx:id="startTimeColumn" prefWidth="75.0" text="StartTime" />
@@ -90,19 +79,21 @@
                   <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
                </columns>
             </TableView>
-            <TableView fx:id="billsTable" layoutY="458.0" prefHeight="202.0" prefWidth="548.0">
-               <columns>
-                  <TableColumn fx:id="billIdColumn" prefWidth="75.0" text="BillId" />
-                  <TableColumn fx:id="billStatusColumn" prefWidth="75.0" text="Status" />
-                  <TableColumn fx:id="paymentMethodColumn" prefWidth="112.0" text="PaymentMethod" />
-                  <TableColumn fx:id="amountColumn" prefWidth="78.0" text="Amount" />
-               </columns>
-            </TableView>
-            <Label layoutY="425.0" prefHeight="32.0" prefWidth="548.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
+            <Label layoutY="391.0" prefHeight="24.0" prefWidth="548.0" style="-fx-background-color: #f3f0dd;" text="Update Status">
                <font>
                   <Font name="Cambria" size="20.0" />
                </font>
+               <padding>
+                  <Insets left="220.0" />
+               </padding>
             </Label>
+            <Button layoutX="185.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#updateAptStatus" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="Mark as Done" textFill="#fffce8" />
+            <Label layoutX="164.0" layoutY="447.0" prefHeight="21.0" prefWidth="122.0" text="Appointment Id:" textFill="#747572">
+               <font>
+                  <Font name="Calibri" size="17.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="appointmentIdsComboBox" layoutX="296.0" layoutY="445.0" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #f3f0dd;" />
          </children>
       </AnchorPane>
    </center>

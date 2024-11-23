@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -53,33 +55,54 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutY="43.0" prefHeight="32.0" prefWidth="528.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+            <Label layoutX="135.0" layoutY="21.0" text="Patient Id:">
                <font>
-                  <Font name="Cambria" size="20.0" />
+                  <Font name="Calibri" size="18.0" />
                </font>
             </Label>
-            <Label layoutY="221.0" prefHeight="32.0" prefWidth="536.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
-               <font>
-                  <Font name="Cambria" size="20.0" />
-               </font>
-            </Label>
-            <Label layoutY="377.0" prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
-               <font>
-                  <Font name="Cambria" size="20.0" />
-               </font>
-            </Label>
-            <AnchorPane layoutX="118.0" layoutY="168.0" prefHeight="252.0" prefWidth="293.0" style="-fx-background-color: #dd403a;" visible="false">
+            <ComboBox fx:id="pidComboBox" layoutX="238.0" layoutY="20.0" prefHeight="25.0" prefWidth="185.0" style="-fx-background-color: #f3f0dd;" />
+            <Button fx:id="ViewPatientRecordNurse" layoutX="186.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#handleViewPatientRecordNurse" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Record" textFill="#fffce8" />
+            <AnchorPane fx:id="RecordAnchorPane" layoutY="103.0" prefHeight="666.0" prefWidth="549.0">
                <children>
-                  <AnchorPane layoutX="41.0" layoutY="34.0" prefHeight="183.0" prefWidth="205.0" style="-fx-background-color: #e67066;">
-                     <children>
-                        <Label layoutX="33.0" layoutY="56.0" text="Enter Patient Id: ">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="30.0" layoutY="93.0" />
-                     </children>
-                  </AnchorPane>
+                  <Label layoutX="-1.0" layoutY="-2.0" prefHeight="32.0" prefWidth="550.0" style="-fx-background-color: #f3f0dd;" text="  Current Medications">
+                     <font>
+                        <Font name="Cambria" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="221.0" prefHeight="32.0" prefWidth="547.0" style="-fx-background-color: #f3f0dd;" text="  Appointments">
+                     <font>
+                        <Font name="Cambria" size="20.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="medicationTable" layoutY="30.0" prefHeight="190.0" prefWidth="547.0">
+                     <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="75.0" text="MedId" />
+                        <TableColumn fx:id="nameColumn" prefWidth="75.0" text="MedName" />
+                        <TableColumn fx:id="dosageColumn" prefWidth="75.0" text="Dosage" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="appointmentsTable" layoutY="253.0" prefHeight="172.0" prefWidth="548.0">
+                     <columns>
+                        <TableColumn fx:id="aptIdcolumn" prefWidth="75.0" text="AptId" />
+                        <TableColumn fx:id="startTimeColumn" prefWidth="75.0" text="StartTime" />
+                        <TableColumn fx:id="endTimeColumn" prefWidth="75.0" text="EndTime" />
+                        <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
+                     </columns>
+                  </TableView>
+                  <TableView fx:id="billsTable" layoutY="458.0" prefHeight="227.0" prefWidth="548.0">
+                     <columns>
+                        <TableColumn fx:id="billIdColumn" prefWidth="75.0" text="BillId" />
+                        <TableColumn fx:id="billStatusColumn" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="paymentMethodColumn" prefWidth="112.0" text="PaymentMethod" />
+                        <TableColumn fx:id="amountColumn" prefWidth="78.0" text="Amount" />
+                     </columns>
+                  </TableView>
+                  <Label layoutY="425.0" prefHeight="32.0" prefWidth="548.0" style="-fx-background-color: #f3f0dd;" text="  Pending Bills">
+                     <font>
+                        <Font name="Cambria" size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

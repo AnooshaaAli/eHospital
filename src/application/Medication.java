@@ -8,21 +8,19 @@ public class Medication {
 	private int medicationId;
 	private String medicineName; 
 	private int dosage; 
-	private DBHandler db;
- 	Medication()
-	{
-		db= new DBHandler();
+	private DBHandler dbhandler;
+	
+	Medication() {
+		dbhandler = new DBHandler();
 	}
 	
-	
-	Medication(int medicationId, String medicineName, int dosage)
-	{
-		this.medicationId=medicationId;
-		this.dosage=dosage;
-		this.medicineName=medicineName;
+	Medication(int id, String name, int dosage) {
+		dbhandler = new DBHandler();
+		this.medicationId = id;
+		this.medicineName = name;
+		this.dosage = dosage;
 	}
-	
-	
+		
 	public int getDosage() {
 		return dosage;
 	}
@@ -32,34 +30,16 @@ public class Medication {
 	public String getMedicineName() {
 		return medicineName;
 	}
+	
 	public void setMedicineName(String medicineName) {
 		this.medicineName = medicineName;
 	}
+	
 	public void addPrescribeMedication(String medName,int dosage,int pid)
 	{
-		//Medication med= new Medication();
-		//med.addPrescribeMedication(medName,dosage,pid);
-		db.addPrescribeMedication(medName,dosage, pid);
+		dbhandler.addPrescribeMedication(medName,dosage, pid);
 	}
-	public ObservableList<Medication> showExistingMedication(int pid)
-	{
-
-		ObservableList<Medication> list=db.showExistingMedication(pid);
-		
-		return list;
-	}
-//	public void enterMedicationDetails(String name)
-//	{}
-//	public void updateMedicationDetails()
-//	{
-//		
-//	}
-//	public Medication showExistingMedicationDetails()
-//	{
-//		return null;
-//	}
-
-
+	
 	public int getMedicationId() {
 		return medicationId;
 	}
@@ -109,5 +89,11 @@ public class Medication {
 	        
 			return medicationDetails;
 	    }
+	
+	public ObservableList<Medication> showExistingMedication(int pid)
+	{
+		ObservableList<Medication> list=dbhandler.showExistingMedication(pid);
+		return list;
+	}
 	
 }

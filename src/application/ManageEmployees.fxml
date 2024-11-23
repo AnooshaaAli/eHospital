@@ -76,7 +76,7 @@
                   <Image url="@resources/doctor.png" />
                </image>
             </ImageView>
-            <Button fx:id="CRUDdoctor" layoutX="119.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDdoctor" style="-fx-background-color: #f3f0dd;" text="Doctor">
+            <Button fx:id="CRUDdoctor" layoutX="122.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDdoctor" style="-fx-background-color: #f3f0dd;" text="Doctor">
                <font>
                   <Font size="18.0" />
                </font>

@@ -55,8 +55,5 @@ public class Receptionist extends Employee{
 	public void setDb(DBHandler db) {
 		this.db = db;
 	}
-	
-	
-
 
 }

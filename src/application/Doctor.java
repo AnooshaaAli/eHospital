@@ -1,24 +1,60 @@
 package application;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+
 public class Doctor extends Employee{
-	private DBHandler db;
 	private static Doctor instance; 
 	private int doctorId;
     private boolean[] availableDays; 
 	private int num_appointments;
-	
+	private static DBHandler dbhandler;
+	private List<TimeSlot> timeslots;
+    
 	public void init(int id, boolean[] available, int app) {
 		this.doctorId=id;
 		this.availableDays= available;
 		this.num_appointments=app;
     }
+	
+	
+    // ------------------------------------ POPULATE WITH DOCTOR ID'S ----------------------------------------------- //
+    
+	public ObservableList<Integer> getDoctorIdsList() {
+		return dbhandler.getDoctorIdsList();
+	}
+	
+	// ------------------------------------ CHECK DOCTOR AVAILABILITY ----------------------------------------------- //
+	
+	public boolean checkDoctorAvailability(int doctorId, LocalDate date) {
+		return dbhandler.checkDoctorAvailability(doctorId, date);
+	}
+	
+	// ------------------------------------- GET FREE TIME SLOTS OF DOCTOR ------------------------------------------ //
+    
+	public ObservableList<String> getDoctorTimeSlotsList(int docId, LocalDate date) {
+		return dbhandler.fetchAvailableTimeSlots(docId, date);
+	}
+	
+	// ------------------------------------------------- ADD INTO DOCTOR'S TIMESLOT ----------------------------------------------------------- //
+	
+	public boolean addDoctorTimeslot(int doctorId, int timeslotId, LocalDate date) {
+		return dbhandler.addDoctorTimeslot(doctorId, timeslotId, date);
+	}
+	
 	public static Doctor getInstance() 
 	{
 		if (instance == null) {
             instance = new Doctor();
         }
+        dbhandler = new DBHandler();
         return instance;
 	}
 	
@@ -65,12 +101,12 @@ public class Doctor extends Employee{
 	}
 
     public Doctor() {
-    	db= new DBHandler();
+    	dbhandler = new DBHandler();
         availableDays = new boolean[6]; 
     }
     public boolean LoginDoctor(String username,String pass)
     {
-    	boolean check=db.LoginDoctor(username,pass);
+    	boolean check = dbhandler .LoginDoctor(username,pass);
 		return check;   	
     }
 //    public String loadDoctorName(String username)
@@ -81,21 +117,21 @@ public class Doctor extends Employee{
 //	}
 	public int loadDoctorId(String username)
 	{
-		int data=db.loadDoctorId(username);
+		int data = dbhandler.loadDoctorId(username);
 		
 		return data;
 	}
     public String loadDoctorWorkingDays(String username)
     {
     	
-    	String days= db.loadWorkingDays(username);
+    	String days= dbhandler.loadWorkingDays(username);
     	return days;
     }
 	public DBHandler getDb() {
-		return db;
+		return dbhandler;
 	}
 	public void setDb(DBHandler db) {
-		this.db = db;
+		this.dbhandler = db;
 	}
 	public int getDoctorId() {
 		return doctorId;

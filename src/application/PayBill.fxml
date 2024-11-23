@@ -26,7 +26,7 @@
                   <Insets left="20.0" top="10.0" />
                </VBox.margin>
             </ImageView>
-            <Button fx:id="RegisterPatient" mnemonicParsing="false" onMouseClicked="#handleRegisterButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+            <Button fx:id="RegisterPatient" mnemonicParsing="false" onMouseClicked="#handleProfileButtonClick" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
@@ -47,6 +47,11 @@
                </font>
             </Button>
             <Button fx:id="PayBill" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" opacity="0.5" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Pay Bill">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="FollowUpReminders" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleFollowUpReminder" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Follow Up Reminders">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

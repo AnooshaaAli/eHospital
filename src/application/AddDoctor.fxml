@@ -92,21 +92,6 @@
                            </font>
                         </Label>
                         <TextField layoutX="170.0" layoutY="303.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
-                        <CheckBox layoutX="169.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Male">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox layoutX="250.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Female">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
-                        <CheckBox layoutX="353.0" layoutY="238.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Other">
-                           <font>
-                              <Font name="Calibri" size="18.0" />
-                           </font>
-                        </CheckBox>
                         <Label layoutX="59.0" layoutY="328.0" prefHeight="40.0" prefWidth="110.0" text="Available Days">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -159,6 +144,7 @@
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Label>
+                        <ComboBox fx:id="genderComboBox" layoutX="169.0" layoutY="238.0" prefHeight="25.0" prefWidth="263.0" style="-fx-background-color: #f3f0dd;" />
                      </children>
                   </AnchorPane>
                </children>
