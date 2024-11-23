@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -146,6 +147,12 @@ public class eHospital extends patientController implements Initializable {
     	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
     	                return; 
     	            }
+    	            //input validation
+    	            if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+		            {
+		            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+		                return;
+		            }
     	
     	            Employee a = new Employee();
     	            boolean check = a.LoginReceptionist(username, password_);
@@ -184,7 +191,40 @@ public class eHospital extends patientController implements Initializable {
                 String gender = genderComboBox.getValue();
                 String dob = dobTextField.getText();
                 String contact = contactTextField.getText();
+                //input validation 
+                if (name.isEmpty() || p_username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
+                    showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
+                    return;
+                }
+                if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
+                    showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+                    return;
+                }
+                if (!p_username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
+                    showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+                    return;
+                }
+                if (gender == null || gender.isEmpty()) {
+                    showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
+                    return;
+                }
+                if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
+                    showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
+                    return;
+                }
+                try {
+                    LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
+                } catch (DateTimeParseException e) {
+                    showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
+                    return;
+                }
 
+                if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
+                    showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
+                    return;
+                }
+
+                
                 Patient patient = new Patient();
                 patient.registerPatient(name, p_username, password, gender, dob, contact);
                 
@@ -441,7 +481,6 @@ public class eHospital extends patientController implements Initializable {
 		try {
 			
 			// Anoosha
-			
         	String fxmlFile;
             String stageTitle;
             String name = nameTextField.getText();
@@ -450,7 +489,39 @@ public class eHospital extends patientController implements Initializable {
             String gender = genderComboBox.getValue();
             String dob = dobTextField.getText();
             String contact = contactTextField.getText();
+            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
+                showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
+                return;
+            }
+            if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
+                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+                return;
+            }
+            if (!username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
+                showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+                return;
+            }
+            if (gender == null || gender.isEmpty()) {
+                showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
+                return;
+            }
+            if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
+                showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
+                return;
+            }
+            try {
+                LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
+            } catch (DateTimeParseException e) {
+                showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
+                return;
+            }
 
+            if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
+                showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
+                return;
+            }
+
+            
             Patient patient = new Patient();
             patient.registerPatient(name, username, password, gender, dob, contact);
             int id = patient.getPatientId(username);
@@ -472,6 +543,12 @@ public class eHospital extends patientController implements Initializable {
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
+		        //alpha numeric input validation 
+		        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+	            {
+	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
+	            }
 	
 		        boolean check = patient.LoginPatient(username, password);
 	
@@ -664,6 +741,7 @@ public class eHospital extends patientController implements Initializable {
 	public void handleLoginButtonPatinet(MouseEvent  event) {
 		try {
 			//===============================
+			
 			String username="";
 			String password_=""; 
 			Patient patient= Patient.getInstance();
@@ -674,10 +752,16 @@ public class eHospital extends patientController implements Initializable {
 	
 		        if (username.isEmpty() || password_.isEmpty()) 
 		        {
-		            System.out.println("Username or password cannot be empty.");
+		          //  System.out.println("Username or password cannot be empty.");
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
+		        //input validation 
+		        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+	            {
+	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
+	            }
 	
 		        Patient a = new Patient();
 		        boolean check = a.LoginPatient(username, password_);
@@ -986,11 +1070,18 @@ public class eHospital extends patientController implements Initializable {
 		
 		            if (username.isEmpty() || password_.isEmpty()) 
 		            {
-		                System.out.println("Username or password cannot be empty.");
+		               // System.out.println("Username or password cannot be empty.");
 		                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		                return; 
 		            }
-		
+		            //validation for username 
+		            if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+		            {
+		            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+		                return;
+		            }
+		            
+		            
 		            Employee a = new Employee();
 		            boolean check = a.LoginNurse(username, password_);
 		
@@ -1487,7 +1578,13 @@ public class eHospital extends patientController implements Initializable {
 		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 		            return; 
 		        }
-	
+		        //input validation 
+		        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+	            {
+	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
+	            }
+		        
 		        Employee a = new Employee();
 		        boolean check = a.LoginDoctor(username, password_);
 	
@@ -1771,7 +1868,12 @@ public class eHospital extends patientController implements Initializable {
 	                showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
 	                return; 
 	            }
-	
+	            //input validation 
+	            if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+	            {
+	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
+	            }
 	            Admin a = new Admin();
 	            boolean check = a.LoginAdmin(username, password_);
 	
@@ -2686,8 +2788,8 @@ public class eHospital extends patientController implements Initializable {
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
-		    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		    //String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   // String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 
 		    // Connect to the database and fetch the PIDs
 		    try (Connection conn = DriverManager.getConnection(url)) {
