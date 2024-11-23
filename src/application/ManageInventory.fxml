@@ -63,12 +63,12 @@
             </Label>
             <ImageView fitHeight="75.0" fitWidth="80.0" layoutX="327.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@resources/nurse.png" />
+                  <Image url="@resources/health-insurance.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="81.0" fitWidth="81.0" layoutX="118.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@resources/doctor.png" />
+                  <Image url="@resources/medical.png" />
                </image>
             </ImageView>
             <Button fx:id="addInventory" layoutX="116.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleInventoryCRUDadmin" prefHeight="39.0" prefWidth="86.0" style="-fx-background-color: #f3f0dd;" text="Add">
@@ -83,7 +83,7 @@
             </Button>
             <ImageView fitHeight="81.0" fitWidth="81.0" layoutX="232.0" layoutY="305.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@resources/reception.png" />
+                  <Image url="@resources/pills.png" />
                </image>
             </ImageView>
             <Button fx:id="deleteInventory" layoutX="224.0" layoutY="378.0" mnemonicParsing="false" onMouseClicked="#handleInventoryCRUDadmin" prefHeight="39.0" prefWidth="99.0" style="-fx-background-color: #f3f0dd;" text="Remove">
