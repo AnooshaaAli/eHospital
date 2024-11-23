@@ -84,6 +84,19 @@
             </Label>
             <TextField fx:id="date" layoutX="181.0" layoutY="287.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-color: #f3f0dd;" />
             <Button fx:id="dischargeSummary" layoutX="161.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#handleDischargePatientUC" prefHeight="25.0" prefWidth="194.0" style="-fx-background-color: #dd403a;" text="Generate Discharge Summary" textFill="#fffce8" />
+            <AnchorPane fx:id="DischargeConfirmationPane" layoutX="101.0" layoutY="432.0" prefHeight="129.0" prefWidth="315.0" style="-fx-background-color: #dd403a;" visible="false">
+               <children>
+                  <AnchorPane layoutX="15.0" layoutY="26.0" prefHeight="64.0" prefWidth="285.0" style="-fx-background-color: #e67066;">
+                     <children>
+                        <Label layoutX="7.0" layoutY="6.0" prefHeight="65.0" prefWidth="271.0" text="The Patient has been discharged!" textFill="#fffce8">
+                           <font>
+                              <Font name="Calibri" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </center>

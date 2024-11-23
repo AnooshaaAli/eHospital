@@ -13,6 +13,7 @@ public class Employee {
 	private String workingHours;
 	private String contact;
 	private DBHandler db;
+	
 	Employee()
 	{
 		db= new DBHandler();
@@ -82,6 +83,7 @@ public class Employee {
 		boolean check = a.LoginDoctor(username, password);
 		return check;
 	}
+	
 	public boolean LoginReceptionist(String username, String password)
 	{
 		Receptionist a= new Receptionist();
@@ -150,7 +152,6 @@ public class Employee {
 	public String loadNurseName(String username)
 	{
 		String data="";
-		
 		return data;
 	}
 	
@@ -220,4 +221,11 @@ public class Employee {
 		Employee.instance = instance;
 	}
 
+	// ------------------------------------------------- SARA AKBAR USE CASE ----------------------------------------------------------- //
+	
+	public int AddEmployee(String name,String username,String password,String gender,int experience,String contact,int workingHours)
+	{
+		int empid = db.AddEmployee(name,username,password,gender,experience,contact,workingHours);
+		return empid;
+	}
 }

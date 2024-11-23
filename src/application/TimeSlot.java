@@ -1,6 +1,7 @@
 package application;
 
 import java.sql.Time;
+import java.util.List;
 
 public class TimeSlot {
 	
@@ -37,6 +38,13 @@ public class TimeSlot {
 	// ------------------------------ GET TIME SLOT ID -------------------------------------------------- //
 	
 	public int findTimeSlotId(String startTime) {
-		return dbhandler.getTimeSlotIdByStartTime(startTime)
-;	}
+		return dbhandler.getTimeSlotIdByStartTime(startTime);
+	}
+	
+	// ---------------------------- SARA AKBAR USE CASES ----------------------------------------------- //
+	
+	public List<Integer> AddTimeSlots(String starttime, String endtime) {
+	    return dbhandler.AddTimeSlots(starttime, endtime); // Delegate to DB_Handler
+	}
+
 }

@@ -42,8 +42,8 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="169.0" layoutY="135.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
-                        <TextField layoutX="170.0" layoutY="168.0" prefHeight="25.0" prefWidth="260.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="nameTextField" layoutX="169.0" layoutY="135.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="usernameTextField" layoutX="170.0" layoutY="168.0" prefHeight="25.0" prefWidth="260.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="51.0" layoutY="101.0" prefHeight="33.0" prefWidth="291.0" text="Enter the New Details:" textFill="#747572">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -52,7 +52,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="UpdateReceptionist" layoutX="136.0" layoutY="417.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="225.0" style="-fx-background-color: #dd403a;" text="Update Details" textFill="#fffce8">
+                        <Button fx:id="UpdateReceptionist" layoutX="136.0" layoutY="417.0" mnemonicParsing="false" onMouseClicked="#UpdateReceptionist" prefHeight="37.0" prefWidth="225.0" style="-fx-background-color: #dd403a;" text="Update Details" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>
@@ -62,7 +62,7 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="170.0" layoutY="204.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="passwordField" layoutX="170.0" layoutY="204.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="230.0" prefHeight="40.0" prefWidth="85.0" text="Gender">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -73,13 +73,13 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="169.0" layoutY="270.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="experienceTextField" layoutX="169.0" layoutY="270.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="295.0" prefHeight="40.0" prefWidth="99.0" text="Contact">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="170.0" layoutY="303.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
+                        <TextField fx:id="contactTextField" layoutX="170.0" layoutY="303.0" prefHeight="25.0" prefWidth="264.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="335.0" prefHeight="40.0" prefWidth="108.0" text="Working Time">
                            <font>
                               <Font name="Calibri" size="18.0" />
@@ -110,24 +110,24 @@
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="259.0" layoutY="76.0" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #f3f0dd;" />
+                        <ComboBox fx:id="RidComboBox" layoutX="259.0" layoutY="76.0" prefHeight="25.0" prefWidth="126.0" style="-fx-background-color: #f3f0dd;" />
                         <ComboBox fx:id="genderComboBox" layoutX="169.0" layoutY="238.0" prefHeight="25.0" prefWidth="261.0" style="-fx-background-color: #f3f0dd;" />
                         <Label layoutX="59.0" layoutY="368.0" prefHeight="40.0" prefWidth="85.0" text="Shift">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </Label>
-                        <CheckBox layoutX="170.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Morning">
+                        <CheckBox fx:id="morningCheckBox" layoutX="170.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Morning">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="271.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Evening">
+                        <CheckBox fx:id="eveningCheckBox" layoutX="271.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Evening">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
                         </CheckBox>
-                        <CheckBox layoutX="373.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Night">
+                        <CheckBox fx:id="nightCheckbox" layoutX="373.0" layoutY="376.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Night">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
