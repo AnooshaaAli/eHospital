@@ -36,8 +36,6 @@ public class patientController implements Initializable{
 	
 	// ------------------------------------------------ ATTRIBUTES --------------------------------------------------------//
 	
-	private static int patId;
-	
 	// ----------------------------------------------- BUTTONS ----------------------------------------------------------- //
 	
 	@FXML
@@ -171,16 +169,6 @@ public class patientController implements Initializable{
     @FXML
     private Label BillLabel;
     
-    //----------------------------------------------- GET PATIENT ID ----------------------------------------------------//
-    
-    public int getPatientId() {
-    	return patId;
-    }
-    
-    public void setPatientId(int patientId) {
-    	patId = patientId;
-    }
-    
     // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
@@ -217,8 +205,8 @@ public class patientController implements Initializable{
             patientController controller = loader.getController();
             
             // Pass the patId to the new controller
-            int patId = getPatientId();
-            controller.displayPatientRecord(patId);
+            Patient p = Patient.getInstance();
+            controller.displayPatientRecord(p.getInstance().getPatientId());
                  
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -308,7 +296,7 @@ public class patientController implements Initializable{
             String discharge = b.loadPatientDischargeStatus(username);
             String dob = b.loadPatientDOB(username);
             controller.detailsPatient(patientName, username,id,gender,dob,contact,discharge);
-            controller.setPatientId(id);
+            //controller.setPatientId(id);
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -455,9 +443,9 @@ public class patientController implements Initializable{
 	        return;  
 	    }
 	    
-	    Patient patient = new Patient();
-	    System.out.println(patId);
-	    int recId = patient.getRecordId(patId);
+	    Patient patient = Patient.getInstance();
+	    System.out.println(patient.getInstance().getPatientId());
+	    int recId = patient.getRecordId(patient.getInstance().getPatientId());
 	    TimeSlot time = new TimeSlot();
 	    String startTime = timeslotsComboBox .getValue();
 	    
@@ -472,10 +460,10 @@ public class patientController implements Initializable{
 	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
 	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
 	        if (added) {
-	            Patient p = new Patient();
+	            Patient p = Patient.getInstance();
 	            p.addBill(recId, bill, "unknown");
 	            DoctorLabel.setText("Doctor Id: " + docId);
-	            PatientLabel.setText("Patient Id: " + patId);
+	            PatientLabel.setText("Patient Id: " + patient.getInstance().getPatientId());
 	            DateLabel.setText("Date: " + date);
 	            TimeLabel.setText("Time: " + startTime);
 	            BillLabel.setText("Bill: " + bill);
@@ -535,10 +523,10 @@ public class patientController implements Initializable{
 	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
 	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
 	        if (added) {
-	            Patient p = new Patient();
+	            Patient p = Patient.getInstance();
 	            p.addBill(recId, bill, "unknown");
 	            DoctorLabel.setText("Doctor Id: " + docId);
-	            PatientLabel.setText("Patient Id: " + patId);
+	            PatientLabel.setText("Patient Id: " + patient.getInstance().getPatientId());
 	            DateLabel.setText("Date: " + date);
 	            TimeLabel.setText("Time: " + startTime);
 	            BillLabel.setText("Bill: " + bill);
@@ -608,16 +596,16 @@ public class patientController implements Initializable{
 
 	    dateColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Date>("appointmentDate")); 
 	    statusColumn.setCellValueFactory(new PropertyValueFactory<Appointment, Boolean>("status")); 
-        Patient patient = new Patient();
-        appointmentsList = FXCollections.observableArrayList(patient.getPendingAppointments(patId));
+        Patient patient = Patient.getInstance();
+        appointmentsList = FXCollections.observableArrayList(patient.getPendingAppointments(patient.getInstance().getPatientId()));
         appointmentsTable.setItems(appointmentsList);
 	}
 	
 	// ------------------------------------------------- POPULATE APPOINTMENT IDS ------------------------------------------------------- //
 	
 	public void populateAppointmentIdComboBox() {
-		Patient patient = new Patient();
-        ObservableList<Integer> aptIdsList = patient.getPendingAppointmentIdsList(patId);
+		Patient patient = Patient.getInstance();
+        ObservableList<Integer> aptIdsList = patient.getPendingAppointmentIdsList(patient.getInstance().getPatientId());
         if (appointmentIdsComboBox != null) {
         	appointmentIdsComboBox.setItems(aptIdsList);  
         } else {
@@ -629,8 +617,8 @@ public class patientController implements Initializable{
 	
 	public void updateAptStatus() {
 		int aptId = appointmentIdsComboBox.getValue();
-		Patient patient = new Patient();
-		patient.setPatientId(patId);
+		Patient patient = Patient.getInstance();
+		patient.setPatientId(patient.getInstance().getPatientId());
 		patient.markAptCompleted(aptId);
 		displayPendingAppointments();
 	}

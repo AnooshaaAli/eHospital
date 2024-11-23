@@ -39,7 +39,7 @@
                               <Insets left="140.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="RegisterPatient" layoutX="210.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#handleRegisterButtonClick" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Back" textFill="#fffce8">
+                        <Button fx:id="RegisterPatient" layoutX="210.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#handleProfileButtonClick" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Back" textFill="#fffce8">
                            <font>
                               <Font size="16.0" />
                            </font>
