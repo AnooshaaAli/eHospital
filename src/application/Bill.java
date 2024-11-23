@@ -70,6 +70,14 @@ public class Bill {
 	
 	// ---------------------------------------------- GET BILLS LIST OF A PATIENT ------------------------------------------------ //
 	
+	public ObservableList<Bill> loadBills(int recId)
+	{
+		ObservableList<Bill> list = dbhandler.loadBills(recId);
+		return list;
+	}
+	
+	// ---------------------------------------------- GET BILLS LIST OF A PATIENT ------------------------------------------------ //
+	
 	public ObservableList<Bill> getBills(int pid)
 	{
 		ObservableList<Bill> list = dbhandler.getBills(pid);
@@ -82,4 +90,17 @@ public class Bill {
 		dbhandler.addBill(recId, payment, type);
 	}
 
+	// ------------------------------------------------------ UPDATE BILL STATUS ------------------------------------------------- //
+	
+	public boolean payByCash(int billId)
+	{
+		boolean check= dbhandler.payByCash(billId);
+		return check;
+	}
+	
+	public boolean payByCard(int billId)
+	{
+		boolean check= dbhandler.payByCard(billId);
+		return check;
+	}
 }

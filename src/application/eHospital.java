@@ -454,7 +454,7 @@ public class eHospital extends patientController implements Initializable {
             Patient patient = new Patient();
             patient.registerPatient(name, username, password, gender, dob, contact);
             int id = patient.getPatientId(username);
-            setPatientId(id);
+            //setPatientId(id);
         	fxmlFile = "Patient.fxml";
             stageTitle = "Patient";
             
@@ -538,6 +538,69 @@ public class eHospital extends patientController implements Initializable {
             controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
             		,dobString,patient.getContact(),st);
             //==========================================
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ PATIENT PROFILE BUTTON ---------------------------------------------------------------------------- //
+	
+	public void handleProfileButtonClick(MouseEvent  event)
+	{
+        try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==RegisterPatient)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "My Profile";
+            }
+            else if(event.getSource()==RegisterNewPatient)
+            {
+            	fxmlFile = "Patient.fxml";
+                stageTitle = "My Profile";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            Patient patient = Patient.getInstance();
+            eHospital controller = loader.getController();
+            String st = patient.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob1 = patient.getDob();
+            String dobString ="";
+            if (dob1 != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob1);
+                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
+                                           patient.getGender(), dobString, patient.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
+            		,dobString,patient.getContact(),st);
             
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
@@ -697,7 +760,7 @@ public class eHospital extends patientController implements Initializable {
 
             controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
             		,dobString,patient.getContact(),st);
-            controller.setPatientId(patient.loadPatientId(username));
+            //controller.setPatientId(patient.loadPatientId(username));
             
             //==========================================
             
@@ -2363,15 +2426,16 @@ public class eHospital extends patientController implements Initializable {
     private Button payCard;
     public void handlePayBillsUC(MouseEvent event)
     {
+    	int id = billID.getValue();
     	Patient p= Patient.getInstance();
     	boolean check=false;
     	if(event.getSource()==payCash)
     	{
-    		check=p.payByCash();
+    		check = p.payByCash(id);
     	}
     	else if(event.getSource()==payCard)
     	{
-    		check=p.payByCard();
+    		check = p.payByCard(id);
     	}
     	if(check)
     		showAlert("Successful","Payment received","Status updated");
@@ -2400,7 +2464,7 @@ public class eHospital extends patientController implements Initializable {
     	bid.setCellValueFactory(new PropertyValueFactory<>("billId"));
     	amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 		
-		observableBill =patient.loadBills();
+		observableBill = patient.loadBills();
 	
 		billTable.setItems(observableBill);
     }

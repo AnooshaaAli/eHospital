@@ -89,23 +89,26 @@ public class PatientRecord {
 	public ObservableList<Bill> loadBills()
 	{
 		Bill a = new Bill();
-		ObservableList<Bill> bill= a.getBills(recordID);
+		ObservableList<Bill> bill= a.loadBills(recordID);
 		return bill;
 	}
+	
 	public ObservableList<Integer> loadBillID()
 	{
 		ObservableList<Integer> list= dbhandler.loadBillID(recordID);
 		return list;
 	}
 	
-	public boolean payByCash()
+	public boolean payByCash(int billId)
 	{
-		boolean check= dbhandler.payByCash(recordID);
+		Bill b = new Bill();
+		boolean check= b.payByCash(billId);
 		return check;
 	}
-	public boolean payByCard()
+	public boolean payByCard(int billId)
 	{
-		boolean check= dbhandler.payByCard(recordID);
+		Bill b = new Bill();
+		boolean check= b.payByCard(billId);
 		return check;
 	}
 	public String getTemperature() {

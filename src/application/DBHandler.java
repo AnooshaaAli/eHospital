@@ -199,6 +199,46 @@ public class DBHandler {
 	    return bills;
 	}
 
+	// ---------------------------------------------------- LOAD BILLS -------------------------------------------------------------------- //
+	
+	public ObservableList<Bill> loadBills(int id)
+	 {
+		 	ObservableList<Bill> billsList = FXCollections.observableArrayList(); // List to hold bills
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    ResultSet resultSet = null;
+
+		    try {
+		        connection = connect(); // Assuming 'connect()' method establishes the database connection
+		        String query = "SELECT bid, payment FROM BILL WHERE recordId = ? and status = 0";
+		        preparedStatement = connection.prepareStatement(query);
+		        preparedStatement.setInt(1, id); // Set the recordId in the query
+		        
+		        resultSet = preparedStatement.executeQuery();
+
+		        while (resultSet.next()) {
+		            int bid = resultSet.getInt("bid");
+		            double payment = resultSet.getDouble("payment");
+		            
+		            // Create a Bill object and add it to the list
+		            Bill bill = new Bill(bid, payment);
+		            billsList.add(bill);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace(); // Log any exceptions
+		    } finally {
+		        // Close resources
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (preparedStatement != null) preparedStatement.close();
+		            if (connection != null) connection.close();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		    return billsList; // Re	
+	 }
 	
 	// -------------------------------------------------- FIND PATIENT RECORD ------------------------------------------------------------- //
 	
@@ -1290,45 +1330,7 @@ public class DBHandler {
 
 		    return isUpdated;  // Return whether the update was successful
 		}
-	 //load bill
-	 public ObservableList<Bill> loadBills(int id)
-	 {
-		 	ObservableList<Bill> billsList = FXCollections.observableArrayList(); // List to hold bills
-		    Connection connection = null;
-		    PreparedStatement preparedStatement = null;
-		    ResultSet resultSet = null;
 
-		    try {
-		        connection = connect(); // Assuming 'connect()' method establishes the database connection
-		        String query = "SELECT bid, payment FROM BILL WHERE recordId = ?";
-		        preparedStatement = connection.prepareStatement(query);
-		        preparedStatement.setInt(1, id); // Set the recordId in the query
-		        
-		        resultSet = preparedStatement.executeQuery();
-
-		        while (resultSet.next()) {
-		            int bid = resultSet.getInt("bid");
-		            double payment = resultSet.getDouble("payment");
-		            
-		            // Create a Bill object and add it to the list
-		            Bill bill = new Bill(bid, payment);
-		            billsList.add(bill);
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace(); // Log any exceptions
-		    } finally {
-		        // Close resources
-		        try {
-		            if (resultSet != null) resultSet.close();
-		            if (preparedStatement != null) preparedStatement.close();
-		            if (connection != null) connection.close();
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-		    }
-
-		    return billsList; // Re	
-	 }
 	 public ObservableList<Integer> loadBillID(int id)
 	 {
 		 ObservableList<Integer> BillID = FXCollections.observableArrayList();
@@ -1364,17 +1366,17 @@ public class DBHandler {
 		    }
 		    return BillID;
  	 }
-	 public boolean payByCash(int id)
+	 public boolean payByCash(int billId)
 	 {
 		 	Connection connection = null;
 		    PreparedStatement preparedStatement = null;
 
 		    try {
 		        connection = connect();  
-		        String query = "UPDATE BILL SET paymentType = 'Cash', status = 1 WHERE recordId = ?";
+		        String query = "UPDATE BILL SET paymentType = 'Cash', status = 1 WHERE bid = ?";
 
 		        preparedStatement = connection.prepareStatement(query);
-		        preparedStatement.setInt(1, id);  // Bind the recordId to the query
+		        preparedStatement.setInt(1, billId);  // Bind the recordId to the query
 
 		        int rowsAffected = preparedStatement.executeUpdate();
 		        return rowsAffected > 0;
@@ -1392,17 +1394,17 @@ public class DBHandler {
 		    }
 			
 	 }
-	 public boolean payByCard(int id)
+	 public boolean payByCard(int billId)
 	 {
 		 Connection connection = null;
 		    PreparedStatement preparedStatement = null;
 
 		    try {
 		        connection = connect();  
-		        String query = "UPDATE BILL SET paymentType = 'Credit Card', status = 1 WHERE recordId = ?";
+		        String query = "UPDATE BILL SET paymentType = 'Credit Card', status = 1 WHERE bid = ?";
 
 		        preparedStatement = connection.prepareStatement(query);
-		        preparedStatement.setInt(1, id);  // Bind the recordId to the query
+		        preparedStatement.setInt(1, billId);  // Bind the recordId to the query
 
 		        int rowsAffected = preparedStatement.executeUpdate();
 		        return rowsAffected > 0;

@@ -122,28 +122,31 @@ public class Patient {
 		String data = dbhandler.loadPatientDischargeStatus(username) ? "Discharged" : "Not Discharged";
 		return data;
 	}
+	
 	public String loadPatientContact(String username) {
 		String data= dbhandler.loadPatientContact(username);
 		return data;
 	}
+	
 	public ObservableList<Bill> loadBills()
 	{
 		ObservableList<Bill> bill= record.loadBills();
 		return bill;
 	}
+	
 	public ObservableList<Integer> loadBillID()
 	{
 		ObservableList<Integer> list= record.loadBillID();
 		return list;
 	}
-	public boolean payByCash()
+	public boolean payByCash(int billId)
 	{
-		boolean check= record.payByCash();
+		boolean check= record.payByCash(billId);
 		return check;
 	}
-	public boolean payByCard()
+	public boolean payByCard(int billId)
 	{
-		boolean check= record.payByCard();
+		boolean check= record.payByCard(billId);
 		return check;
 	}
 
