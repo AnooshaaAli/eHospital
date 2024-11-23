@@ -6,18 +6,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.lang.Integer;
+import java.sql.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DBHandler {
 	
    //String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-   String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-	
+     String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
    DBHandler()
    {}
 	private Connection connect() {
@@ -25,7 +28,7 @@ public class DBHandler {
 	    try {
 	        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Load SQL Server JDBC driver
 	        conn = DriverManager.getConnection(url);
-	        System.out.println("Connected to the database successfully!");
+	        //System.out.println("Connected to the database successfully!");
 	    } catch (ClassNotFoundException e) {
 	        System.out.println("SQL Server JDBC Driver not found.");
 	        e.printStackTrace();
@@ -70,6 +73,9 @@ public class DBHandler {
 	        System.out.println("Error while prescribing medication.");
 	    }
 	}
+	
+	// ---------------------------------------- View Existing Medications ------------------------------------------------ //
+	
 	public ObservableList<Medication> showExistingMedication(int pid)
 	{
 		ObservableList<Medication> medications = FXCollections.observableArrayList();
@@ -105,6 +111,97 @@ public class DBHandler {
 		return medications;
 	}
 	
+	// ---------------------------------------------- VIEW APPOINTMENTS -------------------------------------------------------- //
+	
+//	public ObservableList<Appointment> getAppointments(int pid) {
+//	    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+//	    String recordIdQuery = "SELECT recordID FROM PATIENTRECORD WHERE pid = " + pid;
+//
+//	    try (Connection conn = connect(); 
+//	         Statement stmt = conn.createStatement()) {
+//
+//	        // First, get the recordID
+//	        ResultSet rsRecordId = stmt.executeQuery(recordIdQuery);
+//
+//	        if (rsRecordId.next()) {
+//	            int recordID = rsRecordId.getInt("recordID");
+//
+//	            // Query the APPOINTMENT table and join with TIMESLOT to fetch all required details
+//	            String appointmentQuery = 
+//	                "SELECT a.aid, a.appdate, a.did, a.status, t.starttime, t.endtime " +
+//	                "FROM APPOINTMENT a " +
+//	                "JOIN TIMESLOT t ON a.tid = t.tid " +
+//	                "WHERE a.recordID = " + recordID;
+//
+//	            ResultSet rsAppointment = stmt.executeQuery(appointmentQuery);
+//
+//	            // Fetch appointment details and add to ObservableList
+//	            while (rsAppointment.next()) {
+//	                int aptId = rsAppointment.getInt("aid");
+//	                Date appdate = rsAppointment.getDate("appdate");
+//	                int doctorId = rsAppointment.getInt("did");
+//	                boolean status = rsAppointment.getBoolean("status");
+//	                Time startTime = rsAppointment.getTime("starttime");
+//	                Time endTime = rsAppointment.getTime("endtime");
+//
+//	                // Create an Appointment object (ensure it has fields for startTime and endTime)
+//	                Appointment appointment = new Appointment(aptId, appdate, status, startTime, endTime);
+//	                appointments.add(appointment);
+//	            }
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return appointments;
+//	}
+
+	// ---------------------------------------------- VIEW BILLS -------------------------------------------------------- //
+//	
+//	public ObservableList<Bill> getBills(int pid) {
+//	    ObservableList<Bill> bills = FXCollections.observableArrayList();
+//	    
+//	    // First, get the recordID for the given patient ID (pid)
+//	    String recordIdQuery = "SELECT recordID FROM PATIENTRECORD WHERE pid = " + pid;
+//
+//	    try (Connection conn = connect(); 
+//	         Statement stmt = conn.createStatement()) {
+//
+//	        // Execute the query to get the recordID
+//	        ResultSet rsRecordId = stmt.executeQuery(recordIdQuery);
+//
+//	        if (rsRecordId.next()) {
+//	            int recordID = rsRecordId.getInt("recordID");
+//
+//	            // Query the BILL table to fetch all the bills related to the recordID
+//	            String billQuery = 
+//	                "SELECT b.bid, b.payment, b.paymentType, b.status " +
+//	                "FROM BILL b " +
+//	                "WHERE b.recordId = " + recordID;
+//
+//	            ResultSet rsBill = stmt.executeQuery(billQuery);
+//
+//	            // Fetch bill details and add them to the ObservableList
+//	            while (rsBill.next()) {
+//	                int bid = rsBill.getInt("bid");
+//	                double payment = rsBill.getDouble("payment");
+//	                String paymentType = rsBill.getString("paymentType");
+//	                boolean status = rsBill.getBoolean("status");
+//
+//	                // Create a Bill object (ensure your Bill class has appropriate fields for bid, payment, paymentType, and status)
+//	                Bill bill = new Bill(bid, payment, paymentType, status);
+//	                bills.add(bill);
+//	            }
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    
+//	    return bills;
+//	}
+//
+//	
+	// -------------------------------------------------- FIND PATIENT RECORD ------------------------------------------------------------- //
+	
 	public ObservableList<String> findPatientRecord(int pid) {
 	        int rpid = -1; // Default value if no record is found
 	        try (Connection conn = DriverManager.getConnection(url)) {
@@ -132,6 +229,8 @@ public class DBHandler {
 	        return null; // Return null if an error occurs
 	    }
 	 
+	// -------------------------------------------------------- GET MEDICATIONS LIST -------------------------------------------------------------- //
+	
 	public ObservableList<String> getMedications() {
         ObservableList<String> medicationList = FXCollections.observableArrayList();
 
@@ -435,7 +534,9 @@ public class DBHandler {
 		    }
 		    return adminID; // Return the retrieved name or null
 		}
-	 //login doctor + nurse
+	 
+	 // --------------------------------------------------- LOGIN DOCTOR AND NURSE --------------------------------------------------------------- //
+	 
 	 public boolean LoginDoctor(String username, String password)
 	 {
 		  // String url = "jdbc:sqlserver://DESKTOP-VH2BAA0\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;encrypt=false";
@@ -706,6 +807,9 @@ public class DBHandler {
 		        return false; 
 		    }
 	 }
+	 
+	 // -------------------------------------------------------------------- LOGIN NURSE ------------------------------------------------------------------- //
+	 
 	 public boolean LoginNurse(String username, String password)
 	 {
 		 String sql = "SELECT empid, username FROM EMPLOYEE WHERE username = ? AND password = ?";
@@ -738,6 +842,7 @@ public class DBHandler {
 		        return false; 
 		    }
 	 }
+	 
 	 public int loadNurseId(String username)
 	 {
 		 int id=-10;
@@ -760,7 +865,9 @@ public class DBHandler {
 		    }
 		 return id;
 	 }
-	 //login patient 
+	 
+	 // ------------------------------------------------- LOGIN PATIENT -----------------------------------------------------------------------------------------------------------//
+	 
 	 public boolean LoginPatient(String username, String password)
 	 {
 		 String sql = "SELECT pid, username FROM PATIENT WHERE username = ? AND password = ?";
@@ -817,6 +924,7 @@ public class DBHandler {
 		    return name;
 		 
 	 }
+	 
 	 public int loadPatientId(String username)
 	 {
 		 int id=-20;
@@ -838,6 +946,7 @@ public class DBHandler {
 		    }
 		 return id;
 	 }
+	 
 	 public String loadPatientGender(String username)
 	 {
 		 String data="";
@@ -859,6 +968,7 @@ public class DBHandler {
 		    }
 		 return data;
 	 }
+	 
 	 public String loadPatientDOB(String username)
 	 {
 		 String data="";
@@ -1289,7 +1399,7 @@ public class DBHandler {
 
 		    try {
 		        connection = connect();  
-		        String query = "UPDATE BILL SET paymentType = 'Credit Card', status = 1 WHERE recordId = ?";
+		        String query = "UPDATE BILL SET paymentType = 'Credit Card', status = 1 WHERE bid = ?";
 
 		        preparedStatement = connection.prepareStatement(query);
 		        preparedStatement.setInt(1, id);  // Bind the recordId to the query
@@ -1309,4 +1419,404 @@ public class DBHandler {
 		        }
 		    }
 	 }
+	 
+	 // ------------------------------------------- ANOOSHAAAAAA ------------------------------------------------------------//
+	 
+	 // ----------------------------------------- GET ALL IDS OF DOCTORS ------------------------------------------------- //
+	 
+	public ObservableList<Integer> getDoctorIdsList() {
+	    ObservableList<Integer> docIdsList = FXCollections.observableArrayList();
+	   
+	    try (Connection conn = this.connect()) {
+	        String query = "SELECT did FROM doctor";
+	        Statement stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+
+	        while (rs.next()) {
+	            int did = rs.getInt("did");
+	            docIdsList.add(did);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return docIdsList;
+	}
+	
+	// --------------------------------------- IS DOCTOR AVAILABLE --------------------------------------------------------- //
+	
+	public boolean checkDoctorAvailability(int doctorId, LocalDate appointmentDate) {
+	
+	    DayOfWeek dayOfWeek = appointmentDate.getDayOfWeek();
+	    String dayString = dayOfWeek.toString(); 
+	
+	    String query = "SELECT monday, tuesday, wednesday, thursday, friday, saturday FROM DOCTOR WHERE did = ?";
+	
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        stmt.setInt(1, doctorId);
+	        ResultSet rs = stmt.executeQuery();
+	
+	        if (rs.next()) {
+	            boolean isAvailable = false;
+	            
+	            switch (dayString) {
+	                case "MONDAY":
+	                    isAvailable = rs.getBoolean("monday");
+	                    break;
+	                case "TUESDAY":
+	                    isAvailable = rs.getBoolean("tuesday");
+	                    break;
+	                case "WEDNESDAY":
+	                    isAvailable = rs.getBoolean("wednesday");
+	                    break;
+	                case "THURSDAY":
+	                    isAvailable = rs.getBoolean("thursday");
+	                    break;
+	                case "FRIDAY":
+	                    isAvailable = rs.getBoolean("friday");
+	                    break;
+	                case "SATURDAY":
+	                    isAvailable = rs.getBoolean("saturday");
+	                    break;
+	                default:
+	                    isAvailable = false;
+	            }
+	
+	            return isAvailable;
+	        }
+	
+	        return false;
+	
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;  
+	    }
+	}
+	
+	// ------------------------------------------- GET FREE TIME SLOTS OF THE DOCTOR ---------------------------------------------- //
+	
+	public ObservableList<String> fetchAvailableTimeSlots(int doctorId, LocalDate selectedDate) {
+	    ObservableList<String> timeSlots = FXCollections.observableArrayList();
+	    
+	    Date sqlDate = Date.valueOf(selectedDate);
+	    String query = "SELECT t.starttime FROM DoctorTimeslot dt " +
+	                   "JOIN timeslot t ON dt.tid = t.tid " +
+	                   "WHERE dt.did = ? AND dt.date = ?";
+	
+	    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");  // Set the format to "HH:mm"
+	    
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        stmt.setInt(1, doctorId);
+	        stmt.setDate(2, sqlDate);
+	
+	        ResultSet rs = stmt.executeQuery();
+	
+	        while (rs.next()) {
+	            // Fetch the time from the result set as a Time object
+	            Time timeFromDB = rs.getTime("starttime");
+	            
+	            // Convert the SQL Time to LocalTime
+	            LocalTime localTime = timeFromDB.toLocalTime();
+	            
+	            // Format the LocalTime to "HH:mm"
+	            String formattedTime = localTime.format(timeFormatter);
+	            
+	            // Add the formatted time to the list
+	            timeSlots.add(formattedTime);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	
+	    return timeSlots;
+	}
+	
+	// ---------------------------------------------- ADD APPOINTMENT ------------------------------------------------- //
+	
+	public boolean addAppointment(int recordID, int doctorId, LocalDate appDate, int timeSlotId) {
+	    String insertQuery = "INSERT INTO APPOINTMENT (recordID, did, APPDATE, tid, status) " +
+	                         "VALUES (?, ?, ?, ?, ?)";
+	
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+	
+	        // Set the parameters for the insert query
+	        stmt.setInt(1, recordID);  // Patient record ID
+	        stmt.setInt(2, doctorId);   // Doctor ID
+	        stmt.setDate(3, Date.valueOf(appDate)); // Appointment date
+	        stmt.setInt(4, timeSlotId); // Time slot ID
+	        stmt.setInt(5, 0);          // Status (default to 0 for new appointments)
+	
+	        // Execute the insert query
+	        int rowsAffected = stmt.executeUpdate();
+	
+	        // If one row is inserted successfully, return true
+	        if (rowsAffected > 0) {
+	            return true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	
+	    // Return false if something goes wrong
+	    return false;
+	}
+	
+	// ---------------------------------------------- GET PATIENT RECORD ID ------------------------------------------------------ //
+	
+	public int getRecordId(int patId) {
+	    // SQL query to get patientId for the provided username
+	    String query = "SELECT recordID FROM PATIENTRECORD WHERE pid = ?";
+	    
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        // Set the username parameter in the query
+	        stmt.setInt(1, patId);
+	
+	        // Execute the query
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Retrieve patientId from the result set
+	                return rs.getInt("recordID");
+	            } else {
+	                // Return -1 or any value to indicate the username was not found
+	                return -1;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return -1; // In case of error, return -1 or handle it as needed
+	    }
+	}
+	
+	// --------------------------------------------- GET TIME SLOT ID ----------------------------------------------------- //
+	
+	public int getTimeSlotIdByStartTime(String startTime) {
+	    String query = "SELECT tid FROM timeslot WHERE starttime = ?";
+	    int timeSlotId = -1; // Default value to indicate that no match was found
+	
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        // Set the parameter (startTime) for the query
+	        stmt.setString(1, startTime);
+	        
+	        // Execute the query
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        // Check if the result set has a matching record
+	        if (rs.next()) {
+	            timeSlotId = rs.getInt("tid");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	
+	    return timeSlotId;
+	}
+	
+	// ------------------------------------------------- ADD BILL ----------------------------------------------------------------- //
+	
+	public void addBill(int recordId, double payment, String paymentType) {
+	    String insertBillQuery = "INSERT INTO BILL (recordId, payment, paymentType, status) VALUES (?, ?, ?, ?)";
+	
+	    try (Connection conn = this.connect(); 
+	         PreparedStatement stmt = conn.prepareStatement(insertBillQuery, Statement.RETURN_GENERATED_KEYS)) {
+	
+	        // Set the parameters for the query
+	        stmt.setInt(1, recordId);
+	        stmt.setDouble(2, payment);
+	        stmt.setString(3, paymentType);
+	        stmt.setInt(4, 0); // Default status is 0
+	
+	        // Execute the insert query
+	        int rowsInserted = stmt.executeUpdate();
+	
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	// -------------------------------------------- GET PENDING APPOINTMENTS LIST ----------------------------------------------- //
+//	
+//	public ObservableList<Appointment> getPendingAppointments(int pid) {
+//	    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+//	    String recordIdQuery = "SELECT recordID FROM PATIENTRECORD WHERE pid = " + pid;
+//	
+//	    try (Connection conn = connect(); 
+//	         Statement stmt = conn.createStatement()) {
+//	
+//	        // First, get the recordID
+//	        ResultSet rsRecordId = stmt.executeQuery(recordIdQuery);
+//	
+//	        if (rsRecordId.next()) {
+//	            int recordID = rsRecordId.getInt("recordID");
+//	
+//	            // Query the APPOINTMENT table and join with TIMESLOT to fetch all required details
+//	            String appointmentQuery = 
+//	                "SELECT a.aid, a.appdate, a.did, a.status, t.starttime, t.endtime " +
+//	                "FROM APPOINTMENT a " +
+//	                "JOIN TIMESLOT t ON a.tid = t.tid " +
+//	                "WHERE a.recordID = " + recordID + "and a.status = " + 0;
+//	
+//	            ResultSet rsAppointment = stmt.executeQuery(appointmentQuery);
+//	
+//	            // Fetch appointment details and add to ObservableList
+//	            while (rsAppointment.next()) {
+//	                int aptId = rsAppointment.getInt("aid");
+//	                Date appdate = rsAppointment.getDate("appdate");
+//	                int doctorId = rsAppointment.getInt("did");
+//	                boolean status = rsAppointment.getBoolean("status");
+//	                Time startTime = rsAppointment.getTime("starttime");
+//	                Time endTime = rsAppointment.getTime("endtime");
+//	
+//	                // Create an Appointment object (ensure it has fields for startTime and endTime)
+//	                Appointment appointment = new Appointment(aptId, appdate, status, startTime, endTime);
+//	                appointments.add(appointment);
+//	            }
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    }
+//	    return appointments;
+//	}
+//	
+	// ----------------------------------------- GET PENDING APPOINTMENT IDS LIST ---------------------------------------------- //
+	
+	public ObservableList<Integer> getPendingAppointmentIdsList(int recordId) {
+	    ObservableList<Integer> pendingAppointments = FXCollections.observableArrayList();
+	    String query = "SELECT aid FROM appointment WHERE recordID = ? AND status = " + 0;
+	
+	    try (PreparedStatement preparedStatement = this.connect().prepareStatement(query)) {
+	        // Set the patient ID parameter
+	        preparedStatement.setInt(1, recordId);
+	
+	        // Execute the query and process the result set
+	        ResultSet resultSet = preparedStatement.executeQuery();
+	
+	        // Loop through the result set and add each appointment ID to the list
+	        while (resultSet.next()) {
+	            int appointmentId = resultSet.getInt("aid");
+	            pendingAppointments.add(appointmentId);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	
+	    return pendingAppointments;
+	}
+	
+	// ------------------------------------------------------ MARK AS COMPLETED --------------------------------------------------------- //
+	
+	public void makeAptCompleted(int appointmentId) {
+	    String updateQuery = "UPDATE Appointment SET status = " + 1 + "WHERE aid = ?";
+	
+	    try (PreparedStatement stmt = this.connect().prepareStatement(updateQuery)) {
+	        // Set the appointmentId parameter
+	        stmt.setInt(1, appointmentId);
+	
+	        // Execute the update query
+	        int rowsUpdated = stmt.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        System.out.println("Error while marking appointment as completed: " + e.getMessage());
+	    }
+	}
+	
+	// ---------------------------------------------- GET PATIENT ID ------------------------------------------------------ //
+	
+	public int getPatientId(String username) {
+	    // SQL query to get patientId for the provided username
+	    String query = "SELECT patientId FROM patients WHERE username = ?";
+	    
+	    try (Connection conn = this.connect();
+	         PreparedStatement stmt = conn.prepareStatement(query)) {
+	        
+	        // Set the username parameter in the query
+	        stmt.setString(1, username);
+	
+	        // Execute the query
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Retrieve patientId from the result set
+	                return rs.getInt("patientId");
+	            } else {
+	                // Return -1 or any value to indicate the username was not found
+	                return -1;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return -1; // In case of error, return -1 or handle it as needed
+	    }
+	}
+	
+	// ------------------------------------------- register a new patient ------------------------------------------------ //
+	
+	public int registerPatient(String name, String username, String password, String gender, String dob, String contact) {
+	
+	    // SQL Insert Query
+	    String sql = "INSERT INTO patient (name, username, password, gender, dob, contact) VALUES (?, ?, ?, ?, ?, ?)";
+	
+	    try (Connection connection = this.connect();
+	    	 PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	
+	        // Setting values to the prepared statement
+	        preparedStatement.setString(1, name);
+	        preparedStatement.setString(2, username);
+	        preparedStatement.setString(3, password);
+	        preparedStatement.setString(4, gender);
+	        preparedStatement.setString(5, dob);
+	        preparedStatement.setString(6, contact);
+	
+	        // Execute the query
+	        int rowsInserted = preparedStatement.executeUpdate();
+	        if (rowsInserted > 0) {
+	            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+	                if (generatedKeys.next()) {
+	                    int autoGeneratedId = generatedKeys.getInt(1);
+	                    return autoGeneratedId;
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+		return 0;
+	}
+	
+	// --------------------------------------------- INSERT INTO PATIENT RECORD ---------------------------------------------------- //
+	
+	public void insertPatientRecord(int pid, String temperature, String bloodPressure, String heartRate) {
+	    // SQL Insert Query
+	    String sql = "INSERT INTO PATIENTRECORD (pid, temperature, blood_pressure, heart_rate) VALUES (?, ?, ?, ?)";
+	
+	    try (Connection connection = this.connect();
+	         PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	
+	        // Set the parameters for the query
+	        preparedStatement.setInt(1, pid);
+	        preparedStatement.setString(2, temperature);
+	        preparedStatement.setString(3, bloodPressure);
+	        preparedStatement.setString(4, heartRate);
+	
+	        // Execute the insert query
+	        int rowsInserted = preparedStatement.executeUpdate();
+	
+	        // Retrieve the auto-generated recordID
+	        if (rowsInserted > 0) {
+	            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+	                if (generatedKeys.next()) {
+	                    int recordID = generatedKeys.getInt(1); // Get the auto-incremented ID
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
