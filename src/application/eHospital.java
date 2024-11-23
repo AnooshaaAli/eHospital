@@ -2084,7 +2084,7 @@ public class eHospital extends patientController implements Initializable {
 
 	        if (selectedAction == null) {
 	            System.out.println("No action selected. Ensure an action is chosen.");
-	            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+	            showAlert("Error", "No action selected", "Please Select action from Combobox");
 	            
 	            return;
 	        }
@@ -2159,7 +2159,7 @@ public class eHospital extends patientController implements Initializable {
 
 		        if (selectedAction == null) {
 		            System.out.println("No action selected. Ensure an action is chosen.");
-		            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+		            showAlert("Error", "No action selected", "Please Select action from Combobox");
 		            return;
 		        }
        	String fxmlFile="";
@@ -2231,7 +2231,7 @@ public class eHospital extends patientController implements Initializable {
 
 		        if (selectedAction == null) {
 		            System.out.println("No action selected. Ensure an action is chosen.");
-		            showAlert("Error", "Nn action selected", "Please Select action from Combobox");
+		            showAlert("Error", "No action selected", "Please Select action from Combobox");
 		            return;
 		        }
         	String fxmlFile="";
@@ -2870,8 +2870,8 @@ public class eHospital extends patientController implements Initializable {
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
-		    String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		    //String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   // String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 
 		    // Connect to the database and fetch the PIDs
 		    try (Connection conn = DriverManager.getConnection(url)) {
@@ -2895,7 +2895,7 @@ public class eHospital extends patientController implements Initializable {
 		    }
 		}
 	
-	// ------------------------------------------------------------------ STORE USER DETAILS ---------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------ STORE ADMIN DETAILS ---------------------------------------------------------------------------- //
 	
 	private void details(String Name, String usrname,int id) {
 		  //  System.out.println("Setting admin name: " + Name);
@@ -3002,7 +3002,7 @@ public class eHospital extends patientController implements Initializable {
 		Admin a=new Admin();
 		a.DeleteNurse(nid);
 		System.out.println("Done");
-		showAlert("Success","Success", "The Nurse has been Added");
+		showAlert("Success","Success", "The Nurse has been deleted");
     }
     
     public void UpdateNurse(MouseEvent event)
@@ -3164,7 +3164,7 @@ public class eHospital extends patientController implements Initializable {
 
     @FXML
     private Button handleSubmitRecpetionist;
-    
+    //ADD RECEPTIONIST
     public void handleSubmitRecpetionist(MouseEvent event)
     {
     	  if (selectedStartTime.get() != null && selectedEndTime.get() != null) {
@@ -3182,6 +3182,32 @@ public class eHospital extends patientController implements Initializable {
 	            String password = passwordField.getText();
 	            String experience = experienceTextField.getText();
 	            String contact = contactTextField.getText();
+	            //start validation 
+	            // Gender validation
+	            if (gender == null) {
+	                showAlert("Error", "Gender Not Selected", "Please select a gender.");
+	                return;
+	            }
+
+	            // Name validation (only alphabets and spaces)
+	            if (!name.matches("^[a-zA-Z\\s]+$")) {
+	                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+	                return;
+	            }
+	            // Username validation (only alphanumeric)
+	            if (!username.matches("^[a-zA-Z0-9]+$")) {
+	                showAlert("Error", "Invalid Username", "Username can only contain alphanumeric characters.");
+	                return;
+	            }
+	         // Contact validation (only digits)
+	            if (!contact.matches("\\d+")) {
+	                showAlert("Error", "Invalid Contact", "Contact can only contain digits.");
+	                return;
+	            }
+
+	            //end validation 
+	            
+	            
 	            if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
 		            showAlert("Error", "Missing Input", "Please fill in all required fields.");
 		            return;
@@ -3226,6 +3252,7 @@ public class eHospital extends patientController implements Initializable {
 	        }
     }
     
+    //DELETE RECEPTIONIST
     public void deleteReceptionist(MouseEvent event)
     {
     	String ridString = RidComboBox.getSelectionModel().getSelectedItem();
@@ -3247,8 +3274,8 @@ public class eHospital extends patientController implements Initializable {
             System.out.println("Invalid Receptionist ID format. Please enter a valid number.");
             showAlert("Failure","Failure", "The Deletion can't happen");
         }
-    }
-    
+    }     
+    //UPDATE RECEPTIONIST
     public void UpdateReceptionist(MouseEvent event)
     {
     	String ridString = RidComboBox.getSelectionModel().getSelectedItem();
@@ -3357,7 +3384,7 @@ public class eHospital extends patientController implements Initializable {
     
     @FXML
     private CheckBox nightCheckbox;
-    
+    //ADD NURSE
     @FXML
     private void handleSubmitNurse(MouseEvent event)
     {
@@ -3376,7 +3403,25 @@ public class eHospital extends patientController implements Initializable {
 	            String password = passwordField.getText();
 	            String experience = experienceTextField.getText();
 	            String contact = contactTextField.getText();
+	            //start validation 
+	            // Name validation (only alphabets and spaces)
+	            if (!name.matches("^[a-zA-Z\\s]+$")) {
+	                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+	                return;
+	            }
 
+	            // Username validation (only alphanumeric)
+	            if (!username.matches("^[a-zA-Z0-9]+$")) {
+	                showAlert("Error", "Invalid Username", "Username can only contain alphanumeric characters.");
+	                return;
+	            }
+	            // Contact validation (only digits)
+	            if (!contact.matches("\\d+")) {
+	                showAlert("Error", "Invalid Contact", "Contact can only contain digits.");
+	                return;
+	            }
+	            //end validation 
+	            
 		        if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
 		            showAlert("Error", "Missing Input", "Please fill in all required fields.");
 		            return;
@@ -3605,9 +3650,9 @@ public class eHospital extends patientController implements Initializable {
 	        int hours = (int) (minutes / 60);
 	        return hours;
 	    }
-
-	    @FXML
-	    public void handleSubmit() {
+	//ADD DOCTOR 
+	@FXML
+	public void handleSubmit() {
 	        // Ensure that the start and end times are selected
 	        if (selectedStartTime.get() == null || selectedEndTime.get() == null) {
 	            showAlert("Error", "Time Selection Missing", "Please select both start and end times.");
@@ -3629,7 +3674,31 @@ public class eHospital extends patientController implements Initializable {
 	        String password = passwordField.getText();
 	        String experience = experienceTextField.getText();
 	        String contact = contactTextField.getText();
+	        //new input validation 
+	        if (gender == null) {
+	            showAlert("Error", "Missing Input", "Please select a gender.");
+	            return;
+	        }
 
+	        // Username validation
+	        if (!username.matches("^[a-zA-Z0-9]+$")) {
+	            showAlert("Error", "Invalid Username", "Username can only contain alphanumeric characters.");
+	            return;
+	        }
+
+	        // Contact validation
+	        if (!contact.matches("\\d+")) {
+	            showAlert("Error", "Invalid Contact", "Contact can only contain digits.");
+	            return;
+	        }
+
+	        // General input validation
+	        if (name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
+	            showAlert("Error", "Missing Input", "Please fill in all required fields.");
+	            return;
+	        }
+	        //end here
+	        
 	        if (gender == null || name.isEmpty() || username.isEmpty() || password.isEmpty() || contact.isEmpty()) {
 	            showAlert("Error", "Missing Input", "Please fill in all required fields.");
 	            return;
@@ -3677,6 +3746,11 @@ public class eHospital extends patientController implements Initializable {
 	            showAlert("Error", "Database Error", "Failed to add the doctor. Please try again.");
 	        }
 	    }
+	//READ NURSE
+
+
+
+
 }
 
 
