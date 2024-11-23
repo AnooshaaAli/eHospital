@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
+   <left>
+      <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/admin-panel.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="AdminSignIn" mnemonicParsing="false" onMouseClicked="#handleLoginButtonAdmin" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="10.0" layoutY="215.0" mnemonicParsing="false" opacity="0.5" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Employees">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="HandlePayrolls" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleHandlePayrollsAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="ManageInventory" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="81.0" fitWidth="81.0" layoutX="226.0" layoutY="303.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/reception.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="1.0" layoutY="111.0" prefHeight="33.0" prefWidth="544.0" style="-fx-background-color: #f3f0dd;" text="Choose Employee Type">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="170.0" />
+               </padding>
+            </Label>
+            <ImageView fitHeight="75.0" fitWidth="80.0" layoutX="327.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/nurse.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="81.0" fitWidth="81.0" layoutX="118.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@resources/doctor.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="CRUDdoctor" layoutX="119.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDdoctor" style="-fx-background-color: #f3f0dd;" text="Doctor">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="CRUDNurse" layoutX="329.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#handleCRUDnurse" style="-fx-background-color: #f3f0dd;" text="Nurse">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="CRUDReceptionist" layoutX="206.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#handleCRUDreceptionist" style="-fx-background-color: #f3f0dd;" text="Receptionist">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="81.0" layoutY="52.0" prefHeight="33.0" prefWidth="152.0" text="Choose Action:">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </Label>
+            <ComboBox fx:id="AdminRightComboBox" layoutX="239.0" layoutY="56.0" prefHeight="25.0" prefWidth="191.0" style="-fx-background-color: #f3f0dd;" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
