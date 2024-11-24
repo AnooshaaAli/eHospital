@@ -1,7 +1,6 @@
-package application;
-
+package model;
 import java.util.List;
-
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Admin {
@@ -13,9 +12,9 @@ public class Admin {
 	private DBHandler db;
 	private static Admin instance; 
 	
-	Admin()
+	public Admin()
 	{
-		db=new DBHandler();
+		db = new DBHandler();
 	}
 	
 	public void init(int id, String nm, String usr, String pass) {

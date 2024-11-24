@@ -1,7 +1,9 @@
-package application;
+package model;
 
 import java.sql.Time;
 import java.util.List;
+
+import application.DBHandler;
 
 public class TimeSlot {
 	
@@ -12,7 +14,7 @@ public class TimeSlot {
 	
 	// ---------------------------------- GETTERS AND SETTERS --------------------------------------------- //
 	
-	TimeSlot() {
+	public TimeSlot() {
 		dbhandler = new DBHandler();
 	}
 	

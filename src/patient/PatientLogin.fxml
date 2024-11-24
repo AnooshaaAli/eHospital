@@ -30,11 +30,11 @@
          <children>
             <Pane prefHeight="490.0" prefWidth="537.0" style="-fx-background-color: #ee9e91;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <AnchorPane layoutX="53.0" layoutY="67.0" prefHeight="387.0" prefWidth="431.0" style="-fx-background-color: #fffce8;">
+                  <AnchorPane layoutX="60.0" layoutY="67.0" prefHeight="387.0" prefWidth="379.0" style="-fx-background-color: #fffce8;">
                      <children>
                         <ImageView fitHeight="105.0" fitWidth="92.0" layoutX="34.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@resources/HospitalLogo.png" />
+                              <Image url="@../application/resources/HospitalLogo.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="131.0" layoutY="48.0" prefHeight="63.0" prefWidth="287.0" text="Login to Proceed!">
@@ -62,7 +62,7 @@
                               <Insets left="10.0" />
                            </padding>
                         </Label>
-                        <Button fx:id="ReceptionistSignIn" layoutX="101.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#handleLoginButtonReceptionist" prefHeight="45.0" prefWidth="217.0" style="-fx-background-color: #dd403a;" text="Sign In" textFill="#fffce8">
+                        <Button fx:id="PatientSignIn" layoutX="101.0" layoutY="288.0" mnemonicParsing="false" onMouseClicked="#handleLoginButtonPatinet" prefHeight="45.0" prefWidth="217.0" style="-fx-background-color: #dd403a;" text="Sign In" textFill="#fffce8">
                            <font>
                               <Font name="Calibri Bold" size="20.0" />
                            </font>

@@ -1,6 +1,7 @@
 // ---------------------------------------------- NOOR KA EHOSPITAL ------------------------------------------------------- //
 
 package application;
+import model.*;
 
 import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
@@ -90,7 +91,7 @@ public class eHospital extends patientController implements Initializable {
 	            
 	            if(event.getSource()==ReceptionistButton)
 	            {
-	            	fxmlFile = "ReceptionistLogin.fxml";
+	            	fxmlFile = "/Receptionist/ReceptionistLogin.fxml";
 	                stageTitle = "Receptionist";
 	            }
 	            else
@@ -134,7 +135,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ReceptionistSignIn)
             {
-            	fxmlFile = "Receptionist.fxml";
+            	fxmlFile = "/Receptionist/Receptionist.fxml";
                 stageTitle = "Receptionist";
                 
     			//=======================
@@ -233,7 +234,7 @@ public class eHospital extends patientController implements Initializable {
                 Patient patient = new Patient();
                 patient.registerPatient(name, p_username, password, gender, dob, contact);
                 
-            	fxmlFile = "Receptionist.fxml";
+            	fxmlFile = "/Receptionist/Receptionist.fxml";
                 stageTitle = "Receptionist";
             }
             
@@ -284,7 +285,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ScheduleFollowUp)
             {
-            	fxmlFile = "ScheduleFollowUp.fxml";
+            	fxmlFile = "/Receptionist/ScheduleFollowUp.fxml";
                 stageTitle = "ScheduleFollowUp";
             }
             
@@ -325,7 +326,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ScheduleAppointment)
             {
-            	fxmlFile = "ScheduleAppointmentReceptionist.fxml";
+            	fxmlFile = "/Receptionist/ScheduleAppointmentReceptionist.fxml";
                 stageTitle = "ScheduleAppointmentReceptionist";
             }
             
@@ -366,7 +367,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==RegisterNewPatient)
             {
-            	fxmlFile = "RegisterNewPatient.fxml";
+            	fxmlFile = "/Receptionist/RegisterNewPatient.fxml";
                 stageTitle = "Register Patient";
             }
             
@@ -444,12 +445,12 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==PatientButton)
             {
-            	fxmlFile = "PatientSignUp.fxml";
+            	fxmlFile = "/patient/PatientSignUp.fxml";
                 stageTitle = "Patient";
             }
             else if(event.getSource()==RegisterNewPatient)
             {
-            	fxmlFile = "PatientSignUp.fxml";
+            	fxmlFile = "/patient/PatientSignUp.fxml";
                 stageTitle = "Patient";
             }
             else
@@ -531,7 +532,7 @@ public class eHospital extends patientController implements Initializable {
             patient.registerPatient(name, username, password, gender, dob, contact);
             int id = patient.getPatientId(username);
             //setPatientId(id);
-        	fxmlFile = "Patient.fxml";
+        	fxmlFile = "/patient/Patient.fxml";
             stageTitle = "Patient";
             
             // Anoosha
@@ -590,7 +591,7 @@ public class eHospital extends patientController implements Initializable {
 
             if(event.getSource()==RegisterPatient)
             {
-            	fxmlFile = "Patient.fxml";
+            	fxmlFile = "/patient/Patient.fxml";
                 stageTitle = "Patient";
             }
             else
@@ -649,12 +650,12 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==RegisterPatient)
             {
-            	fxmlFile = "Patient.fxml";
+            	fxmlFile = "/patient/Patient.fxml";
                 stageTitle = "My Profile";
             }
             else if(event.getSource()==RegisterNewPatient)
             {
-            	fxmlFile = "Patient.fxml";
+            	fxmlFile = "/patient/Patient.fxml";
                 stageTitle = "My Profile";
             }
             else
@@ -711,8 +712,8 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==LoginPagePatient)
             {
-            	fxmlFile = "PatientLogin.fxml";
-                stageTitle = "PatientLogin";
+            	fxmlFile = "/patient/PatientLogin.fxml";
+                stageTitle = "Patient Login Portal";
             }
             else
             {
@@ -821,7 +822,7 @@ public class eHospital extends patientController implements Initializable {
 	       
             if(event.getSource()==PatientSignIn)
             {
-            	fxmlFile = "Patient.fxml";
+            	fxmlFile = "/patient/Patient.fxml";
                 stageTitle = "Patient";
             }
             else
@@ -879,7 +880,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ViewPrescription)
             {
-            	fxmlFile = "Medications.fxml";
+            	fxmlFile = "/patient/Medications.fxml";
                 stageTitle = "Medications";
             }
             else
@@ -928,7 +929,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==PayBills)
             {
-            	fxmlFile = "PayBill.fxml";
+            	fxmlFile = "/patient/PayBill.fxml";
                 stageTitle = "PayBill";
             }
             else
@@ -967,7 +968,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==showBills)
             {
-            	fxmlFile = "Bills.fxml";
+            	fxmlFile = "/patient/Bills.fxml";
                 stageTitle = "Bills";
             }
             else
@@ -1029,7 +1030,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==NurseButton)
             {
-            	fxmlFile = "NurseLogin.fxml";
+            	fxmlFile = "/Nurse/NurseLogin.fxml";
                 stageTitle = "Nurse";
             }
             else
@@ -1120,7 +1121,7 @@ public class eHospital extends patientController implements Initializable {
 	            
 	            if(event.getSource()==NurseSignIn)
 	            {
-	            	fxmlFile = "Nurse.fxml";
+	            	fxmlFile = "/Nurse/Nurse.fxml";
 	                stageTitle = "Nurse";
 	            }
 	            else
@@ -1170,7 +1171,7 @@ public class eHospital extends patientController implements Initializable {
 	            
 	            if(event.getSource()==UpdatePatientRecord)
 	            {
-	            	fxmlFile = "UpdatePatientRecord.fxml";
+	            	fxmlFile = "/Nurse/UpdatePatientRecord.fxml";
 	                stageTitle = "UpdatePatientRecord";
 	            }
 	            else
@@ -1210,7 +1211,7 @@ public class eHospital extends patientController implements Initializable {
              
              if(event.getSource()==TrackMedication)
              {
-             	fxmlFile = "TrackMedication.fxml";
+             	fxmlFile = "/Nurse/TrackMedication.fxml";
                  stageTitle = "TrackMedication";
              }
              else
@@ -1265,7 +1266,7 @@ public class eHospital extends patientController implements Initializable {
                 if(event.getSource()==existingMed)
                 {
                 	try {
-	                	String fxmlFile= "ViewExistingMedications.fxml";
+	                	String fxmlFile= "/doctor/ViewExistingMedications.fxml";
 	    	            String stageTitle="ViewExistingMedications";
 	    	            // Load the new FXML file
 	    	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -1410,7 +1411,7 @@ public class eHospital extends patientController implements Initializable {
              
              if(event.getSource()==ViewPatientRecord)
              {
-             	fxmlFile = "ViewPatientRecordNurse.fxml";
+             	fxmlFile = "/Nurse/ViewPatientRecordNurse.fxml";
                  stageTitle = "ViewPatientRecordNurse";
              }
              else
@@ -1477,7 +1478,7 @@ public class eHospital extends patientController implements Initializable {
              
              if(event.getSource()==ViewPrescriptionNurse)
              {
-             	fxmlFile = "ViewPrescription.fxml";
+             	fxmlFile = "/Nurse/ViewPrescription.fxml";
                 stageTitle = "ViewPrescription";
                 
              }
@@ -1534,7 +1535,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==DoctorButton)
             {
-            	fxmlFile = "DoctorLogin.fxml";
+            	fxmlFile = "/doctor/DoctorLogin.fxml";
                 stageTitle = "Doctor";
             }
             else
@@ -1627,7 +1628,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==DoctorSignIn)
             {
-            	fxmlFile = "Doctor.fxml";
+            	fxmlFile = "/doctor/Doctor.fxml";
                 stageTitle = "Doctor";
             }
             else
@@ -1675,8 +1676,8 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==PrescribeMedications)
             {
-            	fxmlFile = "PrescribeMedications.fxml";
-                stageTitle = "PrescribeMedications";
+            	fxmlFile = "/doctor/PrescribeMedications.fxml";
+                stageTitle = "Prescribe Medications";
             }
             else
             {
@@ -1714,7 +1715,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==DischargePatient)
             {
-            	fxmlFile = "DischargePatient.fxml";
+            	fxmlFile = "/doctor/DischargePatient.fxml";
                 stageTitle = "DischargePatient";
             }
             
@@ -1754,7 +1755,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==PatientRecord)
             {
-            	fxmlFile = "ViewPatientRecordDoctor.fxml";
+            	fxmlFile = "/doctor/ViewPatientRecordDoctor.fxml";
                 stageTitle = "PatientRecord";
             }
             else
@@ -1823,7 +1824,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==AdminButton)
             {
-            	fxmlFile = "AdminLogin.fxml";
+            	fxmlFile = "/admin/AdminLogin.fxml";
                 stageTitle = "Admin";
             }
             else
@@ -1908,7 +1909,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==AdminSignIn)
             {
-            	fxmlFile = "Admin.fxml";
+            	fxmlFile = "/admin/Admin.fxml";
                 stageTitle = "Admin";
             }
             else
@@ -1959,7 +1960,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ManageEmployees)
             {
-            	fxmlFile = "ManageEmployees.fxml";
+            	fxmlFile = "/admin/ManageEmployees.fxml";
                 stageTitle = "ManageEmployees";
             }
             else
@@ -1998,7 +1999,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==AdminButton)
             {
-            	fxmlFile = "AdminLogin.fxml";
+            	fxmlFile = "/admin/AdminLogin.fxml";
                 stageTitle = "Admin";
             }
             else
@@ -2037,7 +2038,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==ManageInventory)
             {
-            	fxmlFile = "ManageInventory.fxml";
+            	fxmlFile = "/admin/ManageInventory.fxml";
                 stageTitle = "ManageInventory";
             }
             else
@@ -2097,19 +2098,19 @@ public class eHospital extends patientController implements Initializable {
 	        if (event.getSource() == CRUDdoctor) {
 	            switch (selectedAction) {
 	                case "Add":
-	                    fxmlFile = "AddDoctor.fxml";
+	                    fxmlFile = "/admin/AddDoctor.fxml";
 	                    stageTitle = "Add Doctor";
 	                    break;
 	                case "Read":
-	                    fxmlFile = "ReadDoctor.fxml";
+	                    fxmlFile = "/admin/ReadDoctor.fxml";
 	                    stageTitle = "Retrieve Doctor";
 	                    break;
 	                case "Update":
-	                    fxmlFile = "UpdateDoctor.fxml";
+	                    fxmlFile = "/admin/UpdateDoctor.fxml";
 	                    stageTitle = "Update Doctor";
 	                    break;
 	                case "Delete":
-	                    fxmlFile = "DeleteDoctor.fxml";
+	                    fxmlFile = "/admin/DeleteDoctor.fxml";
 	                    stageTitle = "Delete Doctor";
 	                    break;
 	                default:
@@ -2172,22 +2173,22 @@ public class eHospital extends patientController implements Initializable {
             {
             	if(selectedAction=="Add")
             	{
-            		fxmlFile = "AddReceptionist.fxml";
+            		fxmlFile = "/admin/AddReceptionist.fxml";
                     stageTitle = "AddReceptionist";
             	}
             	else if(selectedAction=="Read")
             	{
-            		fxmlFile = "ReadReceptionist.fxml";
+            		fxmlFile = "/admin/ReadReceptionist.fxml";
                     stageTitle = "ReadReceptionist";
             	}
             	else if(selectedAction=="Update")
             	{
-            		fxmlFile = "UpdateReceptionist.fxml";
+            		fxmlFile = "/admin/UpdateReceptionist.fxml";
                     stageTitle = "UpdateReceptionist";
             	}
             	else if(selectedAction=="Delete")
             	{
-            		fxmlFile = "DeleteReceptionist.fxml";
+            		fxmlFile = "/admin/DeleteReceptionist.fxml";
                     stageTitle = "DeleteReceptionist";
             	}
             	
@@ -2249,22 +2250,22 @@ public class eHospital extends patientController implements Initializable {
             {
             	if(selectedAction=="Add")
             	{
-            		fxmlFile = "AddNurse.fxml";
+            		fxmlFile = "/admin/AddNurse.fxml";
                     stageTitle = "AddNurse";
             	}
             	else if(selectedAction=="Read")
             	{
-            		fxmlFile = "ReadNurse.fxml";
+            		fxmlFile = "/admin/ReadNurse.fxml";
                     stageTitle = "ReadNurse";
             	}
             	else if(selectedAction=="Update")
             	{
-            		fxmlFile = "UpdateNurse.fxml";
+            		fxmlFile = "/admin/UpdateNurse.fxml";
                     stageTitle = "UpdateNurse";
             	}
             	else if(selectedAction=="Delete")
             	{
-            		fxmlFile = "DeleteNurse.fxml";
+            		fxmlFile = "/admin/DeleteNurse.fxml";
                     stageTitle = "DeleteNurse";
             	}
             }
@@ -2309,7 +2310,7 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==HandlePayrolls)
             {
-            	fxmlFile = "HandlePayrollProcessing.fxml";
+            	fxmlFile = "/admin/HandlePayrollProcessing.fxml";
                 stageTitle = "HandlePayrollProcessing";
             }
             else
@@ -2349,23 +2350,23 @@ public class eHospital extends patientController implements Initializable {
             
             if(event.getSource()==retrieveInventory)
             {
-            	fxmlFile = "UpdateInventoryItem.fxml";
+            	fxmlFile = "/admin/UpdateInventoryItem.fxml";
                 stageTitle = "UpdateInventoryItem";
             }
             else if (event.getSource()==currentInventory)
             {
-            	fxmlFile = "CurrentInventory.fxml";
+            	fxmlFile = "/admin/CurrentInventory.fxml";
                 stageTitle = "CurrentInventory";
                 
             }
             else if(event.getSource()==deleteInventory)
             {
-            	fxmlFile = "DeleteInventory.fxml";
+            	fxmlFile = "/admin/DeleteInventory.fxml";
                 stageTitle = "DeleteInventory";
             }
             else if(event.getSource()==addInventory)
             {
-            	fxmlFile = "AddInventoryItem.fxml";
+            	fxmlFile = "/admin/AddInventoryItem.fxml";
                 stageTitle = "AddInventoryItem";
             }
             
@@ -2426,7 +2427,7 @@ public class eHospital extends patientController implements Initializable {
 		if(event.getSource()==existingMed)
 		{
 			try {
-	        	String fxmlFile= "ViewExistingMedications.fxml";
+	        	String fxmlFile= "/doctor/ViewExistingMedications.fxml";
 	            String stageTitle="ViewExistingMedications";
 	            // Load the new FXML file
 	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -2524,7 +2525,7 @@ public class eHospital extends patientController implements Initializable {
             return; 
         }
         //jab patient combobox se pid select karo ge then the patient record will be added
-        PatientRecord p=new PatientRecord();
+        PatientRecord p = new PatientRecord();
         p.updatePatientRecord(pid,tempText,bloodPressureText,heartRateText);
       //  System.out.println("done");
         
@@ -2550,7 +2551,7 @@ public class eHospital extends patientController implements Initializable {
 			if(event.getSource()==existingMed)
 			{
 				try {
-		        	String fxmlFile= "ViewExistingMedications.fxml";
+		        	String fxmlFile= "/doctor/ViewExistingMedications.fxml";
 		            String stageTitle="ViewExistingMedications";
 		            // Load the new FXML file
 		            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

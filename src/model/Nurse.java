@@ -1,7 +1,8 @@
-package application;
+package model;
 
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Nurse extends Employee{
@@ -12,7 +13,7 @@ public class Nurse extends Employee{
 	private DBHandler db;
 	private static Nurse instance; 
 	
-	Nurse()
+	public Nurse()
 	{
 		db= new DBHandler();
 		

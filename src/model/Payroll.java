@@ -1,4 +1,4 @@
-package application;
+package model;
 
 public class Payroll {
 	private int payrollId;

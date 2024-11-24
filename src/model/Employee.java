@@ -1,5 +1,6 @@
-package application;
+package model;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Employee {
@@ -16,7 +17,7 @@ public class Employee {
 	private String contact;
 	private DBHandler db;
 	
-	Employee()
+	public Employee()
 	{
 		db= new DBHandler();
 	}

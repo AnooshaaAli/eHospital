@@ -1,8 +1,9 @@
-package application;
+package model;
 
 import java.sql.Date;
 import java.sql.Time;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Appointment {
@@ -17,7 +18,7 @@ public class Appointment {
 		dbhandler = new DBHandler();
 	}
 
-	Appointment(int id, Date date, boolean status, Time startTime, Time endTime) {
+	public Appointment(int id, Date date, boolean status, Time startTime, Time endTime) {
 		this.appointmentId = id;
 		this.appointmentDate = date;
 		this.status = status;

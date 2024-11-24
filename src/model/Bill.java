@@ -1,5 +1,6 @@
-package application;
+package model;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Bill {
@@ -14,7 +15,7 @@ public class Bill {
 		dbhandler = new DBHandler();
 	}
 	
-	Bill(int id, double amt)
+	public Bill(int id, double amt)
 	{
 		this.billId=id;
 		this.amount=amt;

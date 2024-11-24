@@ -1,4 +1,4 @@
-package application;
+package model;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 

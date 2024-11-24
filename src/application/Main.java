@@ -22,7 +22,7 @@ public class Main extends Application {
     
 	public void showHomePage() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("HomePage.fxml"));
+		loader.setLocation(Main.class.getResource("/Home/HomePage.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
 		this.primaryStage.setTitle("eHospital | Home");

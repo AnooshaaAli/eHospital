@@ -1,10 +1,11 @@
-package application;
+package model;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import java.sql.ResultSet;
@@ -54,7 +55,7 @@ public class Patient {
         return instance;
 	}
 	
-	Patient()
+	public Patient()
 	{
 		dbhandler=new DBHandler();
 		record= new PatientRecord();

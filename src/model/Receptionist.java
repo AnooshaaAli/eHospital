@@ -1,8 +1,9 @@
-package application;
+package model;
 
 import java.sql.Date;
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Receptionist extends Employee{
@@ -10,7 +11,7 @@ public class Receptionist extends Employee{
 	private String shift;
 	private static Receptionist instance;
 	private DBHandler db;
-	Receptionist()
+	public Receptionist()
 	{
 		db = new DBHandler();
 	}

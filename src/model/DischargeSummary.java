@@ -1,7 +1,9 @@
-package application;
+package model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+
+import application.DBHandler;
 
 public class DischargeSummary {
 	//private Patient patient;
@@ -9,6 +11,7 @@ public class DischargeSummary {
 	private String instructions;
 	private Date date;	
 	private DBHandler dbhandler;
+	
 	DischargeSummary()
 	{
 		dbhandler= new DBHandler();

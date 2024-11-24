@@ -1,5 +1,6 @@
-package application;
+package model;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class InventoryItem {
@@ -9,11 +10,13 @@ public class InventoryItem {
 	private String name;
 	private String category;
 	private DBHandler db;
-	InventoryItem()
+	
+	public InventoryItem()
 	{
 		db= new DBHandler();
 	}
-	InventoryItem(int id, int q, String n, String c)
+	
+	public InventoryItem(int id, int q, String n, String c)
 	{
 		this.invID=id;
 		this.quantity=q;

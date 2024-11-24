@@ -1,9 +1,10 @@
-package application;
+package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class PatientRecord {
@@ -35,7 +36,7 @@ public class PatientRecord {
     	this.recordID= dbhandler.loadRecordID(id);
 	}
     
-    PatientRecord() {
+    public PatientRecord() {
     	dbhandler = new DBHandler();
     	summary = new DischargeSummary();
     	medicine = new ArrayList<Medication>();

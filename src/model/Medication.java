@@ -1,7 +1,8 @@
-package application;
+package model;
 
 import java.util.List;
 
+import application.DBHandler;
 import javafx.collections.ObservableList;
 
 public class Medication {
@@ -10,11 +11,11 @@ public class Medication {
 	private int dosage; 
 	private DBHandler dbhandler;
 	
-	Medication() {
+	public Medication() {
 		dbhandler = new DBHandler();
 	}
 	
-	Medication(int id, String name, int dosage) {
+	public Medication(int id, String name, int dosage) {
 		dbhandler = new DBHandler();
 		this.medicationId = id;
 		this.medicineName = name;
