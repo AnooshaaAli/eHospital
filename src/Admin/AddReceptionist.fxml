@@ -36,7 +36,7 @@
                      <children>
                         <ImageView fitHeight="95.0" fitWidth="80.0" layoutX="50.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@resources/HospitalLogo.png" />
+                              <Image url="@../application/resources/HospitalLogo.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="144.0" layoutY="24.0" prefHeight="63.0" prefWidth="287.0" text="Add a new Receptionist!">
