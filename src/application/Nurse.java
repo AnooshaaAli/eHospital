@@ -105,4 +105,12 @@ public class Nurse extends Employee{
 		int nidList = db.GetnidFromDid(nid);
 		return nidList;
 	}
+	//-------------------------------------------------------------LIST OF ALL NURSE-------------------------------------------------------------//
+	public ObservableList<Nurse> listNurse() {
+		Employee emp= new Employee();
+		ObservableList<Nurse> list= emp.listNurse();
+		return list;
+	}
+
+
 }

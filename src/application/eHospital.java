@@ -2073,7 +2073,7 @@ public class eHospital extends patientController implements Initializable {
 	public void handleCRUDdoctor(MouseEvent event) {
 	    try {
 	        // Initialize options for AdminRightComboBox
-	        ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+	        ObservableList<String> options = FXCollections.observableArrayList("Add", "Read", "Update", "Delete");
 	        AdminRightComboBox.setItems(options);
 
 	        // Add listener to AdminRightComboBox to monitor selection changes
@@ -2100,7 +2100,7 @@ public class eHospital extends patientController implements Initializable {
 	                    fxmlFile = "AddDoctor.fxml";
 	                    stageTitle = "Add Doctor";
 	                    break;
-	                case "Retrieve":
+	                case "Read":
 	                    fxmlFile = "ReadDoctor.fxml";
 	                    stageTitle = "Retrieve Doctor";
 	                    break;
@@ -2123,7 +2123,11 @@ public class eHospital extends patientController implements Initializable {
 	        // Load the FXML file
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
 	        Parent newFormRoot = loader.load();
-
+	        if ("Read".equals(selectedAction))
+	        {
+	        	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initDoctorTable();
+	        }
 	        // Create a new scene and stage for the new form
 	        Scene newFormScene = new Scene(newFormRoot);
 	        Stage newFormStage = new Stage();
@@ -2148,7 +2152,7 @@ public class eHospital extends patientController implements Initializable {
     public void handleCRUDreceptionist(MouseEvent event)
 	{
     	try {
-			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Read", "Update", "Delete");
 		        AdminRightComboBox.setItems(options);
 
 		        // Add listener to AdminRightComboBox to monitor selection changes
@@ -2171,7 +2175,7 @@ public class eHospital extends patientController implements Initializable {
             		fxmlFile = "AddReceptionist.fxml";
                     stageTitle = "AddReceptionist";
             	}
-            	else if(selectedAction=="Retrieve")
+            	else if(selectedAction=="Read")
             	{
             		fxmlFile = "ReadReceptionist.fxml";
                     stageTitle = "ReadReceptionist";
@@ -2196,7 +2200,11 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if ("Read".equals(selectedAction))
+	        {
+	        	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initReceptionistTable();
+	        }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -2220,7 +2228,7 @@ public class eHospital extends patientController implements Initializable {
 	public void handleCRUDnurse(MouseEvent event)
 	{
 		try {
-			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Retrieve", "Update", "Delete");
+			 ObservableList<String> options = FXCollections.observableArrayList("Add", "Read", "Update", "Delete");
 		        AdminRightComboBox.setItems(options);
 
 		        // Add listener to AdminRightComboBox to monitor selection changes
@@ -2244,7 +2252,7 @@ public class eHospital extends patientController implements Initializable {
             		fxmlFile = "AddNurse.fxml";
                     stageTitle = "AddNurse";
             	}
-            	else if(selectedAction=="Retrieve")
+            	else if(selectedAction=="Read")
             	{
             		fxmlFile = "ReadNurse.fxml";
                     stageTitle = "ReadNurse";
@@ -2268,7 +2276,11 @@ public class eHospital extends patientController implements Initializable {
             // Load the new FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent newFormRoot = loader.load();
-
+            if ("Read".equals(selectedAction))
+	        {
+	        	eHospital controller = loader.getController(); // Get the same controller
+ 	            controller.initNurseTable();
+	        }
             // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
@@ -2619,7 +2631,7 @@ public class eHospital extends patientController implements Initializable {
     public void initBillTable()
     {
     	Patient patient= Patient.getInstance();
-    	System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
+    	//System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
     	observableBill = FXCollections.observableArrayList();
     	
     	bid.setCellValueFactory(new PropertyValueFactory<>("billId"));
@@ -2971,7 +2983,8 @@ public class eHospital extends patientController implements Initializable {
 	private TextField workingDays;
 	@FXML
 	private TextField empID;
-	
+	@FXML
+	private TextField salary;
 	//-------------------------------------------------------------- SARA AKBAR USE CASES ------------------------------------------------------------------------------- //
 	
 	AtomicReference<String> selectedEndTime = new AtomicReference<>(null);
@@ -3650,9 +3663,9 @@ public class eHospital extends patientController implements Initializable {
 	        int hours = (int) (minutes / 60);
 	        return hours;
 	    }
-	//ADD DOCTOR 
+	    //ADD DOCTOR 
 	@FXML
-	public void handleSubmit() {
+		public void handleSubmit() {
 	        // Ensure that the start and end times are selected
 	        if (selectedStartTime.get() == null || selectedEndTime.get() == null) {
 	            showAlert("Error", "Time Selection Missing", "Please select both start and end times.");
@@ -3746,11 +3759,111 @@ public class eHospital extends patientController implements Initializable {
 	            showAlert("Error", "Database Error", "Failed to add the doctor. Please try again.");
 	        }
 	    }
-	//READ NURSE
-
-
-
-
+		//READ NURSE
+		//AdminRightComboBox
+		//CRUD DOCTOR button 
+		//handleCRUDdoctor this loads fxml files 
+	
+		
+		
+		//READ DOCTOR 
+		@FXML		
+		TableView<Doctor> DoctorsList;
+		@FXML
+		TableColumn<Doctor, Integer> docEmpID;
+		@FXML
+		TableColumn<Doctor, Integer> docID;
+		@FXML
+		TableColumn<Doctor, String> docName;
+		@FXML
+		TableColumn<Doctor, String> hrsWorking;
+		@FXML
+		TableColumn<Doctor, Integer> experienced;
+		
+		ObservableList<Doctor> doctorsDBlist;
+		private void initDoctorTable()
+		{
+			
+	    	//System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
+	    	doctorsDBlist = FXCollections.observableArrayList();
+	    	Doctor doc=new Doctor();
+	    	doctorsDBlist=doc.listDoctors();
+    	    System.out.println(doctorsDBlist.size());
+	    	docEmpID.setCellValueFactory(new PropertyValueFactory<>("employeeId")); // From Employee class
+    	    docID.setCellValueFactory(new PropertyValueFactory<>("doctorId"));      // From Doctor class
+    	    docName.setCellValueFactory(new PropertyValueFactory<>("name"));        // From Employee class
+    	    hrsWorking.setCellValueFactory(new PropertyValueFactory<>("workingHours")); // From Employee class or Doctor
+    	    experienced.setCellValueFactory(new PropertyValueFactory<>("experience"));       // Assuming you want gender as status for example
+    	    
+	    	DoctorsList.setItems(doctorsDBlist);
+			
+		}
+		
+		//READ NURSE 
+		@FXML
+		TableView<Nurse> NurseList;
+		@FXML
+		TableColumn<Nurse, Integer> NurseEmpID;
+		@FXML
+		TableColumn<Nurse, Integer> NurseID;
+		@FXML
+		TableColumn<Nurse, String> NurseName;
+		@FXML
+		TableColumn<Nurse, String> NursehrsWorking;
+		@FXML
+		TableColumn<Nurse, Integer> Nurseexperienced;
+		
+		ObservableList<Nurse> NurseDBlist;
+		private void initNurseTable()
+		{
+			
+	    	//System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
+			NurseDBlist = FXCollections.observableArrayList();
+			Nurse doc=new Nurse();
+	    	NurseDBlist=doc.listNurse();
+    	    System.out.println("sdf"+NurseDBlist.size());
+    	    NurseEmpID.setCellValueFactory(new PropertyValueFactory<>("employeeId")); // From Employee class
+    	    NurseID.setCellValueFactory(new PropertyValueFactory<>("nurseId"));      // From Doctor class
+    	    NurseName.setCellValueFactory(new PropertyValueFactory<>("name"));        // From Employee class
+    	    NursehrsWorking.setCellValueFactory(new PropertyValueFactory<>("workingHours")); // From Employee class or Doctor
+    	    Nurseexperienced.setCellValueFactory(new PropertyValueFactory<>("experience"));       // Assuming you want gender as status for example
+    	    
+    	    NurseList.setItems(NurseDBlist);
+			
+		}
+		
+		//READ RECEPTIONIST
+		@FXML
+		TableView<Receptionist> ReceptionistList;
+		@FXML
+		TableColumn<Receptionist, Integer> ReceptionistEmpID;
+		@FXML
+		TableColumn<Receptionist, Integer> ReceptionistID;
+		@FXML
+		TableColumn<Receptionist, String> ReceptionistName;
+		@FXML
+		TableColumn<Receptionist, String> ReceptionisthrsWorking;
+		@FXML
+		TableColumn<Receptionist, Integer> Receptionistexperienced;
+		
+		ObservableList<Receptionist> ReceptionistDBlist;
+		private void initReceptionistTable()
+		{
+			
+	    	//System.out.println(patient.getId()+ " "+ patient.getRecord().getRecordID());
+			ReceptionistDBlist = FXCollections.observableArrayList();
+			Receptionist doc=new Receptionist();
+			ReceptionistDBlist=doc.listReceptionist();
+    	    System.out.println("sdf"+ReceptionistDBlist.size());
+    	    ReceptionistEmpID.setCellValueFactory(new PropertyValueFactory<>("employeeId")); // From Employee class
+    	    ReceptionistID.setCellValueFactory(new PropertyValueFactory<>("receptionistId"));      // From Doctor class
+    	    ReceptionistName.setCellValueFactory(new PropertyValueFactory<>("name"));        // From Employee class
+    	    ReceptionisthrsWorking.setCellValueFactory(new PropertyValueFactory<>("workingHours")); // From Employee class or Doctor
+    	    Receptionistexperienced.setCellValueFactory(new PropertyValueFactory<>("experience"));       // Assuming you want gender as status for example
+    	    
+    	    ReceptionistList.setItems(ReceptionistDBlist);
+			
+		}
 }
 
 

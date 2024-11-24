@@ -1,5 +1,7 @@
 package application;
 
+import javafx.collections.ObservableList;
+
 public class Employee {
 	private int employeeId;
 	private String name;
@@ -227,5 +229,28 @@ public class Employee {
 	{
 		int empid = db.AddEmployee(name,username,password,gender,experience,contact,workingHours);
 		return empid;
+	}
+	public static void setInstanceNurse(Employee instanceNurse) {
+		Employee.instanceNurse = instanceNurse;
+	}
+	public static void setInstanceReceptionist(Employee instanceReceptionist) {
+		Employee.instanceReceptionist = instanceReceptionist;
+	}
+	//-------------------------------------------------------------LIST OF ALL DOCTORS-------------------------------------------------------------//
+	public ObservableList<Doctor> listDoctors() {
+		 ObservableList<Doctor> list= db.listDoctors();
+		 return list;
+	}
+	//-------------------------------------------------------------LIST OF ALL NURSE-------------------------------------------------------------//
+		public ObservableList<Nurse> listNurse() {
+			Employee emp= new Employee();
+			ObservableList<Nurse> list= db.listNurse();
+			return list;
+	}
+	//-------------------------------------------------------------LIST OF ALL RECEPTIONIST-------------------------------------------------------------//
+	public ObservableList<Receptionist> listReceptionist() {
+		Employee emp= new Employee();
+		ObservableList<Receptionist> list= db.listReceptionist();
+		return list;
 	}
 }

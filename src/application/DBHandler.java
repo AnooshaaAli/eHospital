@@ -2519,7 +2519,7 @@ public class DBHandler {
 				        return false;
 				    }
 				} catch (SQLException e) {
-				    System.err.println("Error connecting to the datASDFGHJKabase: " + e.getMessage());
+				    System.err.println("Error connecting to the database: " + e.getMessage());
 				    return false;
 				}
 
@@ -2661,7 +2661,7 @@ public class DBHandler {
 			    return false;
 			}
 		   
-	   public List<Integer> AddTimeSlots(String starttime, String endtime) {
+		   public List<Integer> AddTimeSlots(String starttime, String endtime) {
 	       List<Integer> timeSlotIds = new ArrayList<>();
 	       String insertTimeSlotQuery = "INSERT INTO timeslot (starttime, endtime) VALUES (?, ?)";
 	
@@ -2702,7 +2702,7 @@ public class DBHandler {
 	   }
 	
 	
-	   public boolean AddTimeSlot(int did, int tid) {
+		   public boolean AddTimeSlot(int did, int tid) {
 		    String insertDoctorTimeSlotQuery = "INSERT INTO DoctorTimeslot (did, tid) VALUES (?, ?)";
 	
 		    try (Connection con = this.connect();
@@ -2719,4 +2719,121 @@ public class DBHandler {
 	
 		    return false; // Return false if an exception occurs
 		}
+		   
+		   //READ DOCTOR
+		   public ObservableList<Doctor> listDoctors() 
+		   {
+			   ObservableList<Doctor> doctorList = FXCollections.observableArrayList();
+
+			    // Database query to fetch the required fields from the Employee and Doctor tables
+			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, d.did " +
+			                   "FROM Employee e INNER JOIN Doctor d ON e.empid = d.empid";
+			    try (Connection conn = connect(); 
+			         PreparedStatement stmt = conn.prepareStatement(query); 
+			         ResultSet rs = stmt.executeQuery()) {
+			        
+			        while (rs.next()) {
+			            // Retrieve the data from the result set
+			            int employeeId = rs.getInt("empid");
+			            String name = rs.getString("name");
+			            String workingHours = rs.getString("working_hours");
+			            int experience = rs.getInt("experience");
+			            int doctorId = rs.getInt("did");
+
+			            // Create a Doctor object and set its fields
+			            Doctor doctor = new Doctor();
+			            doctor.setEmployeeId(employeeId); // Assuming setter is available in Employee class
+			            doctor.setName(name);
+			            doctor.setWorkingHours(workingHours);
+			            doctor.setExperience(experience);
+			            doctor.setDoctorId(doctorId);
+
+			            // Add the Doctor object to the ObservableList
+			            doctorList.add(doctor);
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			        // Handle the exception, maybe show an alert
+			    }
+
+			    return doctorList;
+			}
+		   //READ NURSE 
+		   public ObservableList<Nurse> listNurse() 
+		   {
+			   ObservableList<Nurse>nurseList = FXCollections.observableArrayList();
+
+			    // Database query to fetch the required fields from the Employee and Doctor tables
+			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, n.nid " +
+			                   "FROM Employee e INNER JOIN Nurse n ON e.empid = n.empid";
+			    try (Connection conn = connect(); 
+			         PreparedStatement stmt = conn.prepareStatement(query); 
+			         ResultSet rs = stmt.executeQuery()) {
+			        
+			        while (rs.next()) {
+			            // Retrieve the data from the result set
+			            int employeeId = rs.getInt("empid");
+			            String name = rs.getString("name");
+			            String workingHours = rs.getString("working_hours");
+			            int experience = rs.getInt("experience");
+			            int nurseId = rs.getInt("nid");
+
+			            // Create a Doctor object and set its fields
+			            Nurse nurse = new Nurse();
+			            nurse.setEmployeeId(employeeId); // Assuming setter is available in Employee class
+			            nurse.setName(name);
+			            nurse.setWorkingHours(workingHours);
+			            nurse.setExperience(experience);
+			            nurse.setNurseId(nurseId);
+
+			            // Add the Doctor object to the ObservableList
+			            nurseList.add(nurse);
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			        // Handle the exception, maybe show an alert
+			    }
+
+			    return nurseList;
+			}
+		   //READ RECEPTIONIST
+		   //READ DOCTOR
+		   public ObservableList<Receptionist> listReceptionist() 
+		   {
+			   ObservableList<Receptionist> ReceptionistList = FXCollections.observableArrayList();
+
+			    // Database query to fetch the required fields from the Employee and Doctor tables
+			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, d.rid " +
+			                   "FROM Employee e INNER JOIN Receptionist d ON e.empid = d.empid";
+			    try (Connection conn = connect(); 
+			         PreparedStatement stmt = conn.prepareStatement(query); 
+			         ResultSet rs = stmt.executeQuery()) {
+			        
+			        while (rs.next()) {
+			            // Retrieve the data from the result set
+			            int employeeId = rs.getInt("empid");
+			            String name = rs.getString("name");
+			            String workingHours = rs.getString("working_hours");
+			            int experience = rs.getInt("experience");
+			            int doctorId = rs.getInt("rid");
+
+			            // Create a Doctor object and set its fields
+			            Receptionist Receptionist = new Receptionist();
+			            Receptionist.setEmployeeId(employeeId); // Assuming setter is available in Employee class
+			            Receptionist.setName(name);
+			            Receptionist.setWorkingHours(workingHours);
+			            Receptionist.setExperience(experience);
+			            Receptionist.setReceptionistId(doctorId);
+
+			            // Add the Doctor object to the ObservableList
+			            ReceptionistList.add(Receptionist);
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			        // Handle the exception, maybe show an alert
+			    }
+
+			    return ReceptionistList;
+			}
+		   
 }
