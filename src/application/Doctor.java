@@ -209,5 +209,31 @@ public class Doctor extends Employee{
 	return did;
 		
     }
+
+
+	public static DBHandler getDbhandler() {
+		return dbhandler;
+	}
+
+
+	public static void setDbhandler(DBHandler dbhandler) {
+		Doctor.dbhandler = dbhandler;
+	}
+
+
+	public List<TimeSlot> getTimeslots() {
+		return timeslots;
+	}
+
+
+	public void setTimeslots(List<TimeSlot> timeslots) {
+		this.timeslots = timeslots;
+	}
 	
+	//-------------------------------------------------------------LIST OF ALL DOCTORS-------------------------------------------------------------//
+	public ObservableList<Doctor> listDoctors() {
+		Employee emp= new Employee();
+		ObservableList<Doctor> list= emp.listDoctors();
+		return list;
+	}
 }

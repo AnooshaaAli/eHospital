@@ -98,4 +98,10 @@ public class Receptionist extends Employee{
 		int rids = db.GetempidFromrid(rid);
 		 return rids;
 	}
+	//-------------------------------------------------------------LIST OF ALL RECEPTIONIST-------------------------------------------------------------//
+	public ObservableList<Receptionist> listReceptionist() {
+		Employee emp= new Employee();
+		ObservableList<Receptionist> list= emp.listReceptionist();
+		return list;
+	}
 }
