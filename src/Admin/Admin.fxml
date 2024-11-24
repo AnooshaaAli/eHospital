@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
+   <left>
+      <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../application/resources/admin-panel.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="myProfile" mnemonicParsing="false" onMouseClicked="#handleLoginButtonAdmin" opacity="0.5" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="ManageEmployees" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handleManageEmployeesAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Employees">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="HandlePayrolls" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleHandlePayrollsAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Handle Payrolls">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="ManageInventory" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handleManageInventoryAdmin" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Manage Inventory">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="name" editable="false" prefHeight="26.0" prefWidth="361.0" style="-fx-background-color: transparent;" text="[Admin Name]">
+               <font>
+                  <Font name="Calibri Bold" size="36.0" />
+               </font></TextField>
+            <TextField fx:id="Username" editable="false" promptText="[username]" style="-fx-background-color: transparent;" text="Username: [username]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font></TextField>
+            <TextField fx:id="Id" prefHeight="35.0" prefWidth="494.0" style="-fx-background-color: transparent;" text="Id: [ Patient Id ]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <Label textFill="#747572">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+            </Label>
+            <Label textFill="#747572">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="50.0" />
+               </padding>
+            </Label>
+            <VBox prefHeight="277.0" prefWidth="544.0">
+               <children>
+                  <Label prefHeight="33.0" prefWidth="551.0" style="-fx-background-color: #f3f0dd;" text="What you can do?">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="- Manage Employees" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="63.0" text="- Handle Payrolls of all the Employees" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="85.0" text="- Manage Medical Equipment" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

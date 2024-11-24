@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #dd403a;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="367.0" minWidth="0.0" prefWidth="64.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="750.0" minWidth="10.0" prefWidth="612.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="229.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="595.0" minHeight="10.0" prefHeight="595.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane prefHeight="585.0" prefWidth="604.0" style="-fx-background-color: #ee9e91;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <AnchorPane layoutX="57.0" layoutY="50.0" prefHeight="488.0" prefWidth="345.0" style="-fx-background-color: #fffce8;">
+                     <children>
+                        <Label layoutX="1.0" layoutY="29.0" prefHeight="63.0" prefWidth="493.0" style="-fx-background-color: #f3f0dd;" text="Doctor Information">
+                           <font>
+                              <Font name="Cambria Bold" size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets left="130.0" />
+                           </padding>
+                        </Label>
+                        <TableView fx:id="DoctorsList" layoutX="14.0" layoutY="124.0" prefHeight="287.0" prefWidth="466.0">
+                          <columns>
+                            <TableColumn fx:id="docEmpID" prefWidth="50.4000244140625" text="Emp ID" />
+                            <TableColumn fx:id="docID" prefWidth="65.5999755859375" text="Doctor ID" />
+                            <TableColumn fx:id="docName" prefWidth="131.99998474121094" text="Name" />
+                            <TableColumn fx:id="hrsWorking" prefWidth="92.79998779296875" text="Working Hours" />
+                            <TableColumn fx:id="experienced" prefWidth="123.20001220703125" text="Experience" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="Close" layoutX="204.0" layoutY="426.0" mnemonicParsing="false" onMouseClicked="#handleClose" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #13b2b2;" text="Close" textFill="#fffce8">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </Pane>
+         </children>
+      </GridPane>
+   </center>
+   <right>
+      <HBox prefHeight="700.0" prefWidth="68.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

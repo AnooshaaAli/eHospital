@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" style="-fx-background-color: #fffce8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.eHospital">
+   <left>
+      <VBox prefHeight="700.0" prefWidth="206.0" spacing="10.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../application/resources/doctor.png" />
+               </image>
+               <VBox.margin>
+                  <Insets left="20.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Button fx:id="DoctorSignIn" mnemonicParsing="false" opacity="0.5" prefHeight="55.0" prefWidth="198.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="My Profile">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="PrescribeMedications" layoutX="10.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#handlePrescribeMedicationsDoctor" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Prescribe Medications">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="DischargePatient" layoutX="10.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#handleDischargePatientDoctor" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="Discharge Patient">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="PatientRecord" layoutX="10.0" layoutY="375.0" mnemonicParsing="false" onMouseClicked="#handlePatientRecordDoctor" prefHeight="55.0" prefWidth="199.0" style="-fx-background-color: #ee9e91; -fx-border-radius: 5;" text="View Patient Record">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #dd403a;" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="name" editable="false" style="-fx-background-color: transparent;" text="[Doctor Name ]">
+               <font>
+                  <Font name="Calibri Bold" size="36.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Username" editable="false" style="-fx-background-color: transparent;" text="Username: [ Username ]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="Id" editable="false" prefHeight="35.0" prefWidth="493.0" style="-fx-background-color: transparent;" text="Id: [ Doctor Id ]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="empID" editable="false" style="-fx-background-color: transparent;" text="Employee Id: [ Emp Id ]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="experience" editable="false" style="-fx-background-color: transparent;" text="Experience: [ Years ]">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="workingDays" editable="false" prefHeight="86.0" prefWidth="430.0" style="-fx-background-color: transparent;" text="Available Days: Mon, Tue, Wed, Thurs, Fri, Sat ">
+               <font>
+                  <Font name="Cambria" size="18.0" />
+               </font>
+            </TextField>
+            <VBox prefHeight="277.0" prefWidth="544.0">
+               <children>
+                  <Label prefHeight="33.0" prefWidth="551.0" style="-fx-background-color: #f3f0dd;" text="What you can do?">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label text="- Prescribe Medications to a Patient" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="63.0" text="- Discharge a Patient and Generate a Discharge Summary" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="85.0" text="- View Patient Previous Record" textFill="#747572">
+                     <font>
+                        <Font name="Cambria" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

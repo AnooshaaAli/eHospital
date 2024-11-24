@@ -4,6 +4,12 @@ import java.awt.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Appointment;
+import model.Bill;
+import model.Doctor;
+import model.Medication;
+import model.Patient;
+import model.TimeSlot;
 
 import java.io.IOException;
 import java.net.URL;
@@ -189,7 +195,7 @@ public class patientController implements Initializable{
             
             if(event.getSource()==ViewRecord)
             {
-            	fxmlFile = "ViewPatientRecordPatient.fxml";
+            	fxmlFile = "/patient/ViewPatientRecordPatient.fxml";
                 stageTitle = "ViewPatientRecord";
             }
             else
@@ -275,7 +281,7 @@ public class patientController implements Initializable{
 	       
             if(event.getSource()==PatientSignIn)
             {
-            	fxmlFile = "Patient.fxml";
+            	fxmlFile = "/patient/Patient.fxml";
                 stageTitle = "Patient";
             }
             else
@@ -339,7 +345,7 @@ public class patientController implements Initializable{
             
             if(event.getSource()==scheduleAppointment)
             {
-            	fxmlFile = "ScheduleAppointment.fxml";
+            	fxmlFile = "/patient/ScheduleAppointment.fxml";
                 stageTitle = "ScheduleAppointment";
             }
             else
@@ -547,7 +553,7 @@ public class patientController implements Initializable{
         	String fxmlFile;
             String stageTitle;
             
-        	fxmlFile = "FollowUpReminder.fxml";
+        	fxmlFile = "/patient/FollowUpReminder.fxml";
             stageTitle = "Manage Follow Ups";
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

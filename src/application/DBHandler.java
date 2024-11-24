@@ -16,13 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Appointment;
+import model.Bill;
+import model.Doctor;
+import model.InventoryItem;
+import model.Medication;
+import model.Nurse;
+import model.Receptionist;
 
 public class DBHandler {
 	
-   //String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-     String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-   DBHandler()
-   {}
+   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+     // String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+   public DBHandler()
+   {
+	   
+   }
 	private Connection connect() {
 	    Connection conn = null;
 	    try {
