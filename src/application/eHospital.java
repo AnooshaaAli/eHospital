@@ -1355,6 +1355,7 @@ public class eHospital extends patientController implements Initializable {
             }
             Medication medicationService = new Medication();
             medicationService.EnterMedicationDetails(pid, medicationName, dosage);
+            showAlert("update","Medicine Record Updated", "You can review updated record");
         } catch (Exception e) {
             System.err.println("An unexpected error occurred:");
             e.printStackTrace();
@@ -2492,16 +2493,85 @@ public class eHospital extends patientController implements Initializable {
 	// ------------------------------------------------------------------ UPDATE PATIENT RECORD BY NURSE ---------------------------------------------------------------------------- //
 	
 	@FXML
-    public void handleupdatePatientRecordViewNurseUC() {
-    	try {
-    		System.out.println("dance");
-    	}
-    	catch(Exception e)
-    	{
-    		e.printStackTrace();
-    	}
+	TableView<PatientRecord> patientRecord;
+	@FXML
+	TableColumn<PatientRecord,String> temperature;
+	@FXML
+	TableColumn<PatientRecord,String> bloodPressure;
+	@FXML
+	TableColumn<PatientRecord,String> heartRate;
+	ObservableList<PatientRecord> record;
+	
+    public void handleupdatePatientRecordViewNurseUC(MouseEvent event) {
+    	//if(event.getSource()==updatePatientRecordViewUC)
+    	
+    		try {
+	        	
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==updatePatientRecordViewUC)
+	            {
+	            	fxmlFile = "/Nurse/PatientRecordNurse.fxml";
+	                stageTitle = "PatientRecord";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+	            //load table 
+	            if(event.getSource()==updatePatientRecordViewUC)
+	            {
+	            	int pid =Integer.parseInt(pidComboBox.getValue());
+	            	System.out.println("SFd"+pid);
+	            	
+	            	eHospital controller = loader.getController(); // Get the same controller
+	            	controller.pidComboBox= this.pidComboBox;
+
+	            	controller.initPatientRecordNurseTable();
+	            }
+	            //end of loading table
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+    	
     	 
     }
+	
+	private void initPatientRecordNurseTable()
+	{
+		int pid;
+		if (pidComboBox != null && pidComboBox.getValue() != null) {
+		    pid =Integer.parseInt(pidComboBox.getValue());
+			record = FXCollections.observableArrayList();
+			
+			temperature.setCellValueFactory(new PropertyValueFactory<>("temperature"));
+			bloodPressure.setCellValueFactory(new PropertyValueFactory<>("bloodPressure"));
+			heartRate.setCellValueFactory(new PropertyValueFactory<>("heartRate"));
+			
+			Patient patient = new Patient();
+			record=patient.loadPatientRecord(pid);
+			System.out.println("sdf"+record.size());
+			//record
+			patientRecord.setItems(record);
+		}
+		
+	}
 	
     @FXML
     public void handleupdatePatientRecordupdateNurseUC() {
@@ -2525,8 +2595,10 @@ public class eHospital extends patientController implements Initializable {
             return; 
         }
         //jab patient combobox se pid select karo ge then the patient record will be added
+        
         PatientRecord p = new PatientRecord();
         p.updatePatientRecord(pid,tempText,bloodPressureText,heartRateText);
+        showAlert("Update!","Record Updated", "Updated view available");
       //  System.out.println("done");
         
     }
@@ -2883,8 +2955,8 @@ public class eHospital extends patientController implements Initializable {
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
-		   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		   //String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   //String url = "jdbc:sqlserver:// \\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 
 		    // Connect to the database and fetch the PIDs
 		    try (Connection conn = DriverManager.getConnection(url)) {

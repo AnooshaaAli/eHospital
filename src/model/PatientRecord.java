@@ -36,7 +36,15 @@ public class PatientRecord {
     	this.recordID= dbhandler.loadRecordID(id);
 	}
     
-    public PatientRecord() {
+    public PatientRecord(String temp,String bp,String hr)
+    {
+    	
+    	this.temperature=temp;
+    	this.heartRate=hr;
+    	this.bloodPressure=bp;
+    }
+
+	public PatientRecord() {
     	dbhandler = new DBHandler();
     	summary = new DischargeSummary();
     	medicine = new ArrayList<Medication>();
@@ -234,4 +242,13 @@ public class PatientRecord {
 		apt.setAppointmentId(aptId);
 		apt.markAptCompleted();
 	}
+	
+	//----------------------------------------------------PATIENT RECORD NURSE -----------------------------------------------------------///
+	public ObservableList<PatientRecord> loadPatientRecord(int pid)
+	{
+		
+		ObservableList<PatientRecord> list= dbhandler.loadPatientRecord(pid);
+		return list;
+	}
+
 }

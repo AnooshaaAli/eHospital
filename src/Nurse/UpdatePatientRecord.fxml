@@ -62,7 +62,7 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="updatePatientRecordView" layoutX="183.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#handleupdatePatientRecordViewNurseUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Patient Record" textFill="#fffce8" />
+                  <Button fx:id="updatePatientRecordViewUC" layoutX="183.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#handleupdatePatientRecordViewNurseUC" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color: #dd403a;" text="View Patient Record" textFill="#fffce8" />
                   <Label layoutX="146.0" layoutY="55.0" text="Patient Id: " textFill="#747572">
                      <font>
                         <Font name="Calibri" size="17.0" />

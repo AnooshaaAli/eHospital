@@ -22,12 +22,13 @@ import model.Doctor;
 import model.InventoryItem;
 import model.Medication;
 import model.Nurse;
+import model.PatientRecord;
 import model.Receptionist;
 
 public class DBHandler {
 	
-   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-     // String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+   //String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+    String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
    public DBHandler()
    {
 	   
@@ -2736,7 +2737,7 @@ public class DBHandler {
 
 			    // Database query to fetch the required fields from the Employee and Doctor tables
 			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, d.did " +
-			                   "FROM Employee e INNER JOIN Doctor d ON e.empid = d.empid";
+			                   "FROM Employee e INNER JOIN Doctor d ON e.empid = d.empid where active=1";
 			    try (Connection conn = connect(); 
 			         PreparedStatement stmt = conn.prepareStatement(query); 
 			         ResultSet rs = stmt.executeQuery()) {
@@ -2774,7 +2775,7 @@ public class DBHandler {
 
 			    // Database query to fetch the required fields from the Employee and Doctor tables
 			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, n.nid " +
-			                   "FROM Employee e INNER JOIN Nurse n ON e.empid = n.empid";
+			                   "FROM Employee e INNER JOIN Nurse n ON e.empid = n.empid where active=1";
 			    try (Connection conn = connect(); 
 			         PreparedStatement stmt = conn.prepareStatement(query); 
 			         ResultSet rs = stmt.executeQuery()) {
@@ -2813,7 +2814,7 @@ public class DBHandler {
 
 			    // Database query to fetch the required fields from the Employee and Doctor tables
 			    String query = "SELECT e.empid, e.name, e.working_hours, e.experience, d.rid " +
-			                   "FROM Employee e INNER JOIN Receptionist d ON e.empid = d.empid";
+			                   "FROM Employee e INNER JOIN Receptionist d ON e.empid = d.empid where active=1";
 			    try (Connection conn = connect(); 
 			         PreparedStatement stmt = conn.prepareStatement(query); 
 			         ResultSet rs = stmt.executeQuery()) {
@@ -2844,5 +2845,43 @@ public class DBHandler {
 
 			    return ReceptionistList;
 			}
+		   
+		 //----------------------------------------------------PATIENT RECORD NURSE -----------------------------------------------------------///
+		public ObservableList<PatientRecord> loadPatientRecord(int pid)
+		{
+			
+			ObservableList<PatientRecord> result = FXCollections.observableArrayList();
+
+	        String query = """
+	                SELECT recordID, temperature, blood_pressure, heart_rate
+	                FROM PatientRecord
+	                WHERE pid = ?
+	                """;
+
+	        try (Connection connection = connect();
+	             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+	            // Set the patient ID parameter in the query
+	            preparedStatement.setInt(1, pid);
+
+	            // Execute the query
+	            ResultSet resultSet = preparedStatement.executeQuery();
+
+	            // Process the results
+	            while (resultSet.next()) {
+	                int recordId = resultSet.getInt("recordID");
+	                String temperature = resultSet.getString("temperature");
+	                String bloodPressure = resultSet.getString("blood_pressure");
+	                String heartRate = resultSet.getString("heart_rate");
+
+	                // Create a PatientRecord object and add it to the result list
+	                result.add(new PatientRecord( temperature, bloodPressure, heartRate));
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return result;
+		}
 		   
 }
