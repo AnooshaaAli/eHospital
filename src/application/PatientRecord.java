@@ -214,7 +214,8 @@ public class PatientRecord {
 	
 	public ObservableList<Appointment> getPendingAppointments(int patId)
 	{
-		ObservableList<Appointment> list = dbhandler.getPendingAppointments(patId);
+		Appointment a = new Appointment();
+		ObservableList<Appointment> list = a.getPendingAppointments(patId);
 		return list;
 	}
 	

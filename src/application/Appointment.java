@@ -82,4 +82,12 @@ public class Appointment {
 	public void markAptCompleted() {
 		dbhandler.makeAptCompleted(this.appointmentId);
 	}
+	
+	// ----------------------------------------------------- GET PENDING APPOINTMENTS LIST -------------------------------------- //
+	
+	public ObservableList<Appointment> getPendingAppointments(int patId)
+	{
+		ObservableList<Appointment> list = dbhandler.getPendingAppointments(patId);
+		return list;
+	}
 }
