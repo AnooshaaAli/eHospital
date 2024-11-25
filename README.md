@@ -17,21 +17,7 @@ The **eHospital Management System** is a JavaFX-based desktop application design
 
 ---
 
-## Project Structure
-### Folder/Package Organization
-
-src/
-├── Admin/              # Handles admin-specific functionalities
-├── application/        # Main application logic and controllers
-├── application.resources/  # FXML and other UI resources
-├── doctor/             # Doctor-related functionality
-├── Home/               # Main application homepage
-├── model/              # Model classes for data handling
-├── Nurse/              # Nurse-related functionality
-├── patient/            # Patient-related functionality
-├── Receptionist/       # Receptionist-specific tasks
-
-### Dependencies
+## Dependencies
 The project relies on the following:
 - **JavaFX SDK**: For creating GUI components.
 - **JDBC Driver**: For connecting to the SQL Server database.
