@@ -395,6 +395,64 @@ public class DBHandler {
 	    }
 	}
 	 
+	public void EnterMedicationDetails2(int pid, String medicationName, int dosage) {
+	    
+	    // Query to check if the entry exists
+	    String checkQuery = "SELECT COUNT(*) FROM medication WHERE recordID = ? AND medicationName = ?";
+
+	    // Update query
+	    String updateQuery = "UPDATE medication SET dosage = ? WHERE recordID = ? AND medicationName = ?";
+
+	    // Insert query
+	    String insertQuery = "INSERT INTO medication (recordID, medicationName, dosage) VALUES (?, ?, ?)";
+
+	    try (Connection conn =connect()) {
+	        // Check if the entry exists
+	        try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
+	            checkStmt.setInt(1, pid);
+	            checkStmt.setString(2, medicationName);
+
+	            ResultSet rs = checkStmt.executeQuery();
+	            boolean exists = false;
+	            if (rs.next()) {
+	                exists = rs.getInt(1) > 0; // Check if count > 0
+	            }
+
+	            // Use appropriate query based on existence
+	            if (exists) {
+	                try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+	                    updateStmt.setInt(1, dosage);
+	                    updateStmt.setInt(2, pid);
+	                    updateStmt.setString(3, medicationName);
+	                    int rowsAffected = updateStmt.executeUpdate();
+
+	                    if (rowsAffected > 0) {
+	                        System.out.println("Updated dosage for PID: " + pid + ", Medication: " + medicationName);
+	                    } else {
+	                        System.out.println("Failed to update dosage for PID: " + pid + ", Medication: " + medicationName);
+	                    }
+	                }
+	            } else {
+	                try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+	                    insertStmt.setInt(1, pid);
+	                    insertStmt.setString(2, medicationName);
+	                    insertStmt.setInt(3, dosage);
+	                    int rowsAffected = insertStmt.executeUpdate();
+
+	                    if (rowsAffected > 0) {
+	                        System.out.println("Inserted new medication entry for PID: " + pid);
+	                    } else {
+	                        System.out.println("Failed to insert new medication entry for PID: " + pid);
+	                    }
+	                }
+	            }
+	        }
+	    } catch (SQLException e) {
+	        // Handle SQL exceptions
+	        System.err.println("Error processing medication details in the database:");
+	        e.printStackTrace();
+	    }
+	}
 	 public List<String> FindMedicationDetails(int pid) {
 		    
 		    String selectQuery = "SELECT medicationName, dosage FROM medication WHERE recordID = ?";
@@ -478,36 +536,72 @@ public class DBHandler {
 		    }
 		}
 	 //discharge patient
-	 public void createDischargePatient(String inst,LocalDate date, int pid)
-	 {
-		 Connection connection = null;
-
-		    try (Connection conn = connect(); 
-		         Statement statement = conn.createStatement()) {
-
+//	 public void createDischargePatient(String inst,LocalDate date, int pid)
+//	 {
+//		 Connection connection = null;
+//
+//		    try (Connection conn = connect(); 
+//		         Statement statement = conn.createStatement()) {
+//
+//		        // Step 1: Retrieve the recordId corresponding to the given pid
+//		        String fetchRecordIdSql = "SELECT recordId FROM PatientRecord WHERE pid = " + pid;
+//		        ResultSet resultSet = statement.executeQuery(fetchRecordIdSql);
+//
+//		        // Check if a record was found
+//		        if (resultSet.next()) {
+//		            int recordId = resultSet.getInt("recordId");
+//
+//		            // Step 2: Insert into DischargeSummary using the fetched recordId
+//		            String insertSql = "INSERT INTO DischargeSummary (recordId, instructions, date) " +
+//		                               "VALUES (" + recordId + ", '" + inst + "', '" + date.toString() + "')";
+//		            statement.executeUpdate(insertSql);
+//
+//		        }
+//		        else 
+//		            System.out.println("No record found for patient ID: " + pid);
+//		        
+//		    } 
+//		    catch (SQLException e) {
+//		        e.printStackTrace();
+//		        System.out.println("Error processing discharge summary.");
+//		    }
+//	 }
+	 public void createDischargePatient(String inst, LocalDate date, int pid) {
+		    try (Connection conn = connect()) {
 		        // Step 1: Retrieve the recordId corresponding to the given pid
 		        String fetchRecordIdSql = "SELECT recordId FROM PatientRecord WHERE pid = " + pid;
-		        ResultSet resultSet = statement.executeQuery(fetchRecordIdSql);
+		        Statement fetchStmt = conn.createStatement();
+		        ResultSet resultSet = fetchStmt.executeQuery(fetchRecordIdSql);
 
-		        // Check if a record was found
 		        if (resultSet.next()) {
 		            int recordId = resultSet.getInt("recordId");
 
 		            // Step 2: Insert into DischargeSummary using the fetched recordId
+		            String dateString = date.toString(); // Format as 'YYYY-MM-DD'
 		            String insertSql = "INSERT INTO DischargeSummary (recordId, instructions, date) " +
-		                               "VALUES (" + recordId + ", '" + inst + "', '" + date.toString() + "')";
-		            statement.executeUpdate(insertSql);
+		                               "VALUES (" + recordId + ", '" + inst + "', '" + dateString + "')";
+		            Statement insertStmt = conn.createStatement();
+		            insertStmt.executeUpdate(insertSql);
 
-		        }
-		        else 
+		            // Step 3: Update the isDischarge status in the patient table
+		            String updateStatusSql = "UPDATE patient SET isDischarge = 1 WHERE pid = " + pid;
+		            Statement updateStmt = conn.createStatement();
+		            int rowsAffected = updateStmt.executeUpdate(updateStatusSql);
+
+		            if (rowsAffected > 0) {
+		                System.out.println("Discharge status updated successfully for patient ID: " + pid);
+		            } else {
+		                System.out.println("Failed to update discharge status for patient ID: " + pid);
+		            }
+		        } else {
 		            System.out.println("No record found for patient ID: " + pid);
-		        
-		    } 
-		    catch (SQLException e) {
+		        }
+		    } catch (SQLException e) {
 		        e.printStackTrace();
 		        System.out.println("Error processing discharge summary.");
 		    }
-	 }
+		}
+
 	 //login admin 
 	 public boolean LoginAdmin(String username, String password) 
 	 {
@@ -1434,6 +1528,60 @@ public class DBHandler {
 	 
 	 // ------------------------------------------- ANOOSHAAAAAA ------------------------------------------------------------//
 	 
+
+	// -------------------------------------------------- GET DOCTOR TIME SLOT ID ---------------------------------------------------- //
+	
+    public int getDoctorTimeslotID(int timeslotId) {
+        String query = "SELECT dtid FROM DoctorTimeslot WHERE tid = ?";
+        try (PreparedStatement stmt = this.connect().prepareStatement(query)) {
+            stmt.setInt(1, timeslotId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("dtid");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching DoctorTimeslot ID: " + e.getMessage());
+        }
+        return -1; // Return -1 if not found or an error occurs
+    }
+		    
+
+   public List<Integer> getTimeSlotIds(String starttime, String endtime) {
+	    List<Integer> timeSlotIds = new ArrayList<>();
+
+	    // SQL query to fetch IDs of time slots within the specified range
+	    String query = "SELECT tid FROM timeslot WHERE starttime >= ? AND endtime <= ?";
+
+	    // Define a formatter for the input time strings
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+	    try (Connection con = this.connect(); PreparedStatement pst = con.prepareStatement(query)) {
+	        // Parse the input strings using the formatter
+	        LocalTime start = LocalTime.parse(starttime, formatter);
+	        LocalTime end = LocalTime.parse(endtime, formatter);
+
+	        // Convert LocalTime to the String format expected by SQL Server (hh:mm:ss)
+	        String startStr = start.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+	        String endStr = end.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+	        // Set query parameters as Strings
+	        pst.setString(1, startStr);
+	        pst.setString(2, endStr);
+
+	        // Execute the query and process the result
+	        try (ResultSet rs = pst.executeQuery()) {
+	            while (rs.next()) {
+	                timeSlotIds.add(rs.getInt("tid"));
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return timeSlotIds; // Return the list of matching time slot IDs
+	}
+				   
 	 // ----------------------------------------- GET ALL IDS OF DOCTORS ------------------------------------------------- //
 	 
 	public ObservableList<Integer> getDoctorIdsList() {

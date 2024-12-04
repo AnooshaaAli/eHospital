@@ -61,7 +61,7 @@
                   <Font name="Calibri" size="17.0" />
                </font>
             </Label>
-            <ComboBox fx:id="pidComboBox" layoutX="272.0" layoutY="53.0" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #f3f0dd;" />
+            <ComboBox fx:id="pidDHbox" layoutX="272.0" layoutY="53.0" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #f3f0dd;" />
             <Line endX="443.0" layoutX="101.0" layoutY="164.0" startX="-100.0" stroke="#747572" />
             <Label layoutX="-1.0" layoutY="185.0" prefHeight="24.0" prefWidth="546.0" style="-fx-background-color: #f3f0dd;" text="Discharge Summary">
                <font>
