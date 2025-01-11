@@ -482,164 +482,165 @@ public class eHospital extends patientController implements Initializable {
 	
 	// ------------------------------------------------------------------ REGISTER PATIENT BY PATIENT ---------------------------------------------------------------------------- //
 	
-	public void handleRegisterButtonClick(MouseEvent  event)
-	{
-		try {
-			
-			// Anoosha
-        	String fxmlFile;
-            String stageTitle;
-            String name = nameTextField.getText();
-            String username = usernameTextField.getText();
-            String password = passwordTextField.getText();
-            String gender = genderComboBox.getValue();
-            String dob = dobTextField.getText();
-            String contact = contactTextField.getText();
-            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
-                showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
-                return;
-            }
-            if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
-                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
-                return;
-            }
-            if (!username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
-                showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
-                return;
-            }
-            if (gender == null || gender.isEmpty()) {
-                showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
-                return;
-            }
-            if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
-                showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
-                return;
-            }
-            try {
-                LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
-            } catch (DateTimeParseException e) {
-                showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
-                return;
-            }
-
-            if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
-                showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
-                return;
-            }
-
-            
-            Patient patient = new Patient();
-            patient.registerPatient(name, username, password, gender, dob, contact);
-            int id = patient.getPatientId(username);
-            //setPatientId(id);
-        	fxmlFile = "/patient/Patient.fxml";
-            stageTitle = "Patient";
-            
-            // Anoosha
-            
-			//======================================================
-
-			Patient p = Patient.getInstance();
-			
-			if (usernameTextField != null && passwordTextField != null)
-			{
-		        if (username.isEmpty() || password.isEmpty()) 
-		        {
-		            System.out.println("Username or password cannot be empty.");
-		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-		            return; 
-		        }
-		        //alpha numeric input validation 
-		        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
-	            {
-	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	// ------------------------------------------------------------------ REGISTER PATIENT BY PATIENT ---------------------------------------------------------------------------- //
+	
+		public void handleRegisterButtonClick(MouseEvent  event)
+		{
+			try {
+				
+				// Anoosha
+	        	String fxmlFile;
+	            String stageTitle;
+	            String name = nameTextField.getText();
+	            String username = usernameTextField.getText();
+	            String password = passwordTextField.getText();
+	            String gender = genderComboBox.getValue();
+	            String dob = dobTextField.getText();
+	            String contact = contactTextField.getText();
+	            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
+	                showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
 	                return;
 	            }
-	
-		        boolean check = patient.LoginPatient(username, password);
-	
-		        if (!check) {
-		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-		            return; 
-		        }
-		        
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                LocalDate localDate = null; 
-                java.sql.Date sqlDob = null;
-                try {
-                    // Parse the string into a LocalDate
-                    localDate = LocalDate.parse(dob, formatter);
-                    LocalDateTime localDateTime = localDate.atStartOfDay();
-                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-                    sqlDob = new java.sql.Date(utilDob.getTime());
-                    System.out.println("Converted Date: " + sqlDob);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Invalid date format.");
-                }
-                
-	            p.init(id, username, name, gender, sqlDob, contact, check);
+	            if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
+	                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+	                return;
+	            }
+	            if (!username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
+	                showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
+	            }
+	            if (gender == null || gender.isEmpty()) {
+	                showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
+	                return;
+	            }
+	            if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
+	                showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
+	                return;
+	            }
+	            try {
+	                LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
+	            } catch (DateTimeParseException e) {
+	                showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
+	                return;
+	            }
+
+	            if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
+	                showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
+	                return;
+	            }
+
+	            
+	            Patient patient = new Patient();
+	            patient.registerPatient(name, username, password, gender, dob, contact);
+	            int id = patient.getPatientId(username);
+	            //setPatientId(id);
+	        	fxmlFile = "/patient/Patient.fxml";
+	            stageTitle = "Patient";
+	            
+	            // Anoosha
+	            
+				//======================================================
+
+				Patient p = Patient.getInstance();
+				
+				if (usernameTextField != null && passwordTextField != null)
+				{
+			        if (username.isEmpty() || password.isEmpty()) 
+			        {
+			            System.out.println("Username or password cannot be empty.");
+			            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+			            return; 
+			        }
+			        //alpha numeric input validation 
+			        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
+		            {
+		            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+		                return;
+		            }
 		
-		}
-		else 
-		{
-			 if (p == null) 
-	                showAlert("Error", "Missing Data", "No user is logged in.");
-		}
+			        boolean check = patient.LoginPatient(username, password);
+		
+			        if (!check) {
+			            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+			            return; 
+			        }
+			        
+	                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	                LocalDate localDate = null; 
+	                java.sql.Date sqlDob = null;
+	                try {
+	                    // Parse the string into a LocalDate
+	                    localDate = LocalDate.parse(dob, formatter);
+	                    LocalDateTime localDateTime = localDate.atStartOfDay();
+	                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+	                    sqlDob = new java.sql.Date(utilDob.getTime());
+	                    System.out.println("Converted Date: " + sqlDob);
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    System.out.println("Invalid date format.");
+	                }
+	                
+		            p.init(id, username, name, gender, sqlDob, contact, check);
 			
-		//=========================================
+			}
+			else 
+			{
+				 if (p == null) 
+		                showAlert("Error", "Missing Data", "No user is logged in.");
+			}
+				
+			//=========================================
 
-            if(event.getSource()==RegisterPatient)
-            {
-            	fxmlFile = "/patient/Patient.fxml";
-                stageTitle = "Patient";
-            }
-            else
-            	throw new IllegalArgumentException("Unexpected button source");
-            
-            
-            // Load the new FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent newFormRoot = loader.load();
+	            if(event.getSource()==RegisterPatient)
+	            {
+	            	fxmlFile = "/patient/Patient.fxml";
+	                stageTitle = "Patient";
+	            }
+	            else
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            
+	            
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
 
-            
-          //==========================================
-            eHospital controller = loader.getController();
-            String st = p.isDischargeStatus()? "Discharged":"Not Discharged";
-            Date dob1 = p.getDob();
-            String dobString ="";
-            if (dob1 != null) {
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                dobString = formatter.format(dob1);
-                controller.detailsPatient(p.getPatientName(), p.getUsername(), p.getPatientId(), 
-                                           p.getGender(), dobString, p.getContact(), st);
-            } else {
-                System.out.println("Date of Birth is null.");
-                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
-            }
+	            
+	          //==========================================
+	            eHospital controller = loader.getController();
+	            String st = p.isDischargeStatus()? "Discharged":"Not Discharged";
+	            Date dob1 = p.getDob();
+	            String dobString ="";
+	            if (dob1 != null) {
+	                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	                dobString = formatter.format(dob1);
+	                controller.detailsPatient(p.getPatientName(), p.getUsername(), p.getPatientId(), 
+	                                           p.getGender(), dobString, p.getContact(), st);
+	            } else {
+	                System.out.println("Date of Birth is null.");
+	                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+	            }
 
-            controller.detailsPatient(p.getPatientName(), p.getUsername(),p.getPatientId(),p.getGender()
-            		,dobString,p.getContact(),st);
-            //==========================================
-            
-            // Create a new scene and stage for the new form
-            Scene newFormScene = new Scene(newFormRoot);
-            Stage newFormStage = new Stage();
-            newFormStage.setScene(newFormScene);
-            newFormStage.setTitle(stageTitle);
+	            controller.detailsPatient(p.getPatientName(), p.getUsername(),p.getPatientId(),p.getGender()
+	            		,dobString,p.getContact(),st);
+	            //==========================================
+	            
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
 
-            // Show the new form
-            newFormStage.show();
+	            // Show the new form
+	            newFormStage.show();
 
-            // Close the current form
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            currentStage.close();
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
-	
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
 	// ------------------------------------------------------------------ PATIENT PROFILE BUTTON ---------------------------------------------------------------------------- //
 	
 	public void handleProfileButtonClick(MouseEvent  event)
@@ -647,7 +648,6 @@ public class eHospital extends patientController implements Initializable {
         try {
         	String fxmlFile;
             String stageTitle;
-            
             if(event.getSource()==RegisterPatient)
             {
             	fxmlFile = "/patient/Patient.fxml";
@@ -1354,7 +1354,8 @@ public class eHospital extends patientController implements Initializable {
                 return; 
             }
             Medication medicationService = new Medication();
-            medicationService.EnterMedicationDetails(pid, medicationName, dosage);
+            medicationService.EnterMedicationDetails2(pid, medicationName, dosage);
+            showAlert("update","Medicine Record Updated", "You can review updated record");
         } catch (Exception e) {
             System.err.println("An unexpected error occurred:");
             e.printStackTrace();
@@ -2492,16 +2493,85 @@ public class eHospital extends patientController implements Initializable {
 	// ------------------------------------------------------------------ UPDATE PATIENT RECORD BY NURSE ---------------------------------------------------------------------------- //
 	
 	@FXML
-    public void handleupdatePatientRecordViewNurseUC() {
-    	try {
-    		System.out.println("dance");
-    	}
-    	catch(Exception e)
-    	{
-    		e.printStackTrace();
-    	}
+	TableView<PatientRecord> patientRecord;
+	@FXML
+	TableColumn<PatientRecord,String> temperature;
+	@FXML
+	TableColumn<PatientRecord,String> bloodPressure;
+	@FXML
+	TableColumn<PatientRecord,String> heartRate;
+	ObservableList<PatientRecord> record;
+	
+    public void handleupdatePatientRecordViewNurseUC(MouseEvent event) {
+    	//if(event.getSource()==updatePatientRecordViewUC)
+    	
+    		try {
+	        	
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==updatePatientRecordViewUC)
+	            {
+	            	fxmlFile = "/Nurse/PatientRecordNurse.fxml";
+	                stageTitle = "PatientRecord";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+	            //load table 
+	            if(event.getSource()==updatePatientRecordViewUC)
+	            {
+	            	int pid =Integer.parseInt(pidComboBox.getValue());
+	            	System.out.println("SFd"+pid);
+	            	
+	            	eHospital controller = loader.getController(); // Get the same controller
+	            	controller.pidComboBox= this.pidComboBox;
+
+	            	controller.initPatientRecordNurseTable();
+	            }
+	            //end of loading table
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+    	
     	 
     }
+	
+	private void initPatientRecordNurseTable()
+	{
+		int pid;
+		if (pidComboBox != null && pidComboBox.getValue() != null) {
+		    pid =Integer.parseInt(pidComboBox.getValue());
+			record = FXCollections.observableArrayList();
+			
+			temperature.setCellValueFactory(new PropertyValueFactory<>("temperature"));
+			bloodPressure.setCellValueFactory(new PropertyValueFactory<>("bloodPressure"));
+			heartRate.setCellValueFactory(new PropertyValueFactory<>("heartRate"));
+			
+			Patient patient = new Patient();
+			record=patient.loadPatientRecord(pid);
+			System.out.println("sdf"+record.size());
+			//record
+			patientRecord.setItems(record);
+		}
+		
+	}
 	
     @FXML
     public void handleupdatePatientRecordupdateNurseUC() {
@@ -2525,8 +2595,10 @@ public class eHospital extends patientController implements Initializable {
             return; 
         }
         //jab patient combobox se pid select karo ge then the patient record will be added
+        
         PatientRecord p = new PatientRecord();
         p.updatePatientRecord(pid,tempText,bloodPressureText,heartRateText);
+        showAlert("Update!","Record Updated", "Updated view available");
       //  System.out.println("done");
         
     }
@@ -2545,8 +2617,8 @@ public class eHospital extends patientController implements Initializable {
 	
     public void handleDischargePatientUC(MouseEvent event)
     {
-    	int pid = Integer.parseInt(pidComboBox.getValue());
-		if (pidComboBox != null && pidComboBox.getValue() != null) 
+    	int pid = Integer.parseInt(pidDHbox.getValue());
+		if (pidDHbox != null && pidDHbox.getValue() != null) 
 		{
 			if(event.getSource()==existingMed)
 			{
@@ -2559,7 +2631,7 @@ public class eHospital extends patientController implements Initializable {
 		            
 		            
 		            eHospital controller = loader.getController(); // Get the same controller
-		            controller.pidComboBox= this.pidComboBox;
+		            controller.pidDHbox= this.pidDHbox;
 		            controller.initTable(); // Initialize table after form is loaded
 		            // Create a new scene and stage for the new form
 		            Scene newFormScene = new Scene(newFormRoot);
@@ -2793,6 +2865,49 @@ public class eHospital extends patientController implements Initializable {
 	        alert.setContentText(content);
 	        alert.showAndWait();
 	}
+	@FXML
+	private ComboBox<String> pidDHbox;
+	
+	public void populateDHComboBox()
+	{
+		 // Create an ObservableList to hold patient IDs
+	    ObservableList<String> pidList = FXCollections.observableArrayList();
+	   //String url = "jdbc:sqlserver:// \\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+	   String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+
+	    // Connect to the database and fetch the PIDs
+	   try (Connection conn = DriverManager.getConnection(url)) {
+		    // Replace `statusValue` and `isDischargeValue` with the appropriate values or variables
+		    int statusValue = 1;  // Example value
+		    int isDischargeValue = 0;  // Example value
+
+		    String query = "SELECT pr.pid " +
+		                   "FROM PATIENTRECORD pr " +
+		                   "JOIN patient p ON pr.pid = p.pid " +
+		                   "LEFT JOIN appointment ap ON pr.recordid = ap.recordid " +
+		                   "GROUP BY pr.pid, p.isDischarge " +
+		                   "HAVING SUM(CASE WHEN ap.status != " + statusValue + 
+		                   " AND ap.status IS NOT NULL THEN 1 ELSE 0 END) = 0 " +
+		                   "  AND p.isDischarge = " + isDischargeValue;
+
+		    Statement stmt = conn.createStatement();
+		    ResultSet rs = stmt.executeQuery(query);
+
+		    // Iterate through the result set and add PIDs to the ObservableList
+		    while (rs.next()) {
+		        String pid = rs.getString("pid");
+		        pidList.add(pid);  // Add each pid to the ObservableList
+		    }
+
+		    // Set the ObservableList to the ComboBox if it's not null
+		    if (pidDHbox != null) {
+		        pidDHbox.setItems(pidList);
+		    }
+
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+	}
 	
 	// ------------------------------------------------------------------ LOAD COMBO BOXES ---------------------------------------------------------------------------- //
 	
@@ -2857,6 +2972,7 @@ public class eHospital extends patientController implements Initializable {
 		 populatePid1ComboBox();
 		 populatePidComboBox();
 		 populateDoctorIdComboBox();
+		 populateDHComboBox();
 	}
 
 	
@@ -2883,8 +2999,8 @@ public class eHospital extends patientController implements Initializable {
 	private void populatePidComboBox() {
 		    // Create an ObservableList to hold patient IDs
 		    ObservableList<String> pidList = FXCollections.observableArrayList();
-		   String url = "jdbc:sqlserver://10N5Q8AKAMRA\\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
-		   //String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   //String url = "jdbc:sqlserver:// \\SQLEXPRESS01;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
+		   String url ="jdbc:sqlserver://FATIMA\\SQLEXPRESS;databaseName=eHospital;integratedSecurity=true;trustServerCertificate=true";
 
 		    // Connect to the database and fetch the PIDs
 		    try (Connection conn = DriverManager.getConnection(url)) {
