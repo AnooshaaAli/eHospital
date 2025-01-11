@@ -73,6 +73,12 @@ public class Medication {
 		db.EnterMedicationDetails(pid,medicationName,dosage);
 		
 	}
+	public void EnterMedicationDetails2(int pid,String medicationName,int dosage)
+	{
+		DBHandler db=new DBHandler();
+		db.EnterMedicationDetails2(pid,medicationName,dosage);
+		
+	}
 			
 	public List<String> GetMedicationDetails(int pid) {
 	        DBHandler db = new DBHandler();

@@ -175,7 +175,7 @@ public class patientController implements Initializable{
     @FXML
     private Label BillLabel;
     
-    // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- //
+    // -------------------------------------------- EVENT HANDLERS --------------------------------------------------- /
     
 	public void initialize(URL location, ResourceBundle resources) {
 		populateDoctorIdComboBox();
@@ -187,16 +187,6 @@ public class patientController implements Initializable{
        }
        
 	 }
-	
-    // -------------------------------------------- MESSAGE ALERT -------------------------------------------------- //
-    
-	private void showAlert(String title, String header, String content) {
-	        Alert alert = new Alert(Alert.AlertType.ERROR);
-	        alert.setTitle(title);
-	        alert.setHeaderText(header);
-	        alert.setContentText(content);
-	        alert.showAndWait();
-	}
 	
 	public void handlePatientViewRecord(MouseEvent  event) {
 		try {
@@ -385,6 +375,16 @@ public class patientController implements Initializable{
         }
 	}
 	
+    // -------------------------------------------- MESSAGE ALERT -------------------------------------------------- //
+    
+	private void showAlert(String title, String header, String content) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setTitle(title);
+	        alert.setHeaderText(header);
+	        alert.setContentText(content);
+	        alert.showAndWait();
+	}
+	
 	// ------------------------------------------------- POPULATE DOCTOR IDS ------------------------------------------------------- //
 	
 	public void populateDoctorIdComboBox() {
@@ -429,7 +429,7 @@ public class patientController implements Initializable{
 	    	nonAvailabilityStatusLabel.setVisible(true);
 	    }
 	}
-	
+
 	// --------------------------------------------- POPULATE TIMESLOTS COMBO BOX -------------------------------------------------- //
 	
 	public void populateTimeSlotsComboBox() {
@@ -450,7 +450,7 @@ public class patientController implements Initializable{
             //System.out.println("DoctorIdComboBox is null!");  
         }
 	}
-	
+
 	// ------------------------------------------- APPOINTMENT CONFIRMATION HANDLER -------------------------------------------------- //
 	
 	public void handleAppointmentConfirmation() {

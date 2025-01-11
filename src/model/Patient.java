@@ -278,4 +278,12 @@ public class Patient {
 		record.markAptCompleted(aptId);
 	}
 	
+	
+	//----------------------------------------------------PATIENT RECORD NURSE -----------------------------------------------------------///
+	public ObservableList<PatientRecord> loadPatientRecord(int pid)
+	{
+		PatientRecord p= new PatientRecord();
+		ObservableList<PatientRecord> list= p.loadPatientRecord(pid);
+		return list;
+	}
 }

@@ -50,12 +50,6 @@ public class Doctor extends Employee{
 		return dbhandler.addDoctorTimeslot(doctorId, timeslotId, date);
 	}
 	
-	// ------------------------------------------------ GET DOCTOR TIME SLOT ID ---------------------------------------- //
-	
-	public int getDoctorTimeslotID(int timeslotId) {
-		return dbhandler.getDoctorTimeslotID(timeslotId);
-	}
-	
 	public static Doctor getInstance() 
 	{
 		if (instance == null) {
@@ -164,6 +158,12 @@ public class Doctor extends Employee{
 		Doctor.instance = instance;
 	}
     
+	// ------------------------------------------------ GET DOCTOR TIME SLOT ID ---------------------------------------- //
+	
+	public int getDoctorTimeslotID(int timeslotId) {
+		return dbhandler.getDoctorTimeslotID(timeslotId);
+	}
+	
 	// ----------------------------------------------------- SARA AKBAR USE CASES ------------------------------------------------------------------ //
     
 	public int AddDoctor(int empid,List<String> availableDays,int noOfApp)
