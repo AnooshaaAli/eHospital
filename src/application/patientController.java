@@ -375,6 +375,16 @@ public class patientController implements Initializable{
         }
 	}
 	
+    // -------------------------------------------- MESSAGE ALERT -------------------------------------------------- //
+    
+	private void showAlert(String title, String header, String content) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR);
+	        alert.setTitle(title);
+	        alert.setHeaderText(header);
+	        alert.setContentText(content);
+	        alert.showAndWait();
+	}
+	
 	// ------------------------------------------------- POPULATE DOCTOR IDS ------------------------------------------------------- //
 	
 	public void populateDoctorIdComboBox() {
@@ -400,8 +410,15 @@ public class patientController implements Initializable{
 	        return;  
 	    }
 	    
+	    // Check if the selected date is greater than today's date
+	    if (!date.isAfter(LocalDate.now())) {
+	    	showAlert("Error", "Invalid Date Selected!", "Please select a date in the future.");
+	        return;
+	    }
+	    
 	    Doctor doctor = new Doctor();
 	    boolean isAvailable = doctor.checkDoctorAvailability(doctorId, date);
+	    ConfirmationPane.setVisible(false);
 	    
 	    if (isAvailable) {
 	    	nonAvailabilityStatusLabel.setVisible(false);
@@ -412,7 +429,7 @@ public class patientController implements Initializable{
 	    	nonAvailabilityStatusLabel.setVisible(true);
 	    }
 	}
-	
+
 	// --------------------------------------------- POPULATE TIMESLOTS COMBO BOX -------------------------------------------------- //
 	
 	public void populateTimeSlotsComboBox() {
@@ -433,7 +450,7 @@ public class patientController implements Initializable{
             //System.out.println("DoctorIdComboBox is null!");  
         }
 	}
-	
+
 	// ------------------------------------------- APPOINTMENT CONFIRMATION HANDLER -------------------------------------------------- //
 	
 	public void handleAppointmentConfirmation() {
@@ -446,6 +463,7 @@ public class patientController implements Initializable{
 	    
 	    LocalDate date = appointmentDate.getValue();  
 	    if (date == null) {
+	    	System.out.println("What is the date?" + date);
 	        return;  
 	    }
 	    
@@ -453,7 +471,7 @@ public class patientController implements Initializable{
 	    System.out.println(patient.getInstance().getPatientId());
 	    int recId = patient.getRecordId(patient.getInstance().getPatientId());
 	    TimeSlot time = new TimeSlot();
-	    String startTime = timeslotsComboBox .getValue();
+	    String startTime = timeslotsComboBox.getValue();
 	    
 	    if (startTime == null) {
 	        return;  
@@ -461,10 +479,12 @@ public class patientController implements Initializable{
 	    
 	    double bill = 1500.0; //hardcoded for each doctor
 	    int timeslotId = time.findTimeSlotId(startTime);
+	    System.out.println("Time Slot Id:" + timeslotId);
 	    if (patient.addAppointment(recId, docId, date, timeslotId)) {
 	        // Add the time slot to DoctorTimeslot table
 	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
-	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
+	        int docTimeSlotId = doctor.getDoctorTimeslotID(timeslotId);
+	        boolean added = doctor.addDoctorTimeslot(docId, docTimeSlotId, date);
 	        if (added) {
 	            Patient p = Patient.getInstance();
 	            p.addBill(recId, bill, "unknown");
@@ -474,6 +494,7 @@ public class patientController implements Initializable{
 	            TimeLabel.setText("Time: " + startTime);
 	            BillLabel.setText("Bill: " + bill);
 	            ConfirmationPane.setVisible(true);
+	            populateTimeSlotsComboBox();
 	        } else {
 	            System.out.println("Failed to add time slot to DoctorTimeslot table.");
 	        }
@@ -527,7 +548,8 @@ public class patientController implements Initializable{
 	    if (patient.addAppointment(recId, docId, date, timeslotId)) {
 	        // Add the time slot to DoctorTimeslot table
 	        Doctor doctor = new Doctor(); // Assuming there's a Doctor class to handle this
-	        boolean added = doctor.addDoctorTimeslot(docId, timeslotId, date);
+	        int docTimeSlotId = doctor.getDoctorTimeslotID(timeslotId);
+	        boolean added = doctor.addDoctorTimeslot(docId, docTimeSlotId, date);
 	        if (added) {
 	            Patient p = Patient.getInstance();
 	            p.addBill(recId, bill, "unknown");
@@ -537,6 +559,7 @@ public class patientController implements Initializable{
 	            TimeLabel.setText("Time: " + startTime);
 	            BillLabel.setText("Bill: " + bill);
 	            ConfirmationPane.setVisible(true);
+	            populateTimeSlotsComboBox();
 	        } else {
 	            System.out.println("Failed to add time slot to DoctorTimeslot table.");
 	        }
