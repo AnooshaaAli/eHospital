@@ -158,6 +158,12 @@ public class Doctor extends Employee{
 		Doctor.instance = instance;
 	}
     
+	// ------------------------------------------------ GET DOCTOR TIME SLOT ID ---------------------------------------- //
+	
+	public int getDoctorTimeslotID(int timeslotId) {
+		return dbhandler.getDoctorTimeslotID(timeslotId);
+	}
+	
 	// ----------------------------------------------------- SARA AKBAR USE CASES ------------------------------------------------------------------ //
     
 	public int AddDoctor(int empid,List<String> availableDays,int noOfApp)
