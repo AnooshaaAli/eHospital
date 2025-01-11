@@ -124,10 +124,10 @@ public class Admin {
 		return true; 
 }
 
-	   public void deleteDctor(int did)
-	   {
-		   db.deleteDoctor(did);
-	   }
+   public void deleteDctor(int did)
+   {
+	   db.deleteDoctor(did);
+   }
 
 	public void updateNameEmployee(int did, String name) {
 		db.updateNameDoctor(did,name);

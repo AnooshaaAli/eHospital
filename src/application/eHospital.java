@@ -578,12 +578,12 @@ public class eHospital extends patientController implements Initializable {
                     System.out.println("Invalid date format.");
                 }
                 
-	            patient.init(id, username, name, gender, sqlDob, contact, check);
+	            p.init(id, username, name, gender, sqlDob, contact, check);
 		
 		}
 		else 
 		{
-			 if (patient == null) 
+			 if (p == null) 
 	                showAlert("Error", "Missing Data", "No user is logged in.");
 		}
 			
@@ -605,21 +605,21 @@ public class eHospital extends patientController implements Initializable {
             
           //==========================================
             eHospital controller = loader.getController();
-            String st = patient.isDischargeStatus()? "Discharged":"Not Discharged";
-            Date dob1 = patient.getDob();
+            String st = p.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob1 = p.getDob();
             String dobString ="";
             if (dob1 != null) {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 dobString = formatter.format(dob1);
-                controller.detailsPatient(patient.getPatientName(), patient.getUsername(), patient.getPatientId(), 
-                                           patient.getGender(), dobString, patient.getContact(), st);
+                controller.detailsPatient(p.getPatientName(), p.getUsername(), p.getPatientId(), 
+                                           p.getGender(), dobString, p.getContact(), st);
             } else {
                 System.out.println("Date of Birth is null.");
                 showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
             }
 
-            controller.detailsPatient(patient.getPatientName(), patient.getUsername(),patient.getPatientId(),patient.getGender()
-            		,dobString,patient.getContact(),st);
+            controller.detailsPatient(p.getPatientName(), p.getUsername(),p.getPatientId(),p.getGender()
+            		,dobString,p.getContact(),st);
             //==========================================
             
             // Create a new scene and stage for the new form

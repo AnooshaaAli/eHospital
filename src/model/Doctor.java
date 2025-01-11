@@ -50,6 +50,12 @@ public class Doctor extends Employee{
 		return dbhandler.addDoctorTimeslot(doctorId, timeslotId, date);
 	}
 	
+	// ------------------------------------------------ GET DOCTOR TIME SLOT ID ---------------------------------------- //
+	
+	public int getDoctorTimeslotID(int timeslotId) {
+		return dbhandler.getDoctorTimeslotID(timeslotId);
+	}
+	
 	public static Doctor getInstance() 
 	{
 		if (instance == null) {

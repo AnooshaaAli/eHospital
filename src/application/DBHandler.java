@@ -1454,7 +1454,7 @@ public class DBHandler {
 	    return docIdsList;
 	}
 	
-	// --------------------------------------- IS DOCTOR AVAILABLE --------------------------------------------------------- //
+	// ------------------------------------------------ IS DOCTOR AVAILABLE --------------------------------------------------------- //
 	
 	public boolean checkDoctorAvailability(int doctorId, LocalDate appointmentDate) {
 	
@@ -1862,6 +1862,23 @@ public class DBHandler {
 	    }
 	}
 
+	// -------------------------------------------------- GET DOCTOR TIME SLOT ID ---------------------------------------------------- //
+	
+    public int getDoctorTimeslotID(int timeslotId) {
+        String query = "SELECT dtid FROM DoctorTimeslot WHERE tid = ?";
+        try (PreparedStatement stmt = this.connect().prepareStatement(query)) {
+            stmt.setInt(1, timeslotId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("dtid");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching DoctorTimeslot ID: " + e.getMessage());
+        }
+        return -1; // Return -1 if not found or an error occurs
+    }
+    
 	// ----------------------------------------------- SARA AKBAR USE CASES ------------------------------------------------------------------ //
 	
 	public ObservableList<String> getDoctorIds()
@@ -1984,7 +2001,6 @@ public class DBHandler {
 
 		    return timeSlotID; // Return the generated timeSlotID (tid)
 		}
-
 
 	   public boolean AddDoctorTimeSlot(int did, String starttime, String endtime) {
 		    // First, make sure the timeslot exists and get the tid
@@ -2710,24 +2726,59 @@ public class DBHandler {
 	       return timeSlotIds; // Return all generated time slot IDs
 	   }
 	
-	
+		   public List<Integer> getTimeSlotIds(String starttime, String endtime) {
+			    List<Integer> timeSlotIds = new ArrayList<>();
+
+			    // SQL query to fetch IDs of time slots within the specified range
+			    String query = "SELECT tid FROM timeslot WHERE starttime >= ? AND endtime <= ?";
+
+			    // Define a formatter for the input time strings
+			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+
+			    try (Connection con = this.connect(); PreparedStatement pst = con.prepareStatement(query)) {
+			        // Parse the input strings using the formatter
+			        LocalTime start = LocalTime.parse(starttime, formatter);
+			        LocalTime end = LocalTime.parse(endtime, formatter);
+
+			        // Convert LocalTime to the String format expected by SQL Server (hh:mm:ss)
+			        String startStr = start.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+			        String endStr = end.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+			        // Set query parameters as Strings
+			        pst.setString(1, startStr);
+			        pst.setString(2, endStr);
+
+			        // Execute the query and process the result
+			        try (ResultSet rs = pst.executeQuery()) {
+			            while (rs.next()) {
+			                timeSlotIds.add(rs.getInt("tid"));
+			            }
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+
+			    return timeSlotIds; // Return the list of matching time slot IDs
+			}
+
+		   
 		   public boolean AddTimeSlot(int did, int tid) {
-		    String insertDoctorTimeSlotQuery = "INSERT INTO DoctorTimeslot (did, tid) VALUES (?, ?)";
-	
-		    try (Connection con = this.connect();
-		         PreparedStatement pst = con.prepareStatement(insertDoctorTimeSlotQuery)) {
-	
-		        pst.setInt(1, did);
-		        pst.setInt(2, tid);
-	
-		        int rowsAffected = pst.executeUpdate();
-		        return rowsAffected > 0; // Return true if the association is successful
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-	
-		    return false; // Return false if an exception occurs
-		}
+			    String insertDoctorTimeSlotQuery = "INSERT INTO DoctorTimeslot (did, tid) VALUES (?, ?)";
+		
+			    try (Connection con = this.connect();
+			         PreparedStatement pst = con.prepareStatement(insertDoctorTimeSlotQuery)) {
+		
+			        pst.setInt(1, did);
+			        pst.setInt(2, tid);
+		
+			        int rowsAffected = pst.executeUpdate();
+			        return rowsAffected > 0; // Return true if the association is successful
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+		
+			    return false; // Return false if an exception occurs
+			}
 		   
 		   //READ DOCTOR
 		   public ObservableList<Doctor> listDoctors() 

@@ -46,7 +46,7 @@ public class TimeSlot {
 	// ---------------------------- SARA AKBAR USE CASES ----------------------------------------------- //
 	
 	public List<Integer> AddTimeSlots(String starttime, String endtime) {
-	    return dbhandler.AddTimeSlots(starttime, endtime); // Delegate to DB_Handler
+	    return dbhandler.getTimeSlotIds(starttime, endtime); // Delegate to DB_Handler
 	}
 
 }
