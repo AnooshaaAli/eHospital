@@ -59,6 +59,8 @@ public class eHospital extends patientController implements Initializable {
     private Button ReceptionistSignIn;
 	@FXML 
 	private Button ReceptionistButton;
+	@FXML 
+	private Button LogOutReceptionistButton;
 	@FXML
 	private Button RegisterNewPatient; //calling function of patient
 	@FXML
@@ -120,8 +122,6 @@ public class eHospital extends patientController implements Initializable {
 	            e.printStackTrace();
 	        }
 	    }
-    
-    // ------------------------------------------------------------------ RECEPTIONIST LOGIN HANDLER ---------------------------------------------------------------------------- //
     
     // ------------------------------------------------------------------ RECEPTIONIST LOGIN HANDLER ---------------------------------------------------------------------------- //
     
@@ -275,7 +275,46 @@ public class eHospital extends patientController implements Initializable {
         }
 	}
 	
-    // ------------------------------------------------------------------ SCHEDULE FOLLOW UP RECEPTIONIST ---------------------------------------------------------------------------- //
+	// ------------------------------------------------------------------ LOG OUT HANDLER RECEPTIONIST ---------------------------------------------------------------------------- //
+	
+	public void handleLogOutReceptionistClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LogOutReceptionistButton)
+            {
+            	fxmlFile = "/receptionist/LogOut.fxml";
+                stageTitle = "Log Out";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ SCHEDULE FOLLOW UP RECEPTIONIST ---------------------------------------------------------------------------- //
 	
 	public void handleScheduleFollowUpReceptionist(MouseEvent event)
 	{
@@ -406,6 +445,8 @@ public class eHospital extends patientController implements Initializable {
 	@FXML 
 	private Button LoginPagePatient;
 	@FXML 
+	private Button LogOutPatientButton;
+	@FXML 
     private Button RegisterPatient;
 	@FXML
     private Button scheduleAppointment;
@@ -436,7 +477,7 @@ public class eHospital extends patientController implements Initializable {
     @FXML
     private ListView<String> medicationListView;
 
- // ------------------------------------------------------------------ PATIENT BUTTON HANDLER ---------------------------------------------------------------------------- //
+    // ------------------------------------------------------------------ PATIENT BUTTON HANDLER ---------------------------------------------------------------------------- //
     
 	public void handlePatientButtonClick(MouseEvent  event) {
         try {
@@ -482,165 +523,164 @@ public class eHospital extends patientController implements Initializable {
 	
 	// ------------------------------------------------------------------ REGISTER PATIENT BY PATIENT ---------------------------------------------------------------------------- //
 	
-	// ------------------------------------------------------------------ REGISTER PATIENT BY PATIENT ---------------------------------------------------------------------------- //
-	
-		public void handleRegisterButtonClick(MouseEvent  event)
-		{
-			try {
-				
-				// Anoosha
-	        	String fxmlFile;
-	            String stageTitle;
-	            String name = nameTextField.getText();
-	            String username = usernameTextField.getText();
-	            String password = passwordTextField.getText();
-	            String gender = genderComboBox.getValue();
-	            String dob = dobTextField.getText();
-	            String contact = contactTextField.getText();
-	            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
-	                showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
-	                return;
-	            }
-	            if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
-	                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
-	                return;
-	            }
-	            if (!username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
-	                showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
-	                return;
-	            }
-	            if (gender == null || gender.isEmpty()) {
-	                showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
-	                return;
-	            }
-	            if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
-	                showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
-	                return;
-	            }
-	            try {
-	                LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
-	            } catch (DateTimeParseException e) {
-	                showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
-	                return;
-	            }
-
-	            if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
-	                showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
-	                return;
-	            }
-
-	            
-	            Patient patient = new Patient();
-	            patient.registerPatient(name, username, password, gender, dob, contact);
-	            int id = patient.getPatientId(username);
-	            //setPatientId(id);
-	        	fxmlFile = "/patient/Patient.fxml";
-	            stageTitle = "Patient";
-	            
-	            // Anoosha
-	            
-				//======================================================
-
-				Patient p = Patient.getInstance();
-				
-				if (usernameTextField != null && passwordTextField != null)
-				{
-			        if (username.isEmpty() || password.isEmpty()) 
-			        {
-			            System.out.println("Username or password cannot be empty.");
-			            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
-			            return; 
-			        }
-			        //alpha numeric input validation 
-			        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
-		            {
-		            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
-		                return;
-		            }
-		
-			        boolean check = patient.LoginPatient(username, password);
-		
-			        if (!check) {
-			            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
-			            return; 
-			        }
-			        
-	                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	                LocalDate localDate = null; 
-	                java.sql.Date sqlDob = null;
-	                try {
-	                    // Parse the string into a LocalDate
-	                    localDate = LocalDate.parse(dob, formatter);
-	                    LocalDateTime localDateTime = localDate.atStartOfDay();
-	                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-	                    sqlDob = new java.sql.Date(utilDob.getTime());
-	                    System.out.println("Converted Date: " + sqlDob);
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                    System.out.println("Invalid date format.");
-	                }
-	                
-		            p.init(id, username, name, gender, sqlDob, contact, check);
+	public void handleRegisterButtonClick(MouseEvent  event)
+	{
+		try {
 			
-			}
-			else 
+			// Anoosha
+        	String fxmlFile;
+            String stageTitle;
+            String name = nameTextField.getText();
+            String username = usernameTextField.getText();
+            String password = passwordTextField.getText();
+            String gender = genderComboBox.getValue();
+            String dob = dobTextField.getText();
+            String contact = contactTextField.getText();
+            if (name.isEmpty() || username.isEmpty() || password.isEmpty() || gender == null || dob.isEmpty() || contact.isEmpty()) {
+                showAlert("Error", "Missing Input", "All fields are required. Please fill in all fields.");
+                return;
+            }
+            if (!name.matches("^[a-zA-Z ]+$")) { // Name: Only alphabets and spaces
+                showAlert("Error", "Invalid Name", "Name can only contain alphabets and spaces.");
+                return;
+            }
+            if (!username.matches("^[a-zA-Z0-9]+$")) { // Username: Only alphanumeric
+                showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+                return;
+            }
+            if (gender == null || gender.isEmpty()) {
+                showAlert("Error", "Invalid Gender", "Please select a gender from the dropdown.");
+                return;
+            }
+            if (!dob.matches("\\d{4}-\\d{2}-\\d{2}")) { // DOB: Must match YYYY-MM-DD format
+                showAlert("Error", "Invalid DOB", "Date of Birth must be in the format YYYY-MM-DD.");
+                return;
+            }
+            try {
+                LocalDate.parse(dob, DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Validate if the format is correct
+            } catch (DateTimeParseException e) {
+                showAlert("Error", "Invalid DOB", "Date of Birth must be a valid date in the format YYYY-MM-DD.");
+                return;
+            }
+
+            if (!contact.matches("\\d+")) { // Contact: Only numeric values allowed
+                showAlert("Error", "Invalid Contact", "Contact number can only contain digits.");
+                return;
+            }
+
+            
+            Patient patient = new Patient();
+            patient.registerPatient(name, username, password, gender, dob, contact);
+            int id = patient.getPatientId(username);
+            //setPatientId(id);
+        	fxmlFile = "/patient/Patient.fxml";
+            stageTitle = "Patient";
+            
+            // Anoosha
+            
+			//======================================================
+
+			Patient p = Patient.getInstance();
+			
+			if (usernameTextField != null && passwordTextField != null)
 			{
-				 if (p == null) 
-		                showAlert("Error", "Missing Data", "No user is logged in.");
-			}
-				
-			//=========================================
-
-	            if(event.getSource()==RegisterPatient)
+		        if (username.isEmpty() || password.isEmpty()) 
+		        {
+		            System.out.println("Username or password cannot be empty.");
+		            showAlert("Error", "Invalid Input", "Username or password cannot be empty.");
+		            return; 
+		        }
+		        //alpha numeric input validation 
+		        if(!username.matches("^[a-zA-Z0-9]+$")) //uses only alphanumeric 
 	            {
-	            	fxmlFile = "/patient/Patient.fxml";
-	                stageTitle = "Patient";
+	            	showAlert("Error", "Invalid Username", "Username can only contain letters and numbers.");
+	                return;
 	            }
-	            else
-	            	throw new IllegalArgumentException("Unexpected button source");
-	            
-	            
-	            // Load the new FXML file
-	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-	            Parent newFormRoot = loader.load();
-
-	            
-	          //==========================================
-	            eHospital controller = loader.getController();
-	            String st = p.isDischargeStatus()? "Discharged":"Not Discharged";
-	            Date dob1 = p.getDob();
-	            String dobString ="";
-	            if (dob1 != null) {
-	                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	                dobString = formatter.format(dob1);
-	                controller.detailsPatient(p.getPatientName(), p.getUsername(), p.getPatientId(), 
-	                                           p.getGender(), dobString, p.getContact(), st);
-	            } else {
-	                System.out.println("Date of Birth is null.");
-	                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
-	            }
-
-	            controller.detailsPatient(p.getPatientName(), p.getUsername(),p.getPatientId(),p.getGender()
-	            		,dobString,p.getContact(),st);
-	            //==========================================
-	            
-	            // Create a new scene and stage for the new form
-	            Scene newFormScene = new Scene(newFormRoot);
-	            Stage newFormStage = new Stage();
-	            newFormStage.setScene(newFormScene);
-	            newFormStage.setTitle(stageTitle);
-
-	            // Show the new form
-	            newFormStage.show();
-
-	            // Close the current form
-	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-	            currentStage.close();
-	            
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+	
+		        boolean check = patient.LoginPatient(username, password);
+	
+		        if (!check) {
+		            showAlert("Login Failed", "Invalid Credentials", "The username or password is incorrect.");
+		            return; 
+		        }
+		        
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDate localDate = null; 
+                java.sql.Date sqlDob = null;
+                try {
+                    // Parse the string into a LocalDate
+                    localDate = LocalDate.parse(dob, formatter);
+                    LocalDateTime localDateTime = localDate.atStartOfDay();
+                    java.util.Date utilDob = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+                    sqlDob = new java.sql.Date(utilDob.getTime());
+                    System.out.println("Converted Date: " + sqlDob);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Invalid date format.");
+                }
+                
+	            p.init(id, username, name, gender, sqlDob, contact, check);
+		
 		}
+		else 
+		{
+			 if (p == null) 
+	                showAlert("Error", "Missing Data", "No user is logged in.");
+		}
+			
+		//=========================================
+
+            if(event.getSource()==RegisterPatient)
+            {
+            	fxmlFile = "/patient/Patient.fxml";
+                stageTitle = "Patient";
+            }
+            else
+            	throw new IllegalArgumentException("Unexpected button source");
+            
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+
+            
+          //==========================================
+            eHospital controller = loader.getController();
+            String st = p.isDischargeStatus()? "Discharged":"Not Discharged";
+            Date dob1 = p.getDob();
+            String dobString ="";
+            if (dob1 != null) {
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                dobString = formatter.format(dob1);
+                controller.detailsPatient(p.getPatientName(), p.getUsername(), p.getPatientId(), 
+                                           p.getGender(), dobString, p.getContact(), st);
+            } else {
+                System.out.println("Date of Birth is null.");
+                showAlert("Error", "Invalid Data", "Date of Birth is missing or invalid.");
+            }
+
+            controller.detailsPatient(p.getPatientName(), p.getUsername(),p.getPatientId(),p.getGender()
+            		,dobString,p.getContact(),st);
+            //==========================================
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+
 	// ------------------------------------------------------------------ PATIENT PROFILE BUTTON ---------------------------------------------------------------------------- //
 	
 	public void handleProfileButtonClick(MouseEvent  event)
@@ -743,6 +783,7 @@ public class eHospital extends patientController implements Initializable {
 	}
 	
 	// ------------------------------------------------------------------ LOGIN PATIENT ---------------------------------------------------------------------------- //
+	
 	
 	public void handleLoginButtonPatinet(MouseEvent  event) {
 		try {
@@ -854,6 +895,45 @@ public class eHospital extends patientController implements Initializable {
             
             //==========================================
             
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ LOG OUT HANDLER PATIENT---------------------------------------------------------------------------- //
+	
+	public void handleLogOutPatientClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LogOutPatientButton)
+            {
+            	fxmlFile = "/patient/LogOut.fxml";
+                stageTitle = "Log Out";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            // Create a new scene and stage for the new form
             Scene newFormScene = new Scene(newFormRoot);
             Stage newFormStage = new Stage();
             newFormStage.setScene(newFormScene);
@@ -1008,6 +1088,8 @@ public class eHospital extends patientController implements Initializable {
 	@FXML
 	private Button NurseButton;
 	@FXML
+	private Button LogOutNurseButton;
+	@FXML
 	private Button UpdatePatientRecord;
 	@FXML
 	private Button TrackMedication;
@@ -1159,6 +1241,45 @@ public class eHospital extends patientController implements Initializable {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	}
+	
+	// ------------------------------------------------------------------ LOG OUT HANDLER NURSE ---------------------------------------------------------------------------- //
+	
+	public void handleLogOutNurseClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LogOutNurseButton)
+            {
+            	fxmlFile = "/nurse/LogOut.fxml";
+                stageTitle = "Log Out";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	// ------------------------------------------------------------------ UPDATE PATIENT RECORD ---------------------------------------------------------------------------- //
@@ -1526,6 +1647,10 @@ public class eHospital extends patientController implements Initializable {
     private Button DischargePatient;
 	@FXML
     private Button PatientRecord;
+	@FXML
+    private Button LogOutDoctorButton;
+	 
+	// ------------------------------------------------------------------ DOCTOR SIGN IN ---------------------------------------------------------------------------- //
 	
 	// ------------------------------------------------------------------ DOCTOR BUTTON HANDLER ---------------------------------------------------------------------------- //
 	
@@ -1565,6 +1690,8 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
     }
+	
+	// ------------------------------------------------------------------ DOCTOR LOG IN ---------------------------------------------------------------------------- //
 	
 	// ------------------------------------------------------------------ LOGIN DOCTOR ---------------------------------------------------------------------------- //
 	
@@ -1668,6 +1795,49 @@ public class eHospital extends patientController implements Initializable {
         }
 	}
 	
+	// ------------------------------------------------------------------ LOG OUT HANDLER DOCTOR ---------------------------------------------------------------------------- //
+	
+	// ------------------------------------------------------------------ LOG OUT HANDLER DOCTOR --------------------------------------------------------------------------- //
+	
+	public void handleLogOutDoctorClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LogOutDoctorButton)
+            {
+            	fxmlFile = "/doctor/LogOut.fxml";
+                stageTitle = "Log Out";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	// ------------------------------------------------------------------ PRESCRIBE MEDICATIONS ---------------------------------------------------------------------------- //
+	
 	// ------------------------------------------------------------------ PRESCRIBE MEDICATIONS ---------------------------------------------------------------------------- //
 	
 	public void handlePrescribeMedicationsDoctor(MouseEvent  event) {
@@ -1709,6 +1879,8 @@ public class eHospital extends patientController implements Initializable {
 	
 	// ------------------------------------------------------------------ DISCHARGE PATIENT ---------------------------------------------------------------------------- //
 	
+	// ------------------------------------------------------------------ DISCHARGE PATIENT ---------------------------------------------------------------------------- //
+	
 	public void handleDischargePatientDoctor(MouseEvent  event) {
 		try {
         	String fxmlFile;
@@ -1746,6 +1918,7 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
 	
 	// ------------------------------------------------------------------ VIEW PATIENT RECORD DOCTOR ---------------------------------------------------------------------------- //
 	
@@ -1785,16 +1958,15 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
-	
-	
-	
-	
+
 	
 	//ADMIN
 	@FXML
     private Button AdminSignIn;
 	@FXML
 	private Button AdminButton;
+	@FXML
+	private Button LogOutAdminButton;
 	@FXML
     private Button ManageEmployees;
 	@FXML
@@ -1944,6 +2116,46 @@ public class eHospital extends patientController implements Initializable {
             e.printStackTrace();
         }
 	}
+	
+	// ------------------------------------------------------------------ LOG OUT HANDLER ADMIN ---------------------------------------------------------------------------- //
+	
+	public void handleLogOutAdminClick(MouseEvent  event) {
+		try {
+        	String fxmlFile;
+            String stageTitle;
+            
+            if(event.getSource()==LogOutAdminButton)
+            {
+            	fxmlFile = "/Admin/LogOut.fxml";
+                stageTitle = "Log Out";
+            }
+            else
+            {
+            	throw new IllegalArgumentException("Unexpected button source");
+            }
+            
+            // Load the new FXML file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent newFormRoot = loader.load();
+            
+            // Create a new scene and stage for the new form
+            Scene newFormScene = new Scene(newFormRoot);
+            Stage newFormStage = new Stage();
+            newFormStage.setScene(newFormScene);
+            newFormStage.setTitle(stageTitle);
+
+            // Show the new form
+            newFormStage.show();
+
+            // Close the current form
+            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            currentStage.close();
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 	
 	// ------------------------------------------------------------------ MANAGE EMPLOYEES ---------------------------------------------------------------------------- //
 	
@@ -3981,4 +4193,48 @@ public class eHospital extends patientController implements Initializable {
     	    ReceptionistList.setItems(ReceptionistDBlist);
 			
 		}
+		
+		@FXML 
+		private Button LogOutButton;
+		
+		// ------------------------------------------------------------------ LOG OUT HANDLER ---------------------------------------------------------------------------- //
+		
+		public void handleLogOutClick(MouseEvent  event) {
+			try {
+	        	String fxmlFile;
+	            String stageTitle;
+	            
+	            if(event.getSource()==LogOutButton)
+	            {
+	            	fxmlFile = "/Home/HomePage.fxml";
+	                stageTitle = "eHospital | Home";
+	            }
+	            else
+	            {
+	            	throw new IllegalArgumentException("Unexpected button source");
+	            }
+	            
+	            // Load the new FXML file
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+	            Parent newFormRoot = loader.load();
+	            
+	            // Create a new scene and stage for the new form
+	            Scene newFormScene = new Scene(newFormRoot);
+	            Stage newFormStage = new Stage();
+	            newFormStage.setScene(newFormScene);
+	            newFormStage.setTitle(stageTitle);
+
+	            // Show the new form
+	            newFormStage.show();
+
+	            // Close the current form
+	            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+	            currentStage.close();
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		}
 }
+
+

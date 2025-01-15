@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -152,6 +153,15 @@
                   </Label>
                </children>
             </VBox>
+            <AnchorPane prefHeight="135.0" prefWidth="544.0">
+               <children>
+                  <Button fx:id="LogOutNurseButton" layoutX="133.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#handleLogOutNurseClick" prefHeight="34.0" prefWidth="279.0" style="-fx-background-color: #dd403a; -fx-border-radius: 5;" text="Log Out" textFill="#fffce8">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
          <BorderPane.margin>
             <Insets />
